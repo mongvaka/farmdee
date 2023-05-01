@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import '../utils/constants.dart' as constants;
 
 class AppInput extends StatefulWidget {
@@ -8,14 +9,21 @@ class AppInput extends StatefulWidget {
   final String? Function(String? value)? validator;
   final void Function(String)? onChanged;
   final TextEditingController? controller;
-  const AppInput(
+   EdgeInsets margin;
+  Color borderColor;
+  Color textColor;
+   AppInput(
       {super.key,
         this.obscureText,
         this.placeholder,
         this.validator,
         this.errorMessage,
         this.onChanged,
-        this.controller});
+        this.controller,
+        this.margin = const EdgeInsets.symmetric(vertical: 12, horizontal: 7.5),
+        this.borderColor = const  Color.fromRGBO(255, 255, 255, 0.3),
+        this.textColor =  Colors.white
+      });
   @override
   State<AppInput> createState() => _AppInputState();
 }
@@ -32,15 +40,14 @@ class _AppInputState extends State<AppInput> {
 
   @override
   Widget build(BuildContext context) {
-    const borderColor = Color.fromRGBO(255, 255, 255, 0.3);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         CupertinoTextField(
-          style: const TextStyle(color: CupertinoColors.white),
+          style:  TextStyle(color:widget.textColor),
           onChanged: widget.onChanged,
           controller: widget.controller,
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 7.5),
+          padding: widget.margin,
           decoration: BoxDecoration(
             // backgroundBlendMode: BlendMode.hardLight,
               gradient: const LinearGradient(colors: [
@@ -48,7 +55,7 @@ class _AppInputState extends State<AppInput> {
                 Color.fromRGBO(255, 255, 255, 0.1)
               ]),
               // backgroundBlendMode: const Color.fromRGBO(255, 255, 255, 0.1),
-              border: Border.all(color: borderColor),
+              border: Border.all(color: widget.borderColor),
               borderRadius: const BorderRadius.all(Radius.circular(10))),
           obscureText: _visiblePwd,
           suffixMode: _obscureText

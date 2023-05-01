@@ -7,9 +7,9 @@ import '../../utils/constants.dart';
 class AppScaffoldItem extends StatelessWidget {
   final Widget child;
   final String title;
-  final Function? onPressFilter;
+  final Function? onPressSubmit;
   final bool canBack;
-  const AppScaffoldItem({Key? key, required this.child, required this.title, this.onPressFilter, required this.canBack}) : super(key: key);
+  const AppScaffoldItem({Key? key, required this.child, required this.title, this.onPressSubmit, required this.canBack}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +38,10 @@ class AppScaffoldItem extends StatelessWidget {
             style: BorderStyle.none,
           ),
           backgroundColor: BACKGROUND_COLOR,
-          trailing:onPressFilter!=null?
+          trailing:onPressSubmit!=null?
           GestureDetector(
               onTap: () async {
-                onPressFilter!();
+                onPressSubmit!();
               },
               child:Container(
                 padding: EdgeInsets.only(left: 18,right: 10),

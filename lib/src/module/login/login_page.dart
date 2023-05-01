@@ -15,11 +15,12 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _controllerUserName =
+  TextEditingController(text: '');
   final LoginModel _loginModel = LoginModel.fromJson({'username': '', 'password': ''});
   String _errorPwd = '';
   String _errorUsername = '';
-  final TextEditingController _controllerUserName =
-  TextEditingController(text: '');
+
 
   @override
   Widget build(BuildContext context) {

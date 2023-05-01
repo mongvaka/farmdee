@@ -3,6 +3,8 @@ import 'package:farmdee/src/module/main/main_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'src/module/switch/switch_page.dart';
+
 void main() {
   runApp(MaterialApp(
       builder: (context, child) {
@@ -17,5 +19,5 @@ void main() {
         DefaultCupertinoLocalizations.delegate,
         DefaultWidgetsLocalizations.delegate,
       ],
-      home: const MainPage()));
+      home: const SwitchPage(title: 'รายละเอียด',)));
 }
