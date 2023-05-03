@@ -1,33 +1,29 @@
-import 'package:email_validator/email_validator.dart';
-import 'package:farmdee/src/module/home/home_page.dart';
-import 'package:farmdee/src/module/login/auth_respones_model.dart';
-import 'package:farmdee/src/module/login/login_service.dart';
-import 'package:farmdee/src/module/login/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/app_button.dart';
 import '../../widgets/app_input.dart';
 import '../../widgets/app_input_email.dart';
-import '../main/main_page.dart';
 import 'login_model.dart';
+import 'register_model.dart';
+import 'register_service.dart';
 import 'widgets/label_text.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controllerUserName =
   TextEditingController(text: '');
-  final LoginModel _loginModel = LoginModel.fromJson({'username': '', 'password': ''});
+  final RegisterModel _registerModel = RegisterModel.fromJson({'email': '', 'password': '', 'rePassword': ''});
   String _errorPwd = '';
   String _errorUsername = '';
-  LoginService service = LoginService();
+  RegisterService service = RegisterService();
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +34,7 @@ class _LoginPageState extends State<LoginPage> {
         top: false,
         child: Container(
           decoration: const BoxDecoration(
-         color: Colors.white,
-          ),
+              color: Colors.white),
           child: Center(
             child: SingleChildScrollView(
               child: Padding(
@@ -71,11 +66,12 @@ class _LoginPageState extends State<LoginPage> {
                               controller: _controllerUserName,
                               placeholder: 'อีเมล',
                               errorMessage: _errorUsername,
-
                               onChanged: (val) {
                                 setState(() {
-                                  _loginModel.email = val;
-
+                                  _registerModel.email = val;
+                                  if (val != '' && _errorUsername != '') {
+                                    _errorUsername = "";
+                                  }
                                 });
                               },
                             ),
@@ -91,7 +87,26 @@ class _LoginPageState extends State<LoginPage> {
                               errorMessage: _errorPwd,
                               onChanged: (val) {
                                 setState(() {
-                                  _loginModel.password = val;
+                                  _registerModel.password = val;
+                                  if (val != '' && _errorPwd != '') {
+                                    _errorPwd = "";
+                                  }
+                                });
+                              },
+                            ),
+                            const SizedBox(
+                              height: 10.0,
+                            ),
+                            const LabelText(
+                              text: 'ยืนยันรหัสผ่าน',
+                            ),
+                            AppInput(
+                              obscureText: true,
+                              placeholder: 'ยืนยันรหัสผ่าน',
+                              errorMessage: _errorPwd,
+                              onChanged: (val) {
+                                setState(() {
+                                  _registerModel.rePassword = val;
                                   if (val != '' && _errorPwd != '') {
                                     _errorPwd = "";
                                   }
@@ -105,27 +120,10 @@ class _LoginPageState extends State<LoginPage> {
                               width: double.infinity,
                               child: AppButton(
                                 type: AppButtonType.primary,
-                                text: 'เข้าสู่ระบบ',
-                                onPressed:() async {
-                                  print('loginPress');
-                                 AuthResponseModel result = await service.login(_loginModel);
-                                 if(result.token != ''){
-                                   // Navigator.pushAndRemoveUntil(
-                                   //     context,
-                                   //     MaterialPageRoute(
-                                   //         builder: (context) => MainPage()
-                                   //     ),
-                                   //     ModalRoute.withName("/Home")
-                                   // );
-                                   Navigator.push(
-                                     context,
-                                     MaterialPageRoute(
-                                         builder: (context) =>
-                                         const MainPage()),
-                                   );
-                                 }
-
-                                   },
+                                text: 'สมัครสมาชิก',
+                                onPressed:() {
+                                  service.register(_registerModel);
+                                },
                               ),
                             ),
                             const SizedBox(
@@ -133,14 +131,10 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             GestureDetector(
                                 onTap: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                        const RegisterPage()),
-                                  );
+                                  Navigator.pop(
+                                    context);
                                 },
-                                child: Center(child: LabelText( text:'สมัครสมาชิก',)))
+                                child: Center(child: LabelText( text:'เข้าสู่ระบบ',)))
                           ],
                         ))
                   ],

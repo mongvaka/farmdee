@@ -1,18 +1,19 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import '../utils/constants.dart' as constants;
 
-class AppInput extends StatefulWidget {
+class AppInputEmail extends StatefulWidget {
   final bool? obscureText;
   final String? placeholder;
   final String? errorMessage;
-  final String? Function(String? value)? validator;
+  final String? Function(String value)? validator;
   final void Function(String)? onChanged;
   final TextEditingController? controller;
-   EdgeInsets margin;
+  EdgeInsets margin;
   Color borderColor;
   Color textColor;
-   AppInput(
+  AppInputEmail(
       {super.key,
         this.obscureText,
         this.placeholder,
@@ -20,15 +21,15 @@ class AppInput extends StatefulWidget {
         this.errorMessage,
         this.onChanged,
         this.controller,
-        this.margin = const EdgeInsets.symmetric(vertical: 12, horizontal: 7.5),
+        this.margin = const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
         this.borderColor =  Colors.grey,
         this.textColor =  Colors.black87
       });
   @override
-  State<AppInput> createState() => _AppInputState();
+  State<AppInputEmail> createState() => _AppInputEmailState();
 }
 
-class _AppInputState extends State<AppInput> {
+class _AppInputEmailState extends State<AppInputEmail> {
   bool _visiblePwd = false;
   late bool _obscureText;
   @override
@@ -43,11 +44,14 @@ class _AppInputState extends State<AppInput> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        CupertinoTextField(
-          style:  TextStyle(color:widget.textColor),
+        CupertinoTextFormFieldRow (
+
+          style:  TextStyle(color:widget.textColor,height: 1.7),
+          cursorHeight: 0,
           onChanged: widget.onChanged,
           controller: widget.controller,
           padding: widget.margin,
+          validator: (value)=>EmailValidator.validate(value==null?'':value!) ? null : "โปรดระบุ Email ให้ถูกต้อง",
           decoration: BoxDecoration(
             // backgroundBlendMode: BlendMode.hardLight,
               gradient: const LinearGradient(colors: [
@@ -56,25 +60,9 @@ class _AppInputState extends State<AppInput> {
               ]),
               // backgroundBlendMode: const Color.fromRGBO(255, 255, 255, 0.1),
               border: Border.all(color: widget.borderColor),
+
               borderRadius: const BorderRadius.all(Radius.circular(10))),
           obscureText: _visiblePwd,
-          suffixMode: _obscureText
-              ? OverlayVisibilityMode.always
-              : OverlayVisibilityMode.never,
-          suffix: GestureDetector(
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Icon(
-                _visiblePwd ? CupertinoIcons.eye_slash : CupertinoIcons.eye,
-                color: CupertinoColors.white,
-              ),
-            ),
-            onTap: () {
-              setState(() {
-                _visiblePwd = !_visiblePwd;
-              });
-            },
-          ),
           placeholder: widget.placeholder,
           placeholderStyle: const TextStyle(
             color: Color.fromRGBO(255, 255, 255, 0.7),

@@ -45,8 +45,8 @@ class _SwitchCardState extends State<SwitchCard> {
                   height: 14,
                   width:14,
                 ),
-                LabelText(text:'เวลาเปิด',textColor: Colors.black,),
-                LabelText(text:'เวลาเปิด',textColor: Colors.black),
+                LabelText(text:'เวลาเปิด'),
+                LabelText(text:'เวลาเปิด'),
                 Spacer(),
                 SvgPicture.asset(
                   'assets/icons/coins.svg',

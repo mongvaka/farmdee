@@ -19,5 +19,5 @@ void main() {
         DefaultCupertinoLocalizations.delegate,
         DefaultWidgetsLocalizations.delegate,
       ],
-      home: const SwitchPage(title: 'รายละเอียด',)));
+      home: const LoginPage()));
 }

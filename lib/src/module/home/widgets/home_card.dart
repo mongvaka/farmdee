@@ -29,12 +29,7 @@ class _HomeCardState extends State<HomeCard> {
         setState(() {
           widget.onPress(widget.model);
         });
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //       builder: (context) =>
-        //       const ProductHoldingView()),
-        // );
+
       },
       child: Container(
         decoration: BoxDecoration(

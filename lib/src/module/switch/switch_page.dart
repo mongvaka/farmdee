@@ -58,7 +58,7 @@ class _SwitchPageState extends State<SwitchPage> {
                           children: [
                             Container(
                               alignment: Alignment.center,
-                              child: LabelText(text: 'ตารางงาน',textColor:Colors.black,),
+                              child: LabelText(text: 'ตารางงาน',),
                             ),
                             Spacer(),
                             Container(
