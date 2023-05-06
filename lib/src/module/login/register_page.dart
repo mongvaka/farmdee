@@ -1,9 +1,12 @@
+import 'package:farmdee/src/module/login/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../widgets/app_button.dart';
 import '../../widgets/app_input.dart';
 import '../../widgets/app_input_email.dart';
+import '../main/main_page.dart';
+import 'auth_respones_model.dart';
 import 'login_model.dart';
 import 'register_model.dart';
 import 'register_service.dart';
@@ -121,8 +124,18 @@ class _RegisterPageState extends State<RegisterPage> {
                               child: AppButton(
                                 type: AppButtonType.primary,
                                 text: 'สมัครสมาชิก',
-                                onPressed:() {
-                                  service.register(_registerModel);
+                                onPressed:() async {
+
+                                 AuthResponseModel result = await service.register(_registerModel);
+                                 if(result.token!=null){
+                                   Navigator.pushReplacement(
+                                     context,
+                                     MaterialPageRoute(
+                                         builder: (context) =>
+                                         const MainPage()),
+                                   );
+                                 }
+
                                 },
                               ),
                             ),
@@ -131,8 +144,12 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                             GestureDetector(
                                 onTap: (){
-                                  Navigator.pop(
-                                    context);
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const LoginPage()),
+                                  );
                                 },
                                 child: Center(child: LabelText( text:'เข้าสู่ระบบ',)))
                           ],

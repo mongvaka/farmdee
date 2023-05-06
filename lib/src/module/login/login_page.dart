@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                                    //     ),
                                    //     ModalRoute.withName("/Home")
                                    // );
-                                   Navigator.push(
+                                   Navigator.pushReplacement(
                                      context,
                                      MaterialPageRoute(
                                          builder: (context) =>
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             GestureDetector(
                                 onTap: (){
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>

@@ -1,8 +1,10 @@
+import 'package:farmdee/src/widgets/app_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../utils/constants.dart';
+import 'widgets/app_top_save_button.dart';
 
 class AppScaffoldItem extends StatelessWidget {
   final Widget child;
@@ -20,6 +22,9 @@ class AppScaffoldItem extends StatelessWidget {
           padding: EdgeInsetsDirectional.zero,
           leading:canBack? GestureDetector(
               onTap: () {
+                Navigator.pop(
+                  context,
+                );
               },
               child:Container(
                 padding: const EdgeInsets.only(left: 18,right: 10),
@@ -39,20 +44,13 @@ class AppScaffoldItem extends StatelessWidget {
           ),
           backgroundColor: BACKGROUND_COLOR,
           trailing:onPressSubmit!=null?
-          GestureDetector(
-              onTap: () async {
-                onPressSubmit!();
-              },
-              child:Container(
-                padding: EdgeInsets.only(left: 18,right: 10),
-                width: 45,
-                color: const Color.fromRGBO(245, 246, 248, 0.8),
-                child: SvgPicture.asset(
-                  'assets/icons/filter.svg',
-
-                ),
-              )
-
+          Container(
+            padding: EdgeInsets.only(left: 18,right: 10),
+            width: 100,
+            color: const Color.fromRGBO(245, 246, 248, 0.8),
+            child: AppTopSaveButton(text: 'บันทึก',onPressed: (){
+              onPressSubmit!();
+            },),
           ):null,
         ),
         child: child

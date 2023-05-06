@@ -1,3 +1,5 @@
+import 'package:farmdee/src/module/switch/switch_page.dart';
+import 'package:farmdee/src/widgets/app_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -97,6 +99,7 @@ class _HomePageState extends State<HomePage> {
       title: 'รายการทั้งหมด',
       child: Column(
         children: [
+
           Expanded(
             child: _posts!.isNotEmpty
                 ? ListView.builder(
@@ -108,6 +111,13 @@ class _HomePageState extends State<HomePage> {
                   HomeModel model = _posts![index];
                   return HomeCard(
                     onPress: (HomeModel model) {
+
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                             SwitchPage(homeModel: model)),
+                      );
                       // final router = context.router;
                       // router.push(ClientDetailRoute(clientId: clientId));
                     },

@@ -77,7 +77,7 @@ class _AppInputState extends State<AppInput> {
           ),
           placeholder: widget.placeholder,
           placeholderStyle: const TextStyle(
-            color: Color.fromRGBO(255, 255, 255, 0.7),
+            color: Colors.grey,
           ),
         ),
         widget.errorMessage != null

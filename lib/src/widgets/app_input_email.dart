@@ -47,7 +47,6 @@ class _AppInputEmailState extends State<AppInputEmail> {
         CupertinoTextFormFieldRow (
 
           style:  TextStyle(color:widget.textColor,height: 1.7),
-          cursorHeight: 0,
           onChanged: widget.onChanged,
           controller: widget.controller,
           padding: widget.margin,
