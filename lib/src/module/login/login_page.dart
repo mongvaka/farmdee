@@ -107,6 +107,12 @@ class _LoginPageState extends State<LoginPage> {
                                 type: AppButtonType.primary,
                                 text: 'เข้าสู่ระบบ',
                                 onPressed:() async {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                        const MainPage()),
+                                  );
                                   print('loginPress');
                                  AuthResponseModel result = await service.login(_loginModel);
                                  if(result.token != ''){
@@ -124,6 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                                          const MainPage()),
                                    );
                                  }
+
 
                                    },
                               ),

@@ -5,6 +5,9 @@ import 'package:line_icons/line_icons.dart';
 
 import '../home/home_page.dart';
 import '../home/home_service.dart';
+import '../shop/shop_page.dart';
+import '../support/support_page.dart';
+import '../user/user_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -19,18 +22,9 @@ class _MainPageState extends State<MainPage> {
   TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static  List<Widget> _widgetOptions = <Widget>[
      HomePage(),
-    Text(
-      'อุปกรณ์',
-      style: optionStyle,
-    ),
-    Text(
-      'แผนงาน',
-      style: optionStyle,
-    ),
-    Text(
-      'ผู้ใช้',
-      style: optionStyle,
-    ),
+    ShopPage(),
+    SupportPage(),
+    UserPage()
   ];
   @override
   Widget build(BuildContext context) {
@@ -66,15 +60,15 @@ class _MainPageState extends State<MainPage> {
               tabs: [
                 GButton(
                   icon: LineIcons.home,
-                  text: 'หน้าหลัก',
-                ),
-                GButton(
-                  icon: LineIcons.heart,
                   text: 'อุปกรณ์',
                 ),
                 GButton(
-                  icon: LineIcons.search,
-                  text: 'แผนงาน',
+                  icon: LineIcons.shoppingBasket,
+                  text: 'สั่งซื้อ',
+                ),
+                GButton(
+                  icon: LineIcons.rocketChat,
+                  text: 'สอบถาม',
                 ),
                 GButton(
                   icon: LineIcons.user,
