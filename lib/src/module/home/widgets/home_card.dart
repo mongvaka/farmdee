@@ -14,7 +14,7 @@ class HomeCard extends StatefulWidget {
   final HomeModel model;
   bool statusSwitch = false;
   HomeCard({Key? key, required this.onPress, required this.onPressSwitch,  required this.model}) : super(key: key){
-    statusSwitch = model.status==0;
+    statusSwitch = model.status==1;
   }
 
   @override
@@ -93,7 +93,7 @@ class _HomeCardState extends State<HomeCard> {
                     width: 5,
                   ),
                   Text(
-                    widget.model.status==0? 'สถานะ เปิด':'สถานะ ปิด',
+                    widget.model.status==1? 'สถานะ เปิด':'สถานะ ปิด',
                     style: ClientStyle.bodyClientStyle,
                     // style: TextStyle(
                     //     color: Colors.grey,
@@ -113,7 +113,7 @@ class _HomeCardState extends State<HomeCard> {
                     onToggle: (val) {
                       setState(() {
                         widget.statusSwitch = val;
-                        widget.model.status = val?0:1;
+                        widget.model.status = val?1:0;
                         widget.onPressSwitch(widget.model);
                       });
                     },

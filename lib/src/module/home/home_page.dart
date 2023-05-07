@@ -92,6 +92,7 @@ class _HomePageState extends State<HomePage> {
     _firstLoad();
     _controller = ScrollController()..addListener(_loadMore);
   }
+
   @override
   Widget build(BuildContext context) {
     return AppScaffoldItem(
@@ -117,7 +118,10 @@ class _HomePageState extends State<HomePage> {
                         MaterialPageRoute(
                             builder: (context) =>
                              SwitchPage(homeModel: model)),
-                      );
+                      ).then((value){
+                        _firstLoad();
+                        _controller = ScrollController()..addListener(_loadMore);
+                      });
                       // final router = context.router;
                       // router.push(ClientDetailRoute(clientId: clientId));
                     },

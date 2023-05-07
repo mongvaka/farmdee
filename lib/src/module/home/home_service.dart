@@ -2,12 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:localstorage/localstorage.dart';
-
 import '../../shared/basic_respones.dart';
 import '../../utils/constants.dart';
 import 'home_model.dart';
 import 'home_search.dart';
-
 class HomeService {
   Future<BasicResponse<HomeModel>> list(HomeSearch search) async {
     final LocalStorage storage = new LocalStorage('auth');
@@ -28,10 +26,6 @@ class HomeService {
         encoding: Encoding.getByName("utf-8"),
         headers: header,
       );
-      // print('body');
-      // print(token);
-      // print('body');
-      // print(res.headers['Authorization']);
       if (res.body == null) {
         return BasicResponse();
       }

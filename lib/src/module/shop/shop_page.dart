@@ -12,6 +12,6 @@ class ShopPage extends StatefulWidget {
 class _ShopPageState extends State<ShopPage> {
   @override
   Widget build(BuildContext context) {
-    return AppScaffoldItem(child: Center(child: LabelText(text: 'เร็วๆ นี้',),), title: 'สั่งซื้อสินค้า', canBack: false);
+    return AppScaffoldItem(child: Center(child: LabelText(text: 'เร็วๆนี้',),), title: 'สั่งซื้อสินค้า', canBack: false);
   }
 }
