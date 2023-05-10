@@ -75,7 +75,6 @@ class _AppInputState extends State<AppInput> {
               });
             },
           ),
-          placeholder: widget.placeholder,
           placeholderStyle: const TextStyle(
             color: Colors.grey,
           ),

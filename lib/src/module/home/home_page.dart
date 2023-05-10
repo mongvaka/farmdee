@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../utils/constants.dart';
 import '../../widgets/scaffold/app_scaffold_item.dart';
 import '../../widgets/scaffold/app_scaffold_list.dart';
+import '../login/widgets/label_text.dart';
 import 'home_model.dart';
 import 'home_search.dart';
 import 'home_service.dart';
@@ -132,7 +133,7 @@ class _HomePageState extends State<HomePage> {
 
                   );
                 })
-                : const Center(child: CupertinoActivityIndicator()),
+                :!_posts.isEmpty? const Center(child: CupertinoActivityIndicator()):Center(child: LabelText(text: 'ไม่มีข้อมูล',),),
           ),
           if (_isLoadMoreRunning == true)
             const Padding(

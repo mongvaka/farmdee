@@ -11,7 +11,7 @@ class UserService {
 
     String url = '${API_URL}/users/get-user';
     String? token =  storage.getItem('token');
-    String? id =  storage.getItem('id');
+    int? id =  storage.getItem('id');
     Map<String,String> header = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

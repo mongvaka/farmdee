@@ -107,15 +107,15 @@ class _LoginPageState extends State<LoginPage> {
                                 type: AppButtonType.primary,
                                 text: 'เข้าสู่ระบบ',
                                 onPressed:() async {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                        const MainPage()),
-                                  );
-                                  print('loginPress');
-                                 AuthResponseModel result = await service.login(_loginModel);
-                                 if(result.token != ''){
+                                  // Navigator.pushReplacement(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //       const MainPage()),
+                                  // );
+                                 service.login(_loginModel).then((value)  {
+                                   print('loginComplete');
+                                 if(value.token != ''){
                                    // Navigator.pushAndRemoveUntil(
                                    //     context,
                                    //     MaterialPageRoute(
@@ -124,12 +124,13 @@ class _LoginPageState extends State<LoginPage> {
                                    //     ModalRoute.withName("/Home")
                                    // );
                                    Navigator.pushReplacement(
-                                     context,
-                                     MaterialPageRoute(
-                                         builder: (context) =>
-                                         const MainPage()),
-                                   );
-                                 }
+                                   context,
+                                   MaterialPageRoute(
+                                       builder: (context) =>
+                                       const MainPage()),
+                                 );
+                                }
+                                 });
 
 
                                    },

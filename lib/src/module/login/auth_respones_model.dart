@@ -1,18 +1,18 @@
 class AuthResponseModel {
-  int? id;
+  int? userId;
   String? token;
-  AuthResponseModel({ this.id, this.token});
+  AuthResponseModel({ this.userId, this.token});
 
   factory AuthResponseModel.fromJson(Map<String, dynamic> json,
       {String? username, String? password}) {
     return AuthResponseModel(
-      id: json['id'],
+      userId: int.parse(json['userId']),
       token: json['token'],
     );
   }
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
+      'userId': userId,
       'token': token,
     };
   }

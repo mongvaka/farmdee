@@ -45,7 +45,6 @@ class _AppInputEmailState extends State<AppInputEmail> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         CupertinoTextFormFieldRow (
-
           style:  TextStyle(color:widget.textColor,height: 1.7),
           onChanged: widget.onChanged,
           controller: widget.controller,

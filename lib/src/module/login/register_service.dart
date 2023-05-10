@@ -35,7 +35,7 @@ class RegisterService {
       }
       AuthResponseModel authData =  AuthResponseModel.fromJson(jsonDecode(utf8.decode(res.bodyBytes)));
       final LocalStorage storage = new LocalStorage('auth');
-      storage.setItem('id', authData.id);
+      storage.setItem('id', authData.userId);
       storage.setItem('token', authData.token);
       return authData;
 

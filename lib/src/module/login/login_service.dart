@@ -30,10 +30,13 @@ class LoginService {
       if (res.body == null) {
         return AuthResponseModel();
       }
+      print('jsonDecode : ${jsonDecode(utf8.decode(res.bodyBytes))}');
+
       AuthResponseModel authData =  AuthResponseModel.fromJson(jsonDecode(utf8.decode(res.bodyBytes)));
-      final LocalStorage storage = new LocalStorage('auth');
-      storage.setItem('id', authData.id);
-      storage.setItem('token', authData.token);
+      final LocalStorage storage = LocalStorage('auth');
+      print('authData : ${authData.userId}');
+      await storage.setItem('id', authData.userId);
+      await storage.setItem('token', authData.token);
       print(authData.token);
       return authData;
 
