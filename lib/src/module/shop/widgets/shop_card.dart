@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:farmdee/src/module/home/home_model.dart';
+import 'package:farmdee/src/module/shop/models/shop_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -9,20 +10,19 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../shared/style.dart';
 import '../../../utils/constants.dart';
 
-class HomeCard extends StatefulWidget {
-  final Function(HomeModel) onPress;
-  final Function(HomeModel) onPressSwitch;
-  final HomeModel model;
+class ShopCard extends StatefulWidget {
+  final Function(ShopModel) onPress;
+  final Function(ShopModel) onPressSwitch;
+  final ShopModel model;
   bool statusSwitch = false;
-  HomeCard({Key? key, required this.onPress, required this.onPressSwitch,  required this.model}) : super(key: key){
-    statusSwitch = model.status==1;
+  ShopCard({Key? key, required this.onPress, required this.onPressSwitch,  required this.model}) : super(key: key){
   }
 
   @override
-  State<HomeCard> createState() => _HomeCardState();
+  State<ShopCard> createState() => _ShopCardState();
 }
 
-class _HomeCardState extends State<HomeCard> {
+class _ShopCardState extends State<ShopCard> {
   @override
   Widget build(BuildContext context) {
     return  GestureDetector(
@@ -93,32 +93,7 @@ class _HomeCardState extends State<HomeCard> {
                   SizedBox(
                     width: 5,
                   ),
-                  Text(
-                    widget.model.status==1? 'สถานะ เปิด':'สถานะ ปิด',
-                    style: ClientStyle.bodyClientStyle,
-                    // style: TextStyle(
-                    //     color: Colors.grey,
-                    //     fontSize: 16,
-                    //     decoration: TextDecoration.none),
-                  ),
-                  Spacer(),
 
-                  FlutterSwitch(
-                    showOnOff: true,
-                    activeText: 'เปิด',
-                    inactiveText: 'ปิด',
-                    activeTextColor: Colors.white,
-                    activeColor: Colors.green.shade500,
-                    inactiveTextColor: Colors.white,
-                    value: widget.statusSwitch,
-                    onToggle: (val) {
-                      setState(() {
-                        widget.statusSwitch = val;
-                        widget.model.status = val?1:0;
-                        widget.onPressSwitch(widget.model);
-                      });
-                    },
-                  ),
                 ],
               )
             ],

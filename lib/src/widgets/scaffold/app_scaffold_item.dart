@@ -9,9 +9,10 @@ import 'widgets/app_top_save_button.dart';
 class AppScaffoldItem extends StatelessWidget {
   final Widget child;
   final String title;
+  final String? submitText;
   final Function? onPressSubmit;
   final bool canBack;
-  const AppScaffoldItem({Key? key, required this.child, required this.title, this.onPressSubmit, required this.canBack}) : super(key: key);
+  const AppScaffoldItem({Key? key, required this.child, required this.title, this.onPressSubmit, required this.canBack, this.submitText}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +49,7 @@ class AppScaffoldItem extends StatelessWidget {
             padding: EdgeInsets.only(left: 18,right: 10),
             width: 100,
             color: const Color.fromRGBO(245, 246, 248, 0.8),
-            child: AppTopSaveButton(text: 'บันทึก',onPressed: (){
+            child: AppTopSaveButton(text: submitText??'บันทึก',onPressed: (){
               onPressSubmit!();
             },),
           ):null,

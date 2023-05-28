@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:farmdee/src/shared/basic_service.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:localstorage/localstorage.dart';
@@ -7,62 +8,22 @@ import '../../utils/constants.dart';
 import 'home_model.dart';
 import 'home_search.dart';
 class HomeService {
+  BasicService baseService  =  BasicService();
   Future<BasicResponse<HomeModel>> list(HomeSearch search) async {
-    final LocalStorage storage = new LocalStorage('auth');
-
-    String url = '${API_URL}/esp/esp-child';
-    String? token =  storage.getItem('token');
-
-    Map<String,String> header = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token'
-    };
-    try {
-
-      Response res = await http.post(
-        Uri.parse(url),
-        body: jsonEncode(search.toJson()),
-        encoding: Encoding.getByName("utf-8"),
-        headers: header,
-      );
-      if (res.body == null) {
+    String url = '/esp/esp-child';
+    Response? res = await baseService.post(search.toJson(), url);
+      if (res?.body == null) {
         return BasicResponse();
       }
       return BasicResponse.fromJson(
-          jsonDecode(utf8.decode(res.bodyBytes)), HomeModel.fromJson);
-    } catch (e) {
-      print(e);
-    }
-    return BasicResponse();
+          jsonDecode(utf8.decode(res!.bodyBytes)), HomeModel.fromJson);
   }
   Future<bool> switchStatus(HomeModel model) async {
-    String url = '${API_URL}/esp/switch-status';
-    final LocalStorage storage = new LocalStorage('auth');
-
-    try {
-      String? token =  storage.getItem('token');
-
-      // print(jsonDecode(login.body)['token']);
-      if (token == null) {
-        throw 'Cannot get token from hive.';
-      }
-      Response res = await http.post(
-        Uri.parse(url),
-        body: jsonEncode(model.toJson()),
-        encoding: Encoding.getByName("utf-8"),
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'Authorization': 'Bearer $token'
-        },
-      );
-      if(res.body!=null){
+    String url = '/esp/switch-status';
+    Response? res = await baseService.post(model.toJson(), url);
+    if(res?.body!=null){
         return true;
-      }
-      return false;
-    } catch (e) {
-      return false;
     }
+    return false;
   }
 }

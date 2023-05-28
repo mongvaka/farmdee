@@ -1,12 +1,15 @@
+import 'package:farmdee/src/module/message/message_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:http/http.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:ping_discover_network_forked/ping_discover_network_forked.dart';
+import 'package:http/http.dart' as http;
 
 import '../home/home_page.dart';
 import '../home/home_service.dart';
 import '../shop/shop_page.dart';
-import '../support/support_page.dart';
 import '../user/user_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -18,12 +21,13 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
+
   static const TextStyle optionStyle =
   TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
   static  List<Widget> _widgetOptions = <Widget>[
      HomePage(),
     ShopPage(),
-    SupportPage(),
+    MessagePage(),
     UserPage()
   ];
   @override

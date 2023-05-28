@@ -1,38 +1,19 @@
 import 'dart:convert';
 import 'package:farmdee/src/module/user/user_model.dart';
-import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:localstorage/localstorage.dart';
-import '../../shared/basic_respones.dart';
-import '../../utils/constants.dart';
+import '../../shared/basic_service.dart';
 class UserService {
+  BasicService baseService  =  BasicService();
   Future<UserModel> getById() async {
-    final LocalStorage storage = new LocalStorage('auth');
-
-    String url = '${API_URL}/users/get-user';
-    String? token =  storage.getItem('token');
+    final LocalStorage storage = LocalStorage('auth');
     int? id =  storage.getItem('id');
-    Map<String,String> header = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token'
-    };
-    try {
-
-      Response res = await http.post(
-        Uri.parse(url),
-        body: jsonEncode({'id':id}),
-        encoding: Encoding.getByName("utf-8"),
-        headers: header,
-      );
-      if (res.body == null) {
-        return UserModel(lastName: '', firstName: '', email: '');
-      }
-      return UserModel.fromJson(
-          jsonDecode(utf8.decode(res.bodyBytes)));
-    } catch (e) {
-      print(e);
+    String url = '/users/get-user';
+    Response? res = await baseService.post({'id':id}, url);
+    if (res?.body == null) {
+      return UserModel(lastName: '', firstName: '', email: '');
     }
-    return UserModel(lastName: '', firstName: '', email: '');
+    print(res?.body);
+    return UserModel.fromJson(jsonDecode(utf8.decode(res!.bodyBytes)));
   }
 }

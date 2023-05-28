@@ -1,31 +1,27 @@
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:farmdee/src/module/home/home_model.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:farmdee/src/module/search_hardware/search_hardware_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../../../shared/style.dart';
-import '../../../utils/constants.dart';
+import '../../../widgets/scaffold/widgets/app_top_save_button.dart';
 
-class HomeCard extends StatefulWidget {
-  final Function(HomeModel) onPress;
-  final Function(HomeModel) onPressSwitch;
-  final HomeModel model;
+class SearchHardwareCard extends StatefulWidget {
+  final Function(SearchHardwareModel) onPress;
+  final Function(SearchHardwareModel) onRegister;
+  final SearchHardwareModel model;
   bool statusSwitch = false;
-  HomeCard({Key? key, required this.onPress, required this.onPressSwitch,  required this.model}) : super(key: key){
-    statusSwitch = model.status==1;
+  SearchHardwareCard({Key? key, required this.onPress, required this.onRegister,  required this.model}) : super(key: key){
   }
-
   @override
-  State<HomeCard> createState() => _HomeCardState();
+  State<SearchHardwareCard> createState() => _SearchHardwareCardState();
 }
 
-class _HomeCardState extends State<HomeCard> {
+class _SearchHardwareCardState extends State<SearchHardwareCard> {
   @override
   Widget build(BuildContext context) {
-    return  GestureDetector(
+    return   GestureDetector(
       onTap: () {
         setState(() {
           widget.onPress(widget.model);
@@ -50,7 +46,7 @@ class _HomeCardState extends State<HomeCard> {
               Row(
                 children: [
                   SvgPicture.asset(
-                    'assets/icons/bank.svg',
+                    'assets/icons/clock.svg',
                     height: 16,
                     width:16,
                   ),
@@ -66,7 +62,7 @@ class _HomeCardState extends State<HomeCard> {
                     child: AutoSizeText(
                       maxLines:2,
                       minFontSize: 10,
-                      widget.model.name,
+                      'อุปกรณ์ไอดี : ${widget.model.key}',
                       style: ClientStyle.headerClientStyle,
                     ),
                   ),
@@ -85,40 +81,22 @@ class _HomeCardState extends State<HomeCard> {
               Row(
                 children: [
                   SvgPicture.asset(
-                    'assets/icons/coins.svg',
+                    'assets/icons/user.svg',
                     height: 14,
                     width:14,
                   ),
-
-                  SizedBox(
+                  const SizedBox(
                     width: 5,
                   ),
                   Text(
-                    widget.model.status==1? 'สถานะ เปิด':'สถานะ ปิด',
+                    widget.model.ownerId==0? 'ยังไม่ลงทะเบียน': '${widget.model.owner?.email}',
                     style: ClientStyle.bodyClientStyle,
-                    // style: TextStyle(
-                    //     color: Colors.grey,
-                    //     fontSize: 16,
-                    //     decoration: TextDecoration.none),
                   ),
-                  Spacer(),
+                  const Spacer(),
+                  AppTopSaveButton(text: widget.model.ownerId==0?'ลงทะเบียน':'ลงทะเบียนใหม่',onPressed: (){
+                    widget.onRegister!(widget.model);
+                  },)
 
-                  FlutterSwitch(
-                    showOnOff: true,
-                    activeText: 'เปิด',
-                    inactiveText: 'ปิด',
-                    activeTextColor: Colors.white,
-                    activeColor: Colors.green.shade500,
-                    inactiveTextColor: Colors.white,
-                    value: widget.statusSwitch,
-                    onToggle: (val) {
-                      setState(() {
-                        widget.statusSwitch = val;
-                        widget.model.status = val?1:0;
-                        widget.onPressSwitch(widget.model);
-                      });
-                    },
-                  ),
                 ],
               )
             ],

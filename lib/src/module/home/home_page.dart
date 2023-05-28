@@ -9,6 +9,7 @@ import '../../utils/constants.dart';
 import '../../widgets/scaffold/app_scaffold_item.dart';
 import '../../widgets/scaffold/app_scaffold_list.dart';
 import '../login/widgets/label_text.dart';
+import '../search_hardware/search_hardware_page.dart';
 import 'home_model.dart';
 import 'home_search.dart';
 import 'home_service.dart';
@@ -98,10 +99,21 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return AppScaffoldItem(
       canBack: false,
+      submitText: 'ค้นหา',
+      onPressSubmit: (){
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  const SearchHardwarePage()),
+        ).then((value){
+          _firstLoad();
+          _controller = ScrollController()..addListener(_loadMore);
+        });
+      },
       title: 'รายการทั้งหมด',
       child: Column(
         children: [
-
           Expanded(
             child: _posts!.isNotEmpty
                 ? ListView.builder(

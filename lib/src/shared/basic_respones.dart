@@ -26,6 +26,7 @@ class BasicResponse<T> {
   });
 
   factory BasicResponse.fromJson(Map<String, dynamic> json,Function fromJson) {
+    print('json2');
     print(json);
     if(json['content']==null){
       return BasicResponse(
@@ -43,6 +44,8 @@ class BasicResponse<T> {
     }
 
     final items = json['content'].cast<Map<String, dynamic>>();
+    print('items');
+    print(items);
     final results = new List<T>.from(items.map((itemsJson) => fromJson(itemsJson)));
     return BasicResponse(
         content:  results,

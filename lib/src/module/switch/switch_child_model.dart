@@ -12,8 +12,6 @@ class SwitchChildModel  {
   });
 
   factory SwitchChildModel.fromJson(dynamic json) {
-    print('onMA=p');
-    print(json);
     return SwitchChildModel(
       id:  int.parse(json['id']),
       startTime: json['startTime'] as String,
