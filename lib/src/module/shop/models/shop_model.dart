@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'image.dart';
 
 class ShopModel  {
+  int id;
   String name;
   String code;
   String detail;
@@ -12,6 +13,7 @@ class ShopModel  {
 
 
   ShopModel({
+    required this.id,
     required this.name,
     required this.code,
     required this.detail,
@@ -26,6 +28,7 @@ class ShopModel  {
     });
     // List<ImageModel> imageList = json['images'].map((m){return ImageModel.fromJson(m); });
     return ShopModel(
+      id: int.parse(json['id']??0.0),
       name: json['name'] as String,
       code: json['code'] as String,
       detail: json['detail'] as String,

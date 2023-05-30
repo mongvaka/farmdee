@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 
 import '../../shared/basic_respones.dart';
 import '../../shared/basic_service.dart';
-import 'message_search.dart';
+import 'models/message_search.dart';
 import 'models/message_model.dart';
 import 'models/send_message_model.dart';
 

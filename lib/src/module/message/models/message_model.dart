@@ -5,7 +5,7 @@ import 'answer_model.dart';
 class MessageModel  {
   String? message;
   String? type;
-  AnswerModel? answer;
+  UserModel? answer;
 
   MessageModel({
     required this.message,
@@ -19,7 +19,7 @@ class MessageModel  {
     return MessageModel(
       message: json['message'] ,
       type: json['type'],
-      answer: json['answer'] ==null? null: AnswerModel.fromJson(json['answer']),
+      answer: json['answer'] ==null? null: UserModel.fromJson(json['answer']),
     );
   }
   @override

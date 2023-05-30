@@ -1,21 +1,21 @@
 
-class AnswerModel  {
+class UserModel  {
   int id;
   String? email;
   String? firstName;
   String? lastName;
 
-  AnswerModel({
+  UserModel({
     required this.id,
     required this.email,
     required this.firstName,
     required this.lastName
   });
 
-  factory AnswerModel.fromJson(dynamic json) {
+  factory UserModel.fromJson(dynamic json) {
     print('json');
     print(json);
-    return AnswerModel(
+    return UserModel(
       id: int.parse(json['id'])  ,
       email: json['email'] as String,
       firstName: json['firstName'],

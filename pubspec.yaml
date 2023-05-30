@@ -27,7 +27,7 @@ dependencies:
   email_validator: '^2.1.16'
   time_picker_sheet: ^0.0.2+1
   ping_discover_network_forked: ^0.0.1
-
+  flutter_rating_bar: ^4.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter

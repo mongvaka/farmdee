@@ -1,5 +1,5 @@
 import 'package:farmdee/src/module/login/widgets/label_text.dart';
-import 'package:farmdee/src/module/message/message_search.dart';
+import 'package:farmdee/src/module/message/models/message_search.dart';
 import 'package:farmdee/src/module/message/models/message_model.dart';
 import 'package:farmdee/src/module/message/models/send_message_model.dart';
 import 'package:farmdee/src/module/message/widegets/message_card.dart';

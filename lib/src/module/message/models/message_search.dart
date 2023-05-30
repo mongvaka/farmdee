@@ -1,7 +1,7 @@
 import 'package:localstorage/localstorage.dart';
 
-import '../../shared/basic_respones.dart';
-import '../../shared/basic_search.dart';
+import '../../../shared/basic_respones.dart';
+import '../../../shared/basic_search.dart';
 
 class MessageSearch extends BasicSearch {
   late String message;

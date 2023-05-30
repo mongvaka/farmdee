@@ -1,4 +1,5 @@
 import 'package:farmdee/src/module/login/widgets/label_text.dart';
+import 'package:farmdee/src/module/products/product_detail.dart';
 import 'package:farmdee/src/module/shop/shop_search.dart';
 import 'package:farmdee/src/module/shop/shop_service.dart';
 import 'package:farmdee/src/module/shop/widgets/shop_card.dart';
@@ -107,20 +108,16 @@ class _ShopPageState extends State<ShopPage> {
                     return ShopCard(
                         onPress: (ShopModel model) {
 
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) =>
-                          //           SwitchPage(homeModel: model)),
-                          // ).then((value){
-                          //   _firstLoad();
-                          //   _controller = ScrollController()..addListener(_loadMore);
-                          // });
-                          // final router = context.router;
-                          // router.push(ClientDetailRoute(clientId: clientId));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    ProductDetailPage(id: model.id,)),
+                          );
                         },
-                        onPressSwitch: (ShopModel model) {
-                          // service.switchStatus(model);
+                        onPressBuy: (ShopModel model) {
+                          print('buypress');
+                          service.addProductToOrder(model.id);
                         },
                         model:model
 
