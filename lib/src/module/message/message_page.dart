@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:farmdee/src/module/login/widgets/label_text.dart';
 import 'package:farmdee/src/module/message/models/message_search.dart';
 import 'package:farmdee/src/module/message/models/message_model.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../widgets/app_input.dart';
 import 'message_service.dart';
@@ -26,6 +29,8 @@ class _MessagePageState extends State<MessagePage> {
   bool _isFirstLoadRunning = false;
   bool _isLoadMoreRunning = false;
   List<MessageModel> _posts = [];
+  XFile? image;
+
   void _loadMore() async {
     if (search.page.last == false &&
         _isFirstLoadRunning == false &&
@@ -139,6 +144,24 @@ class _MessagePageState extends State<MessagePage> {
                 child: CupertinoActivityIndicator(),
               ),
             ),
+          image != null
+              ? Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Image.file(
+                //to show image, you type like this.
+                File(image!.path),
+                fit: BoxFit.cover,
+                width: MediaQuery.of(context).size.width,
+                height: 300,
+              ),
+            ),
+          )
+              : Text(
+            "No Image",
+            style: TextStyle(fontSize: 20),
+          ),
           Padding(
             padding: const EdgeInsets.all(5.0),
             child: SizedBox(
@@ -146,6 +169,25 @@ class _MessagePageState extends State<MessagePage> {
                 Row(
 
                   children: [
+                    GestureDetector(
+                      onTap: () async {
+                        var img = await ImagePicker().pickImage(source: ImageSource.gallery);
+                        setState(() {
+                          image = img;
+                          if(image!=null){
+                            service.upload(image!);
+
+                          }
+                        });
+                      },
+                      child: SvgPicture.asset(
+                        'assets/icons/image.svg',
+                        height: 28,
+                        width:28,
+                        color: Colors.grey,
+
+                      ),
+                    ),
                     SizedBox(width: 5,),
                     Flexible(
                       flex: 15,
