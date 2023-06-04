@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:farmdee/src/module/login/widgets/label_text.dart';
+import 'package:farmdee/src/module/message/models/answer_model.dart';
 import 'package:farmdee/src/module/message/models/message_search.dart';
 import 'package:farmdee/src/module/message/models/message_model.dart';
 import 'package:farmdee/src/module/message/models/send_message_model.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:localstorage/localstorage.dart';
 
 import '../../widgets/app_input.dart';
 import 'message_service.dart';
@@ -31,6 +33,9 @@ class _MessagePageState extends State<MessagePage> {
   List<MessageModel> _posts = [];
   XFile? image;
 
+  // void _stopSocket(){
+  //   socket!.disconnect();
+  // }
   void _loadMore() async {
     if (search.page.last == false &&
         _isFirstLoadRunning == false &&
@@ -78,6 +83,8 @@ class _MessagePageState extends State<MessagePage> {
           _posts = res!.content!;
         }
       });
+      // _controller.jumpTo(_controller.position.maxScrollExtent);
+
     } catch (err,t) {
       if (kDebugMode) {
         print(t);
@@ -92,10 +99,20 @@ class _MessagePageState extends State<MessagePage> {
   late ScrollController _controller;
   @override
   void initState() {
+    print('initState');
     super.initState();
     _firstLoad();
+    _connectSocket();
     _controller = ScrollController()..addListener(_loadMore);
   }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print('dispose');
+    // _stopSocket();
+  }
+
   String message = "";
   String messageType = "Message";
   TextEditingController typeMessageController = TextEditingController();
@@ -111,6 +128,7 @@ class _MessagePageState extends State<MessagePage> {
                 scrollDirection: Axis.vertical,
                 itemCount: _posts?.length,
                 controller: _controller,
+                reverse: true,
                 itemBuilder: (_, index) {
                   MessageModel model = _posts![index];
                   return MessageCard(
@@ -144,90 +162,138 @@ class _MessagePageState extends State<MessagePage> {
                 child: CupertinoActivityIndicator(),
               ),
             ),
-          image != null
-              ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Image.file(
-                //to show image, you type like this.
-                File(image!.path),
-                fit: BoxFit.cover,
-                width: MediaQuery.of(context).size.width,
-                height: 300,
-              ),
-            ),
-          )
-              : Text(
-            "No Image",
-            style: TextStyle(fontSize: 20),
-          ),
           Padding(
             padding: const EdgeInsets.all(5.0),
             child: SizedBox(
-              child:
-                Row(
-
-                  children: [
-                    GestureDetector(
-                      onTap: () async {
-                        var img = await ImagePicker().pickImage(source: ImageSource.gallery);
-                        setState(() {
-                          image = img;
-                          if(image!=null){
-                            service.upload(image!);
-
-                          }
-                        });
-                      },
-                      child: SvgPicture.asset(
-                        'assets/icons/image.svg',
-                        height: 28,
-                        width:28,
-                        color: Colors.grey,
-
-                      ),
-                    ),
-                    SizedBox(width: 5,),
-                    Flexible(
-                      flex: 15,
-                      child: Container(
-                        child: AppInput(
-                          controller: typeMessageController,
-                          placeholder: 'พิมพ์ข้อความ',
-                          onChanged: (val) {
+                child: image==null? SizedBox(
+                    child:
+                    Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () async {
+                            var img = await ImagePicker().pickImage(source: ImageSource.gallery);
                             setState(() {
-                              message = val;
+                              image = img;
+                              // if(image!=null){
+                              //   service.upload(image!);
+                              //
+                              // }
                             });
                           },
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 5,),
-                    Flexible(
-                      flex: 1,
-                      child: GestureDetector(
-                        onTap: () async {
-                          SendMessageModel model = SendMessageModel(message: message, type: messageType, answerId: null, clientId: null, supportId: null);
-                          await service.sendMessage(model);
-                          setState(() {
-                            _posts.add(MessageModel(message: message, type: 'Message', answer: null));
-                            message = "";
-                            typeMessageController.text = '';
-                          });
-                        },
-                        child: Container(
                           child: SvgPicture.asset(
-                            'assets/icons/send.svg',
+                            'assets/icons/image.svg',
                             height: 28,
                             width:28,
+                            color: Colors.grey,
 
                           ),
                         ),
+                        SizedBox(width: 5,),
+                        Flexible(
+                          flex: 15,
+                          child: Container(
+                            child: AppInput(
+                              controller: typeMessageController,
+                              placeholder: 'พิมพ์ข้อความ',
+                              onChanged: (val) {
+                                setState(() {
+                                  message = val;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 5,),
+                        Flexible(
+                          flex: 1,
+                          child: GestureDetector(
+                            onTap: () async {
+                              SendMessageModel model = SendMessageModel(message: message, type: messageType, answerId: null, clientId: null, supportId: null);
+                              await service.sendMessage(model);
+                              setState(() {
+                                _posts.add(MessageModel(message: message, type: 'Message', answer: null));
+                                message = "";
+                                typeMessageController.text = '';
+                              });
+                            },
+                            child: Container(
+                              child: SvgPicture.asset(
+                                'assets/icons/send.svg',
+                                height: 28,
+                                width:28,
+
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 5,),
+                      ],
+                    )
+                ): SizedBox(
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          var img = await ImagePicker().pickImage(source: ImageSource.gallery);
+                          setState(() {
+                            image = img;
+
+                          });
+                        },
+                        child: SvgPicture.asset(
+                          'assets/icons/image.svg',
+                          height: 28,
+                          width:28,
+                          color: Colors.grey,
+
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 5,),
-                  ],
+                      SizedBox(width: 5,),
+                      Flexible(
+                        flex: 15,
+                        child:  Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.fromBorderSide(BorderSide(color: Colors.grey),
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(20))
+                          ),
+                          width: double.infinity,
+                          child: Image.file(
+                            //to show image, you type like this.
+                            File(image!.path),
+                            width: 100,
+                            height: 100,
+                          ),
+                        )
+                      ),
+                      SizedBox(width: 5,),
+                      Flexible(
+                        flex: 1,
+                        child: GestureDetector(
+                          onTap: () async {
+                            if(image!=null){
+                              await service.upload(image!);
+
+                            }
+                            setState(()  {
+                              image = null;
+                            });
+                          },
+                          child: Container(
+                            child: SvgPicture.asset(
+                              'assets/icons/send.svg',
+                              height: 28,
+                              width:28,
+
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 5,),
+                    ],
+                  ),
                 )
             ),
           )

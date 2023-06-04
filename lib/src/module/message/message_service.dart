@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ui';
 import 'package:localstorage/localstorage.dart';
 import 'package:path/path.dart';
 import 'package:async/async.dart';
@@ -51,13 +52,17 @@ class MessageService {
      var multipartFile = new http.MultipartFile('file', stream, length,
          filename: basename(imageFile.path));
      request.headers.addAll(header);
+
      //contentType: new MediaType('image', 'png'));
 
      request.files.add(multipartFile);
      var response = await request.send();
-     print(response.statusCode);
-     response.stream.transform(utf8.decoder).listen((value) {
-       print(value);
+     print(response);
+     response.stream.transform(utf8.decoder).listen((value) async{
+       SendMessageModel model = SendMessageModel(message: value, type: 'Image', answerId: null, supportId: null);
+       await sendMessage(model);
+
      });
+     print('complete');
    }
 }

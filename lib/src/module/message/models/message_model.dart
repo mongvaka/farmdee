@@ -14,8 +14,6 @@ class MessageModel  {
   });
 
   factory MessageModel.fromJson(dynamic json) {
-    print("json['answer']");
-    print(json['answer']);
     return MessageModel(
       message: json['message'] ,
       type: json['type'],

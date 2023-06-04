@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../shared/style.dart';
+import '../../../utils/constants.dart';
 import '../models/message_model.dart';
 
 class MessageCard extends StatefulWidget {
@@ -18,9 +19,13 @@ class MessageCard extends StatefulWidget {
 class _MessageCardState extends State<MessageCard> {
   @override
   Widget build(BuildContext context) {
-    return  widget.model.answer==null? leftMessage():rightMessage();
+
+
+    return  widget.model.answer!=null? rightMessage():leftMessage();
   }
   Widget leftMessage(){
+    // print('widget.model.answer');
+    // print(widget.model.answer);
     return  SizedBox(
       child: Row(
         children: [
@@ -36,13 +41,13 @@ class _MessageCardState extends State<MessageCard> {
                   vertical: 5, horizontal: 8),
               child: Padding(
                 padding: EdgeInsets.all(6),
-                child: AutoSizeText(
-                  textAlign: TextAlign.right,
-                  maxLines:5,
-                  minFontSize: 10,
-                  widget.model.message??'',
-                  style: ClientStyle.chatStyle,
-                ),
+                  child:widget.model.type == 'Message'? AutoSizeText(
+                    textAlign: TextAlign.left,
+                    maxLines:5,
+                    minFontSize: 10,
+                    widget.model.message??'',
+                    style: ClientStyle.chatStyle,
+                  ):Image.network('${API_URL}/${widget.model.message}')
               )
           ),
         ],
@@ -61,15 +66,16 @@ class _MessageCardState extends State<MessageCard> {
                   BorderRadius.only(topRight: Radius.circular(20),bottomLeft: Radius.circular(20),bottomRight:Radius.circular(20) )),
               margin: const EdgeInsets.symmetric(
                   vertical: 5, horizontal: 8),
-              child: Padding(
+              child:  Padding(
                 padding: EdgeInsets.all(6),
-                child: AutoSizeText(
+                child:widget.model.type == 'Message'? AutoSizeText(
                   textAlign: TextAlign.left,
                   maxLines:5,
                   minFontSize: 10,
                   widget.model.message??'',
                   style: ClientStyle.chatStyle,
-                ),
+                ):Image.network('${API_URL}/${widget.model.message}')
+                ,
               )
           ),
           Spacer(),
