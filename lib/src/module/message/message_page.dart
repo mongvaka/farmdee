@@ -5,17 +5,20 @@ import 'package:farmdee/src/module/message/models/answer_model.dart';
 import 'package:farmdee/src/module/message/models/message_search.dart';
 import 'package:farmdee/src/module/message/models/message_model.dart';
 import 'package:farmdee/src/module/message/models/send_message_model.dart';
-import 'package:farmdee/src/module/message/widegets/message_card.dart';
+import 'package:farmdee/src/sockets/sockets_cubit.dart';
+import 'package:farmdee/src/sockets/sockets_state.dart';
 import 'package:farmdee/src/widgets/scaffold/app_scaffold_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:localstorage/localstorage.dart';
 
 import '../../widgets/app_input.dart';
 import 'message_service.dart';
+import 'widgets/message_card.dart';
 
 class MessagePage extends StatefulWidget {
   const MessagePage({Key? key}) : super(key: key);
@@ -102,7 +105,7 @@ class _MessagePageState extends State<MessagePage> {
     print('initState');
     super.initState();
     _firstLoad();
-    _connectSocket();
+    // _connectSocket();
     _controller = ScrollController()..addListener(_loadMore);
   }
   @override
@@ -118,6 +121,13 @@ class _MessagePageState extends State<MessagePage> {
   TextEditingController typeMessageController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<SocketCubit>().state;
+    if (state.status ==SocketStatus.newChatMessage) {
+      setState(() {
+        _posts.add(state.chatMessage!);
+      });
+    }
+
     return AppScaffoldItem(title: 'ติดต่อสอบถาม', canBack: false,
       child: Column(
         children: [
