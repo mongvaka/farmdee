@@ -33,6 +33,7 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffoldItem(
+      tailing: SizedBox(),
       title: 'ข้อมูลผู้ใช้',
       canBack: false,
       child: Column(

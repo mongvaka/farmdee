@@ -1,4 +1,5 @@
 import 'package:farmdee/src/module/login/widgets/label_text.dart';
+import 'package:farmdee/src/module/products/models/product_detail_model.dart';
 import 'package:farmdee/src/module/products/product_detail.dart';
 import 'package:farmdee/src/module/shop/shop_search.dart';
 import 'package:farmdee/src/module/shop/shop_service.dart';
@@ -7,7 +8,10 @@ import 'package:farmdee/src/widgets/scaffold/app_scaffold_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
+import '../bucket/bucket_page.dart';
+import '../products/widgets/product_option_dialog.dart';
 import 'models/shop_model.dart';
 
 class ShopPage extends StatefulWidget {
@@ -93,6 +97,50 @@ class _ShopPageState extends State<ShopPage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffoldItem(
+      tailing: GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      BucketPage()),
+            );
+          },
+          child: Container(
+            margin: EdgeInsets.only(right: 10),
+            padding: const EdgeInsets.only(left: 5, right: 5),
+            width: 45,
+            color: const Color.fromRGBO(245, 246, 248, 0.8),
+            child: Stack(
+              children: [
+                Positioned(
+                  right: 0,
+                  child: new Container(
+                    padding: EdgeInsets.all(1),
+                    decoration: new BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    constraints: BoxConstraints(
+                      minWidth: 12,
+                      minHeight: 12,
+                    ),
+                    child: new Text(
+                      '1',
+                      style: new TextStyle(
+                        color: Colors.white,
+                        fontSize: 8,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                SvgPicture.asset(
+                  'assets/icons/shopping_cart.svg',
+                ),
+              ],
+            ),
+          )),
         title: 'สั่งซื้อสินค้า', canBack: false,
         child: Column(
           children: [
@@ -107,7 +155,8 @@ class _ShopPageState extends State<ShopPage> {
                     ShopModel model = _posts![index];
                     return ShopCard(
                         onPress: (ShopModel model) {
-
+                          print('model');
+                          print(model.id);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -116,8 +165,9 @@ class _ShopPageState extends State<ShopPage> {
                           );
                         },
                         onPressBuy: (ShopModel model) {
-                          print('buypress');
-                          service.addProductToOrder(model.id);
+                          showModal(context,'เพิ่มลงตะกร้า',model,false);
+                          // print('buypress');
+                          // service.addProductToOrder(model.id,mo);
                         },
                         model:model
 
@@ -135,5 +185,35 @@ class _ShopPageState extends State<ShopPage> {
           ],
         ),
     );
+  }
+  void showModal(context, String text,ShopModel model,bool gotoBucket) {
+    ProductDetailModel productDetailModel = new ProductDetailModel(
+        id: model.id,
+        name: model.name,
+        code: model.code,
+        detail: model.detail,
+        comments: [],
+        images: model.images,
+        rating: model.rating,
+        sold: 0,
+        options: model.options,
+    );
+    showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(20),
+          ),
+        ),
+        context: context,
+        builder: (context) {
+          return ProductOptionDialog(model: productDetailModel, title: text);
+        }).whenComplete(() {
+      if(gotoBucket){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BucketPage()),
+        );
+      }
+    });
   }
 }

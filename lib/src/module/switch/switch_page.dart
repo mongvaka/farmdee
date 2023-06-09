@@ -8,6 +8,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 import '../../widgets/app_input.dart';
+import '../../widgets/scaffold/widgets/app_top_save_button.dart';
 import '../home/home_model.dart';
 import '../login/widgets/label_text.dart';
 
@@ -47,16 +48,21 @@ class _SwitchPageState extends State<SwitchPage> {
   }
   @override
   Widget build(BuildContext context) {
-    return AppScaffoldItem(title: 'รายละเอียด', canBack: true,
-      onPressSubmit: () async{
-      bool result = await service.createSchedule(model);
-      print(result);
-      if(result){
-        Navigator.pop(
-          context,
-        );
-      }
-      },
+    return AppScaffoldItem(
+      tailing: AppTopSaveButton(
+        text:'บันทึก',
+        onPressed: () async {
+          bool result = await service.createSchedule(model);
+          print(result);
+          if(result){
+            Navigator.pop(
+              context,
+            );
+          }
+        },
+      ),
+      title: 'รายละเอียด', canBack: true,
+
 
       child: SingleChildScrollView(
         child: Padding(

@@ -102,7 +102,9 @@ class _SearchHardwarePageState extends State<SearchHardwarePage> {
   bool loaded = false ;
   @override
   Widget build(BuildContext context) {
-    return AppScaffoldItem( title: 'ค้นหาอุปกรณ์', canBack: true,
+    return AppScaffoldItem(
+      tailing: SizedBox(),
+      title: 'ค้นหาอุปกรณ์', canBack: true,
       child: Column(
         children: [
           Expanded(

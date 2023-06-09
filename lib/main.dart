@@ -9,17 +9,17 @@ import 'src/module/switch/switch_page.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 void main() {
-    IO.Socket socket;
-
-    socket = IO.io("http://192.168.1.45:3033", <String, dynamic>{
-      "transports": ["websocket"],
-    });
-    socket!.onConnect((_) {
-      print('connect');
-    });
-    final LocalStorage storage = LocalStorage('auth');
-    int? ownerId =  storage.getItem('id');
-    socket!.on('message$ownerId', (data) {
+    // IO.Socket socket;
+    //
+    // socket = IO.io("http://192.168.1.45:3033", <String, dynamic>{
+    //   "transports": ["websocket"],
+    // });
+    // socket!.onConnect((_) {
+    //   print('connect');
+    // });
+    // final LocalStorage storage = LocalStorage('auth');
+    // int? ownerId =  storage.getItem('id');
+    // socket!.on('message$ownerId', (data) {
       // print("data['answer']");
       // print(data['answer']);
       // MessageModel newMessage = MessageModel(message: data['message'],
@@ -41,9 +41,9 @@ void main() {
 
       // _controller.jumpTo(0.0);
 
-      print(data);
-    });
-    socket!.connect();
+    //   print(data);
+    // });
+    // socket!.connect();
 
   runApp(MaterialApp(
       builder: (context, child) {

@@ -107,6 +107,7 @@ class _MessagePageState extends State<MessagePage> {
     _firstLoad();
     // _connectSocket();
     _controller = ScrollController()..addListener(_loadMore);
+
   }
   @override
   void dispose() {
@@ -123,12 +124,16 @@ class _MessagePageState extends State<MessagePage> {
   Widget build(BuildContext context) {
     final state = context.watch<SocketCubit>().state;
     if (state.status ==SocketStatus.newChatMessage) {
-      setState(() {
-        _posts.add(state.chatMessage!);
-      });
+      _posts.insert(0,state.chatMessage!);
+      state.status = SocketStatus.none;
+      // setState(() {
+      //   // _posts.insert(0,state.chatMessage!);
+      // });
     }
 
-    return AppScaffoldItem(title: 'ติดต่อสอบถาม', canBack: false,
+    return AppScaffoldItem(
+      tailing: SizedBox(),
+      title: 'ติดต่อสอบถาม', canBack: false,
       child: Column(
         children: [
           Expanded(
@@ -206,9 +211,10 @@ class _MessagePageState extends State<MessagePage> {
                               controller: typeMessageController,
                               placeholder: 'พิมพ์ข้อความ',
                               onChanged: (val) {
-                                setState(() {
-                                  message = val;
-                                });
+                                message = val;
+                                // setState(() {
+                                //   message = val;
+                                // });
                               },
                             ),
                           ),

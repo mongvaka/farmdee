@@ -10,8 +10,9 @@ import '../module/message/models/message_model.dart';
 class SocketCubit extends Cubit<SocketState> {
   IO.Socket? socket;
   SocketCubit()
-      : super(const SocketState.nothing()){
-    socket = IO.io("http://192.168.1.45:3033", <String, dynamic>{
+      : super(SocketState.nothing()){
+    print('socket colled');
+    socket = IO.io("http://192.168.1.38:3033", <String, dynamic>{
       "transports": ["websocket"],});
     socket!.onConnect((_) {
       print('connect');
@@ -44,5 +45,11 @@ class SocketCubit extends Cubit<SocketState> {
       print(data);
     });
     socket!.connect();
+  }
+  @override
+  void onError(Object error, StackTrace stackTrace) {
+    // TODO: implement onError
+    print('stackTraceError');
+    super.onError(error, stackTrace);
   }
 }

@@ -5,9 +5,7 @@ import 'package:farmdee/src/widgets/scaffold/widgets/app_positive_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:flutter_switch/flutter_switch.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 
 import '../../../shared/style.dart';
 import '../../../utils/constants.dart';
@@ -54,7 +52,7 @@ class _ShopCardState extends State<ShopCard> {
                 flex: 3,
                 child: Container(
                     height: 100,
-                    child: Image.network('https://picsum.photos/250?image=9')),
+                    child: Image.network('$API_URL/images/product/${widget.model.images[0]?.url}')),
               ),
               SizedBox(
                 width: 5,
@@ -62,28 +60,34 @@ class _ShopCardState extends State<ShopCard> {
               Expanded(
                 flex: 7,
                 child: Container(
-                  height: 100,
+                  height: 110,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Row(
                         children: [
-                          AutoSizeText(
-                            textAlign: TextAlign.left,
-                            maxLines: 2,
-                            minFontSize: 10,
-                            widget.model.name,
-                            style: ClientStyle.headerProductStyle,
+                          Container(
+                            width:MediaQuery.of(context).size.width/1.75,
+                            child: AutoSizeText(
+                              textAlign: TextAlign.left,
+                              maxLines: 2,
+                              minFontSize: 10,
+                              widget.model.name,
+                              style: ClientStyle.headerProductStyle,
+                            ),
                           ),
                         ],
                       ),
                       Row(
                         children: [
-                          AutoSizeText(
-                            maxLines: 2,
-                            minFontSize: 10,
-                            widget.model.detail,
-                            style: ClientStyle.detailProductStyle,
+                          Container(
+                            width:MediaQuery.of(context).size.width/1.75,
+                            child: AutoSizeText(
+                              maxLines: 2,
+                              minFontSize: 10,
+                              widget.model.detail,
+                              style: ClientStyle.detailProductStyle,
+                            ),
                           ),
                         ],
                       ),
@@ -127,13 +131,13 @@ class _ShopCardState extends State<ShopCard> {
                                 ),
                                 Row(
                                   children: [
-                                    Text('ราคา 100 บาท'),
+                                    Text('ราคา ${widget.model.minPrice} - ${widget.model.maxPrice} บาท'),
                                   ],
                                 ),
                               ],
                             ),
                             Spacer(),
-                            AppPositiveButton(text: 'สั่งซื้อ',onPressed: (){
+                            AppPositiveButton(text: 'ใส่ตะกร้า',onPressed: (){
                               print('prrrrr');
                               widget.onPressBuy(widget.model);
                             },)

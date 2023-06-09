@@ -19,8 +19,8 @@ class ShopService {
     return BasicResponse.fromJson(
         jsonDecode(utf8.decode(res!.bodyBytes)), ShopModel.fromJson);
   }
-  Future<BasicResponse<ShopModel>> addProductToOrder(int productId) async {
-    String url = '/product/create-order';
+  Future<BasicResponse<ShopModel>> addProductToOrder(int productId,int optionId) async {
+    String url = '/product/add-product-to-bucket';
     final LocalStorage storage = LocalStorage('auth');
     int? buyerId =  storage.getItem('id');
     print("buyerId");
@@ -29,7 +29,8 @@ class ShopService {
       "productId":productId,
       "sellerId":null,
       "buyerId":buyerId,
-      "value":1
+      "value":1,
+      "optionId":optionId
     }, url);
     if (res?.body == null) {
       return BasicResponse();

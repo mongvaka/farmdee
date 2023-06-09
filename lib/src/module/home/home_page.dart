@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../utils/constants.dart';
 import '../../widgets/scaffold/app_scaffold_item.dart';
 import '../../widgets/scaffold/app_scaffold_list.dart';
+import '../../widgets/scaffold/widgets/app_top_save_button.dart';
 import '../login/widgets/label_text.dart';
 import '../search_hardware/search_hardware_page.dart';
 import 'home_model.dart';
@@ -98,19 +99,21 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return AppScaffoldItem(
+      tailing: AppTopSaveButton(
+        text:'ค้นหา',
+        onPressed: () async {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                const SearchHardwarePage()),
+          ).then((value){
+            _firstLoad();
+            _controller = ScrollController()..addListener(_loadMore);
+          });
+        },
+      ),
       canBack: false,
-      submitText: 'ค้นหา',
-      onPressSubmit: (){
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  const SearchHardwarePage()),
-        ).then((value){
-          _firstLoad();
-          _controller = ScrollController()..addListener(_loadMore);
-        });
-      },
       title: 'รายการทั้งหมด',
       child: Column(
         children: [
