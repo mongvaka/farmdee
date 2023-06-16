@@ -60,7 +60,7 @@ class _ShopCardState extends State<ShopCard> {
               Expanded(
                 flex: 7,
                 child: Container(
-                  height: 110,
+                  height: 120,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

@@ -3,6 +3,7 @@ import 'package:farmdee/src/module/bucket/model/bucket_model.dart';
 import 'package:farmdee/src/module/bucket/widget/bucket_card.dart';
 import 'package:farmdee/src/module/products/models/product_detail_model.dart';
 import 'package:farmdee/src/module/products/models/product_option.dart';
+import 'package:farmdee/src/module/verify_mobile/verify_mobile.dart';
 import 'package:farmdee/src/widgets/scaffold/app_scaffold_item.dart';
 import 'package:farmdee/src/widgets/text/caption_text.dart';
 import 'package:farmdee/src/widgets/text/title_text.dart';
@@ -224,7 +225,18 @@ class _BucketPageState extends State<BucketPage> {
                             }
 
                           });
-                          bool created = await service.createOrder(orders);
+                          bool mobileIsExist  = await service.verifyMobile();
+                          if(!mobileIsExist){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      VerifyMobile()),
+                            );
+                          }else{
+                            // bool created = await service.createOrder(orders);
+                          }
+
                         },
                         child: Container(
                           padding: EdgeInsets.only(top: 10,bottom: 10),

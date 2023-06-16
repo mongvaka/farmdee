@@ -85,6 +85,7 @@ class _OrderTabState extends State<OrderTab> {
   @override
   void initState() {
     super.initState();
+    search.status = widget.status;
     _firstLoad();
     _controller = ScrollController()..addListener(_loadMore);
   }

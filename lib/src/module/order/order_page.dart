@@ -6,8 +6,9 @@ import 'package:flutter_svg/svg.dart';
 import 'widgets/order_tab.dart';
 
 class OrderPage extends StatefulWidget {
+  final int initialIndex;
   final String status;
-  const OrderPage({Key? key, required this.status}) : super(key: key);
+  const OrderPage({Key? key, required this.status, required this.initialIndex}) : super(key: key);
 
   @override
   State<OrderPage> createState() => _OrderPageState();
@@ -21,7 +22,7 @@ class _OrderPageState extends State<OrderPage> {
       canBack: true,
       tailing: SizedBox(),
     child: DefaultTabController(
-      initialIndex: 2,
+      initialIndex: widget.initialIndex,
       length: 4,
       child: Column(
         children: [
@@ -74,10 +75,10 @@ class _OrderPageState extends State<OrderPage> {
             child: Material(
               child: TabBarView( // ส่วนของเนื้อหา tab
                     children: [
-                      OrderTab(status: 'User confirm',),
-                      Center(child: Text('Tab 2222')),
-                      Center(child: Text('Tab 3333')),
-                      Center(child: Text('Tab 4444')),
+                      OrderTab(status: 'BuyerConfirm',),
+                      OrderTab(status: 'Completed',),
+                      OrderTab(status: 'Canceled',),
+                      OrderTab(status: 'Delivered',),
                     ],
                   ),
             ),

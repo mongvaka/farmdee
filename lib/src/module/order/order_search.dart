@@ -5,10 +5,12 @@ import '../../shared/basic_search.dart';
 
 class OrderSearch extends BasicSearch {
   late String name;
+  late String status;
   OrderSearch() {
     page.orderBy = 'ASC';
     page.sortBy = 'productName';
     name = '';
+    status = '';
   }
   @override
   fromResponse(BasicResponse response) {
@@ -20,19 +22,10 @@ class OrderSearch extends BasicSearch {
 
   @override
   Map<String, dynamic> toJson() {
-    if (name == '') {
-      return {
-        "name": '',
-        "page": {
-          "offset": page.offset,
-          "limit": page.limit,
-          "sortBy": page.sortBy,
-          "orderBy": page.orderBy
-        }
-      };
-    } else {
+
       return {
         "name": name,
+        "status":status,
         "page": {
           "offset": page.offset,
           "limit": page.limit,
@@ -40,7 +33,7 @@ class OrderSearch extends BasicSearch {
           "orderBy": page.orderBy
         }
       };
-    }
+
   }
 
   clearPaginate() {

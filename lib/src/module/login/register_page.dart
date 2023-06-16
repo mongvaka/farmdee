@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:farmdee/src/module/login/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,8 +24,11 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controllerUserName =
   TextEditingController(text: '');
+  final TextEditingController _controllerMobile =
+  TextEditingController(text: '');
   final RegisterModel _registerModel = RegisterModel.fromJson({'email': '', 'password': '', 'rePassword': ''});
   String _errorPwd = '';
+  String _errorMobile= '';
   String _errorUsername = '';
   RegisterService service = RegisterService();
 
@@ -56,6 +60,20 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(
                       height: 40.0,
                     ),
+                    Row(
+                      children: [
+                        Spacer(),
+                        Image.asset(
+                          'assets/icons/logo.png',
+                          width: 100,
+                          height: 100,
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20.0,
+                    ),
                     Form(
                         key: _formKey,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -81,6 +99,25 @@ class _RegisterPageState extends State<RegisterPage> {
                             const SizedBox(
                               height: 10.0,
                             ),
+                            // const LabelText(
+                            //   text: 'เบอร์โทรศัพท์',
+                            // ),
+                            // AppInputEmail(
+                            //   controller: _controllerMobile,
+                            //   placeholder: 'เบอร์โทรศัพท์',
+                            //   errorMessage: _errorMobile,
+                            //   onChanged: (val) {
+                            //     setState(() {
+                            //       _registerModel.mobile = val;
+                            //       if (val != '' && _errorMobile != '') {
+                            //         _errorMobile = "";
+                            //       }
+                            //     });
+                            //   },
+                            // ),
+                            // const SizedBox(
+                            //   height: 10.0,
+                            // ),
                             const LabelText(
                               text: 'รหัสผ่าน',
                             ),
@@ -134,6 +171,24 @@ class _RegisterPageState extends State<RegisterPage> {
                                          builder: (context) =>
                                          const MainPage()),
                                    );
+                                 }else{
+                                   final snackBar = SnackBar(
+                                     elevation: 0,
+                                     behavior: SnackBarBehavior.floating,
+                                     backgroundColor: Colors.transparent,
+                                     content: AwesomeSnackbarContent(
+                                       title: 'ข้อมูลไม่ถูกต้อง!',
+                                       titleFontSize: 16,
+                                       messageFontSize: 14,
+                                       message:
+                                       'โปรดระบุข้อมูลผู้ใช้ให้ถูกต้อง',
+                                       contentType: ContentType.failure,
+                                     ),
+                                   );
+
+                                   ScaffoldMessenger.of(context)
+                                     ..hideCurrentSnackBar()
+                                     ..showSnackBar(snackBar);
                                  }
 
                                 },

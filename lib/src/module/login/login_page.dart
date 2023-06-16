@@ -1,10 +1,9 @@
-import 'package:email_validator/email_validator.dart';
-import 'package:farmdee/src/module/home/home_page.dart';
-import 'package:farmdee/src/module/login/auth_respones_model.dart';
+
 import 'package:farmdee/src/module/login/login_service.dart';
 import 'package:farmdee/src/module/login/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 import '../../widgets/app_button.dart';
 import '../../widgets/app_input.dart';
@@ -31,9 +30,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: true,
-      child: SafeArea(
+      body: SafeArea(
         bottom: false,
         top: false,
         child: Container(
@@ -57,6 +56,20 @@ class _LoginPageState extends State<LoginPage> {
                     // ),
                     const SizedBox(
                       height: 40.0,
+                    ),
+                    Row(
+                      children: [
+                        Spacer(),
+                        Image.asset(
+                          'assets/icons/logo.png',
+                          width: 100,
+                          height: 100,
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20.0,
                     ),
                     Form(
                         key: _formKey,
@@ -114,8 +127,8 @@ class _LoginPageState extends State<LoginPage> {
                                   //       const MainPage()),
                                   // );
                                  service.login(_loginModel).then((value)  {
-                                   print('loginComplete');
-                                 if(value.token != ''){
+                                   print('loginComplete : ${value.token}');
+                                 if(value.token != null){
                                    // Navigator.pushAndRemoveUntil(
                                    //     context,
                                    //     MaterialPageRoute(
@@ -129,7 +142,25 @@ class _LoginPageState extends State<LoginPage> {
                                        builder: (context) =>
                                        const MainPage()),
                                  );
-                                }
+                                }else{
+                                   final snackBar = SnackBar(
+                                     elevation: 0,
+                                     behavior: SnackBarBehavior.floating,
+                                     backgroundColor: Colors.transparent,
+                                     content: AwesomeSnackbarContent(
+                                       title: 'ข้อมูลไม่ถูกต้อง!',
+                                       titleFontSize: 16,
+                                       messageFontSize: 14,
+                                       message:
+                                       'โปรดระบุข้อมูลผู้ใช้ให้ถูกต้อง',
+                                       contentType: ContentType.failure,
+                                     ),
+                                   );
+
+                                   ScaffoldMessenger.of(context)
+                                     ..hideCurrentSnackBar()
+                                     ..showSnackBar(snackBar);
+                                 }
                                  });
 
 
@@ -150,7 +181,36 @@ class _LoginPageState extends State<LoginPage> {
                                 },
                                 child: Center(child: LabelText( text:'สมัครสมาชิก',)))
                           ],
-                        ))
+                        )),
+                    // const SizedBox(
+                    //   height: 20.0,
+                    // ),
+                    const SizedBox(
+                      height: 10.0,
+                    ),
+                    // CaptionText(text: 'หรือ',fontSize: 10,textColor: Colors.black,),
+                    // const SizedBox(
+                    //   height: 10.0,
+                    // ),
+                    // Column(
+                    //   children: [
+                    //     SocialLoginButton(
+                    //       height: 50,
+                    //       buttonType: SocialLoginButtonType.facebook,
+                    //       onPressed: () {},
+                    //       borderRadius: 30,
+                    //       text: 'ลงทะเบียนด้วย Facebook',
+                    //     ),
+                    //     SizedBox(height: 10,),
+                    //     SocialLoginButton(
+                    //       height: 50,
+                    //       text: 'ลงทะเบียนด้วย Google',
+                    //       borderRadius: 30,
+                    //       buttonType: SocialLoginButtonType.google,
+                    //       onPressed: () {},
+                    //     ),
+                    //   ],
+                    // )
                   ],
                 ),
               ),

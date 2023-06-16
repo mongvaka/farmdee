@@ -36,4 +36,12 @@ class BucketService {
     print(res?.body);
     return res?.body != null;
   }
+  Future<bool> verifyMobile()async{
+    String url = '/users/verify-mobile';
+    final LocalStorage storage = LocalStorage('auth');
+    int? userId = storage.getItem('id');
+    Response? res = await baseService.post({"userId":userId}, url);
+    print(res?.body);
+    return res?.body =='true';
+  }
 }
