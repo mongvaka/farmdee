@@ -22,5 +22,18 @@ class BucketService {
     return BasicResponse.fromJson(
         jsonDecode(utf8.decode(res!.bodyBytes)), BucketModel.fromJson);
   }
-
+  Future<bool> removeProductInBucket(int id) async{
+    String url = '/product/delete-product-in-bucket';
+    Response? res = await baseService.post({'id':id}, url);
+    print(res?.body);
+    return res?.body != null;
+  }
+  Future<bool> createOrder(List<Map<String,dynamic>> orders) async{
+    String url = '/product/create-order';
+    final LocalStorage storage = LocalStorage('auth');
+    int? buyerId = storage.getItem('id');
+    Response? res = await baseService.post({"ordersDetail":orders,"buyerId":buyerId}, url);
+    print(res?.body);
+    return res?.body != null;
+  }
 }

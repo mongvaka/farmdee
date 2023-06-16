@@ -24,6 +24,7 @@ class AppScaffoldItem extends StatelessWidget {
     return CupertinoPageScaffold(
         backgroundColor: BACKGROUND_COLOR,
         navigationBar: CupertinoNavigationBar(
+
           padding: EdgeInsetsDirectional.zero,
           leading: canBack
               ? GestureDetector(

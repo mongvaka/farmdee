@@ -28,4 +28,26 @@ class BasicService {
       return Future(() => null);
     }
   }
+  Future<Response?> get(String urlStr) async {
+    final LocalStorage storage = new LocalStorage('auth');
+    String url = '$API_URL$urlStr';
+    String? token =  storage.getItem('token');
+    Map<String,String> header = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    try {
+      Response res = await http.get(
+        Uri.parse(url),
+        headers: header,
+      );
+      print(res.body);
+      return res;
+
+    } catch (e) {
+      print(e);
+      return Future(() => null);
+    }
+  }
 }

@@ -7,7 +7,8 @@ import '../../utils/constants.dart';
 class TitleText extends StatelessWidget {
   final  String text;
   final Color color;
-  const TitleText({Key? key, required this.text,this.color = TEXT_COLOR,}) : super(key: key);
+  double fontSize;
+   TitleText({Key? key, required this.text,this.color = TEXT_COLOR,this.fontSize = 18}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class TitleText extends StatelessWidget {
       maxLines: 2,
       minFontSize: 10,
       text,
-      style: ClientStyle.titleProductStyle(color),
+      style: ClientStyle.customTextStyle(color,fontSize,FontWeight.w500),
     );
     return Text(text,
       style: const TextStyle(

@@ -206,14 +206,14 @@ class _ShopPageState extends State<ShopPage> {
         ),
         context: context,
         builder: (context) {
-          return ProductOptionDialog(model: productDetailModel, title: text);
+          return ProductOptionDialog(model: productDetailModel, title: text,returnValue: false,option: model.options[0]);
         }).whenComplete(() {
-      if(gotoBucket){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BucketPage()),
-        );
-      }
+      // if(gotoBucket){
+      //   Navigator.push(
+      //     context,
+      //     MaterialPageRoute(builder: (context) => BucketPage()),
+      //   );
+      // }
     });
   }
 }

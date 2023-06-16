@@ -14,9 +14,11 @@ class ProductOptionDialog extends StatefulWidget {
   ProductOptionModel option =  ProductOptionModel(id: 0,name: '',price: 1);
   double price = 0;
   final String title;
-  ProductOptionDialog({Key? key, required this.model, required this.title}) : super(key: key){
-    price = model.options[0].price;
-    option = model.options[0];
+  final bool returnValue;
+  final bool activate;
+  int bucketId;
+  ProductOptionDialog({Key? key, required this.model, required this.title, required this.returnValue,required this.option ,this.amount = 1,  this.activate = false,this.bucketId = 0}) : super(key: key){
+    price = option.price* amount;
   }
 
   @override
@@ -109,10 +111,23 @@ class _ProductOptionDialogState extends State<ProductOptionDialog> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    bool created = await service.addProductToOrder(widget.model.id,widget.amount,widget.option.id!);
-                    Navigator.pop(
-                      context,
-                    );
+                    if(widget.returnValue){
+                      Navigator.pop(
+                        context,
+                        {
+                          "productId":widget.model.id,
+                          "optionId":widget.option.id,
+                          "value":widget.amount,
+                          "bucketId":widget.bucketId
+                        }
+                      );
+                    }else{
+                      bool created = await service.addProductToOrder(widget.model.id,widget.amount,widget.option.id!,widget.activate);
+                      Navigator.pop(
+                        context,true
+                      );
+                    }
+
                   },
                   child: Container(
                     color: Colors.blue,

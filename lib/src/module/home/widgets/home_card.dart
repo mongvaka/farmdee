@@ -67,7 +67,7 @@ class _HomeCardState extends State<HomeCard> {
                       maxLines:2,
                       minFontSize: 10,
                       widget.model.name,
-                      style: ClientStyle.headerClientStyle,
+                      style: ClientStyle.customTextStyle(TEXT_COLOR,18,FontWeight.w500),
                     ),
                   ),
                 ],
@@ -95,7 +95,7 @@ class _HomeCardState extends State<HomeCard> {
                   ),
                   Text(
                     widget.model.status==1? 'สถานะ เปิด':'สถานะ ปิด',
-                    style: ClientStyle.bodyClientStyle,
+                    style: ClientStyle.customTextStyle(TEXT_COLOR,14,FontWeight.w300),
                     // style: TextStyle(
                     //     color: Colors.grey,
                     //     fontSize: 16,

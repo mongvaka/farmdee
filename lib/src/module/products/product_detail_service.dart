@@ -16,7 +16,7 @@ class ProductDetailService {
     }
     return ProductDetailModel.fromJson(jsonDecode(utf8.decode(res!.bodyBytes)));
   }
-  Future<bool> addProductToOrder(int productId,int value,int optionId) async {
+  Future<bool> addProductToOrder(int productId,int value,int optionId,bool activate) async {
     String url = '/product/add-product-to-bucket';
     final LocalStorage storage = LocalStorage('auth');
     int? buyerId = storage.getItem('id');
@@ -25,7 +25,9 @@ class ProductDetailService {
         "buyerId":buyerId,
           "sellerId":null,
         "value":value,
-        "optionId":optionId},
+        "optionId":optionId,
+          "activate":activate
+        },
         url);
     if (res?.body == null) {
       return false;

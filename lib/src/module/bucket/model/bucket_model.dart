@@ -7,6 +7,7 @@ class BucketModel  {
   int value;
   int optionId;
   int productId;
+  bool activate;
   ProductDetailModel product;
 
   BucketModel({
@@ -15,7 +16,8 @@ class BucketModel  {
     required this.buyerId,
     required this.optionId,
     required this.product,
-    required this.productId
+    required this.productId,
+    required this.activate,
   });
 
   factory BucketModel.fromJson(dynamic json) {
@@ -26,6 +28,7 @@ class BucketModel  {
       optionId:  int.parse(json['optionId']),
       productId:  int.parse(json['productId']),
       product: ProductDetailModel.fromJson(json['product']),
+      activate: json['activate']
     );
   }
 }

@@ -5,8 +5,17 @@ import '../../shared/style.dart';
 import '../../utils/constants.dart';
 
 class CaptionText extends StatelessWidget {
-  final  String text;
-  const CaptionText({Key? key, required this.text}) : super(key: key);
+  final String text;
+  Color textColor;
+  double fontSize;
+  FontWeight fontWeight;
+  CaptionText(
+      {Key? key,
+      required this.text,
+      this.textColor = BODY_TEXT_COLOR,
+      this.fontSize = 12,
+      this.fontWeight = FontWeight.w300})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,15 +23,8 @@ class CaptionText extends StatelessWidget {
       maxLines: 2,
       minFontSize: 10,
       text,
-      style: ClientStyle.captionProductStyle,
+      style: ClientStyle.customTextStyle(textColor, fontSize, fontWeight),
     );
-    return Text(text,
-      style: const TextStyle(
-          color: BODY_TEXT_COLOR,
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
-          decoration: TextDecoration.none,
-          overflow: TextOverflow.clip),
-    );
+
   }
 }

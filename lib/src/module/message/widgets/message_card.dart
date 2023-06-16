@@ -10,7 +10,12 @@ class MessageCard extends StatefulWidget {
   final Function(MessageModel) onPress;
   final Function(MessageModel) onPressSwitch;
   final MessageModel model;
-  const MessageCard({Key? key, required this.onPress, required this.onPressSwitch,  required this.model}) : super(key: key);
+  const MessageCard(
+      {Key? key,
+      required this.onPress,
+      required this.onPressSwitch,
+      required this.model})
+      : super(key: key);
 
   @override
   State<MessageCard> createState() => _MessageCardState();
@@ -19,65 +24,68 @@ class MessageCard extends StatefulWidget {
 class _MessageCardState extends State<MessageCard> {
   @override
   Widget build(BuildContext context) {
-
-
-    return  widget.model.answer!=null? rightMessage():leftMessage();
+    return widget.model.answer != null ? rightMessage() : leftMessage();
   }
-  Widget leftMessage(){
+
+  Widget leftMessage() {
     // print('widget.model.answer');
     // print(widget.model.answer);
-    return  SizedBox(
+    return SizedBox(
       child: Row(
         children: [
           Spacer(),
           Container(
-            constraints: BoxConstraints(maxWidth: 270),
+              constraints: BoxConstraints(maxWidth: 270),
               decoration: BoxDecoration(
-
                   color: Colors.blue.shade50,
-                  borderRadius:
-                  BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20),bottomLeft:Radius.circular(20) )),
-              margin: const EdgeInsets.symmetric(
-                  vertical: 5, horizontal: 8),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20),
+                      topLeft: Radius.circular(20),
+                      bottomLeft: Radius.circular(20))),
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
               child: Padding(
-                padding: EdgeInsets.all(6),
-                  child:widget.model.type == 'Message'? AutoSizeText(
-                    textAlign: TextAlign.left,
-                    maxLines:5,
-                    minFontSize: 10,
-                    widget.model.message??'',
-                    style: ClientStyle.chatStyle,
-                  ):Image.network('${API_URL}/${widget.model.message}')
-              )
-          ),
+                  padding: EdgeInsets.all(6),
+                  child: widget.model.type == 'Message'
+                      ? AutoSizeText(
+                          textAlign: TextAlign.left,
+                          maxLines: 5,
+                          minFontSize: 10,
+                          widget.model.message ?? '',
+                          style: ClientStyle.customTextStyle(
+                              TEXT_COLOR, 16, FontWeight.w300),
+                        )
+                      : Image.network('${API_URL}/${widget.model.message}'))),
         ],
       ),
     );
   }
-  Widget rightMessage(){
-    return  SizedBox(
+
+  Widget rightMessage() {
+    return SizedBox(
       child: Row(
         children: [
           Container(
               constraints: BoxConstraints(maxWidth: 270),
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius:
-                  BorderRadius.only(topRight: Radius.circular(20),bottomLeft: Radius.circular(20),bottomRight:Radius.circular(20) )),
-              margin: const EdgeInsets.symmetric(
-                  vertical: 5, horizontal: 8),
-              child:  Padding(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20))),
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+              child: Padding(
                 padding: EdgeInsets.all(6),
-                child:widget.model.type == 'Message'? AutoSizeText(
-                  textAlign: TextAlign.left,
-                  maxLines:5,
-                  minFontSize: 10,
-                  widget.model.message??'',
-                  style: ClientStyle.chatStyle,
-                ):Image.network('${API_URL}/${widget.model.message}')
-                ,
-              )
-          ),
+                child: widget.model.type == 'Message'
+                    ? AutoSizeText(
+                        textAlign: TextAlign.left,
+                        maxLines: 5,
+                        minFontSize: 10,
+                        widget.model.message ?? '',
+                        style: ClientStyle.customTextStyle(
+                            TEXT_COLOR, 16, FontWeight.w300),
+                      )
+                    : Image.network('${API_URL}/${widget.model.message}'),
+              )),
           Spacer(),
         ],
       ),

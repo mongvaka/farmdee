@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 import '../../../shared/style.dart';
+import '../../../utils/constants.dart';
 import '../../../widgets/scaffold/widgets/app_top_save_button.dart';
 
 class SearchHardwareCard extends StatefulWidget {
@@ -63,7 +64,7 @@ class _SearchHardwareCardState extends State<SearchHardwareCard> {
                       maxLines:2,
                       minFontSize: 10,
                       'อุปกรณ์ไอดี : ${widget.model.key}',
-                      style: ClientStyle.headerClientStyle,
+                      style: ClientStyle.customTextStyle(TEXT_COLOR,18,FontWeight.w500),
                     ),
                   ),
                 ],
@@ -90,7 +91,7 @@ class _SearchHardwareCardState extends State<SearchHardwareCard> {
                   ),
                   Text(
                     widget.model.ownerId==0? 'ยังไม่ลงทะเบียน': '${widget.model.owner?.email}',
-                    style: ClientStyle.bodyClientStyle,
+                    style: ClientStyle.customTextStyle(TEXT_COLOR,16,FontWeight.w500),
                   ),
                   const Spacer(),
                   AppTopSaveButton(text: widget.model.ownerId==0?'ลงทะเบียน':'ลงทะเบียนใหม่',onPressed: (){

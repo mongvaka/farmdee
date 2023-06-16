@@ -225,7 +225,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     flex: 1,
                     child: GestureDetector(
                       onTap: () {
-                        showModal(context, 'เพิ่มลงรถเข็น',model!,false);
+                        showModal(context, 'เพิ่มลงรถเข็น',model!,false,false);
                       },
                       child: Container(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -253,7 +253,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     flex: 1,
                     child: GestureDetector(
                       onTap: () {
-                        showModal(context, 'เพิ่มลงรถเข็น',model!,true);
+                        showModal(context, 'สั่งซื่อ',model!,true,true);
 
                       },
                       child: Container(
@@ -325,7 +325,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     return optionWidgets;
   }
 
-  void showModal(context, String text,ProductDetailModel model,bool gotoBucket) {
+  void showModal(context, String text,ProductDetailModel model,bool gotoBucket,bool activate) {
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
@@ -334,14 +334,17 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ),
         context: context,
         builder: (context) {
-          return ProductOptionDialog(model: model, title: text);
+          return ProductOptionDialog(model: model, title: text,returnValue: false,option: model.options[0],activate: activate,);
         }).whenComplete(() {
-          if(gotoBucket){
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => BucketPage()),
-            );
-          }
+
+    }).then((value){
+      if(gotoBucket&&value!=null){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BucketPage()),
+        );
+      }
+
     });
   }
 }
