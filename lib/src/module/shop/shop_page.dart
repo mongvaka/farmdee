@@ -12,6 +12,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../bucket/bucket_page.dart';
 import '../products/widgets/product_option_dialog.dart';
+import '../verify_mobile/get_otp_page.dart';
 import 'models/shop_model.dart';
 
 class ShopPage extends StatefulWidget {
@@ -85,15 +86,22 @@ class _ShopPageState extends State<ShopPage> {
       _isFirstLoadRunning = false;
     });
   }
-
+  void _getCountBucket(){
+    service.countBucket().then((value) {
+      setState(() {
+        countBucket = value;
+      });
+    });
+  }
   late ScrollController _controller;
   @override
   void initState() {
     super.initState();
     _firstLoad();
+    _getCountBucket();
     _controller = ScrollController()..addListener(_loadMore);
   }
-
+  int? countBucket = 0;
   @override
   Widget build(BuildContext context) {
     return AppScaffoldItem(
@@ -115,7 +123,7 @@ class _ShopPageState extends State<ShopPage> {
               children: [
                 Positioned(
                   right: 0,
-                  child: new Container(
+                  child:countBucket==0? SizedBox() : new Container(
                     padding: EdgeInsets.all(1),
                     decoration: new BoxDecoration(
                       color: Colors.red,
@@ -126,7 +134,7 @@ class _ShopPageState extends State<ShopPage> {
                       minHeight: 12,
                     ),
                     child: new Text(
-                      '1',
+                      '$countBucket',
                       style: new TextStyle(
                         color: Colors.white,
                         fontSize: 8,
@@ -155,8 +163,6 @@ class _ShopPageState extends State<ShopPage> {
                     ShopModel model = _posts![index];
                     return ShopCard(
                         onPress: (ShopModel model) {
-                          print('model');
-                          print(model.id);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -166,11 +172,8 @@ class _ShopPageState extends State<ShopPage> {
                         },
                         onPressBuy: (ShopModel model) {
                           showModal(context,'เพิ่มลงตะกร้า',model,false);
-                          // print('buypress');
-                          // service.addProductToOrder(model.id,mo);
                         },
                         model:model
-
                     );
                   })
                   :!_posts.isEmpty? const Center(child: CupertinoActivityIndicator()):Center(child: LabelText(text: 'ไม่มีข้อมูล',),),
@@ -208,12 +211,10 @@ class _ShopPageState extends State<ShopPage> {
         builder: (context) {
           return ProductOptionDialog(model: productDetailModel, title: text,returnValue: false,option: model.options[0]);
         }).whenComplete(() {
-      // if(gotoBucket){
-      //   Navigator.push(
-      //     context,
-      //     MaterialPageRoute(builder: (context) => BucketPage()),
-      //   );
-      // }
+    }).then((value) {
+      if(value){
+        _getCountBucket();
+      }
     });
   }
 }

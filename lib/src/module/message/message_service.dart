@@ -39,7 +39,8 @@ class MessageService {
    upload(XFile imageFile) async {
      var stream = new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
      var length = await imageFile.length();
-     final LocalStorage storage = new LocalStorage('auth');
+     final LocalStorage storage = LocalStorage('auth');
+     await storage.ready;
      String url = '$API_URL/support/upload-image';
      String? token =  storage.getItem('token');
      var uri = Uri.parse(url);

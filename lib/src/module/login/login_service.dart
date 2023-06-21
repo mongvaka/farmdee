@@ -34,6 +34,7 @@ class LoginService {
 
       AuthResponseModel authData =  AuthResponseModel.fromJson(jsonDecode(utf8.decode(res.bodyBytes)));
       final LocalStorage storage = LocalStorage('auth');
+      await storage.ready;
       print('authData : ${authData.userId}');
       await storage.setItem('id', authData.userId);
       await storage.setItem('token', authData.token);

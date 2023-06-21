@@ -23,6 +23,7 @@ class SearchHardwareService {
   Future<SearchHardwareModel?> activate(String key , String? email,String? password) async{
     String url = '/esp/activate';
     final LocalStorage storage = LocalStorage('auth');
+    await storage.ready;
     int? ownerId =  storage.getItem('id');
     Response? res = await baseService.post({'ownerId':ownerId,'key':key,'email':email,'password':password}, url);
     if(res!=null){

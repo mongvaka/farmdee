@@ -10,6 +10,10 @@ import 'home_search.dart';
 class HomeService {
   BasicService baseService  =  BasicService();
   Future<BasicResponse<HomeModel>> list(HomeSearch search) async {
+    final LocalStorage storage = LocalStorage('auth');
+    await storage.ready;
+    int? id = storage.getItem('id');
+    search.ownerId = id;
     String url = '/esp/esp-child';
     Response? res = await baseService.post(search.toJson(), url);
       if (res?.body == null) {

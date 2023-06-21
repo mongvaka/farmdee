@@ -21,7 +21,7 @@ class AppInputEmail extends StatefulWidget {
         this.errorMessage,
         this.onChanged,
         this.controller,
-        this.margin = const EdgeInsets.symmetric(vertical: 0, horizontal: 0),
+        this.margin = const EdgeInsets.only(top: 0, bottom: 0),
         this.borderColor =  Colors.grey,
         this.textColor =  Colors.black87
       });
@@ -63,7 +63,7 @@ class _AppInputEmailState extends State<AppInputEmail> {
           obscureText: _visiblePwd,
           placeholder: widget.placeholder,
           placeholderStyle: const TextStyle(
-            color: Color.fromRGBO(255, 255, 255, 0.7),
+            color: Colors.grey,
           ),
         ),
         widget.errorMessage != null

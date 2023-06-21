@@ -9,16 +9,18 @@ import '../module/message/models/message_model.dart';
 
 class SocketCubit extends Cubit<SocketState> {
   IO.Socket? socket;
-  SocketCubit()
-      : super(SocketState.nothing()){
+  final int ownerId;
+  SocketCubit({ required this.ownerId})
+      : super(SocketState.nothing()) {
     print('socket colled');
-    socket = IO.io("http://192.168.1.46:3033", <String, dynamic>{
+    socket = IO.io("http://192.168.1.42:3033", <String, dynamic>{
       "transports": ["websocket"],});
     socket!.onConnect((_) {
       print('connect');
     });
-    final LocalStorage storage = LocalStorage('auth');
-    int? ownerId =  storage.getItem('id');
+    // final LocalStorage storage = LocalStorage('auth');
+    // await storage.ready;
+    // int? ownerId =  storage.getItem('id');
     socket!.on('message$ownerId', (data) {
       // print("data['answer']");
       // print(data['answer']);

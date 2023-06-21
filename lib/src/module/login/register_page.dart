@@ -26,7 +26,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController(text: '');
   final TextEditingController _controllerMobile =
   TextEditingController(text: '');
-  final RegisterModel _registerModel = RegisterModel.fromJson({'email': '', 'password': '', 'rePassword': ''});
+  final RegisterModel _registerModel = RegisterModel.fromJson({'email': '', 'password': '', 'rePassword': '','fName':'','lName':''});
   String _errorPwd = '';
   String _errorMobile= '';
   String _errorUsername = '';
@@ -34,9 +34,9 @@ class _RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
+    return Scaffold(
       resizeToAvoidBottomInset: true,
-      child: SafeArea(
+      body: SafeArea(
         bottom: false,
         top: false,
         child: Container(
@@ -96,28 +96,61 @@ class _RegisterPageState extends State<RegisterPage> {
                                 });
                               },
                             ),
-                            const SizedBox(
-                              height: 10.0,
+
+                            Row(
+                              children: [
+                                Expanded(
+                                    flex:1,
+                                    child: Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const LabelText(
+                                          text: 'ชื่อ',
+                                        ),
+                                      ],
+                                    ),
+                                    AppInput(
+                                      placeholder: 'ชื่อ',
+                                      onChanged: (val) {
+                                        setState(() {
+                                          _registerModel.fName = val;
+
+                                        });
+                                      },
+                                    ),
+                                  ],
+                                )),
+                                SizedBox(width: 20,),
+                                Expanded(
+                                    flex:1,
+                                    child: Column(
+                                      children: [
+                                        Row(
+                                          children: [
+                                            const LabelText(
+                                              text: 'นามสกุล',
+                                            ),
+                                          ],
+                                        ),
+                                        AppInput(
+                                          placeholder: 'นามสกุล',
+                                          onChanged: (val) {
+                                            setState(() {
+                                              _registerModel.lName = val;
+
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    ))
+                              ],
                             ),
-                            // const LabelText(
-                            //   text: 'เบอร์โทรศัพท์',
-                            // ),
-                            // AppInputEmail(
-                            //   controller: _controllerMobile,
-                            //   placeholder: 'เบอร์โทรศัพท์',
-                            //   errorMessage: _errorMobile,
-                            //   onChanged: (val) {
-                            //     setState(() {
-                            //       _registerModel.mobile = val;
-                            //       if (val != '' && _errorMobile != '') {
-                            //         _errorMobile = "";
-                            //       }
-                            //     });
-                            //   },
-                            // ),
-                            // const SizedBox(
-                            //   height: 10.0,
-                            // ),
+
+                            const SizedBox(
+                              height:20.0,
+                            ),
+
                             const LabelText(
                               text: 'รหัสผ่าน',
                             ),
@@ -162,14 +195,59 @@ class _RegisterPageState extends State<RegisterPage> {
                                 type: AppButtonType.primary,
                                 text: 'สมัครสมาชิก',
                                 onPressed:() async {
+                                  if(
+                                  _registerModel.email == '' ||
+                                  _registerModel.password == ''||
+                                  _registerModel.rePassword == ''||
+                                  _registerModel.fName ==''||
+                                  _registerModel.lName ==''
+                                  ){
+                                    final snackBar = SnackBar(
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      content: AwesomeSnackbarContent(
+                                        title: 'กรอกข้อมูลให้ครบถ้วน!',
+                                        titleFontSize: 16,
+                                        messageFontSize: 14,
+                                        message:
+                                        'โปรดระบุข้อมูลให้ครบทุกช่อง',
+                                        contentType: ContentType.failure,
+                                      ),
+                                    );
 
+                                    ScaffoldMessenger.of(context)
+                                      ..hideCurrentSnackBar()
+                                      ..showSnackBar(snackBar);
+                                    return;
+                                  }
+                                  if(_registerModel.password != _registerModel.rePassword){
+                                    final snackBar = SnackBar(
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      content: AwesomeSnackbarContent(
+                                        title: 'รหัสผ่านไม่ตรงกัน!',
+                                        titleFontSize: 16,
+                                        messageFontSize: 14,
+                                        message:
+                                        'โปรดระบุรหัสผ่านและยืนยันรหัสผ่านให้ตรงกัน',
+                                        contentType: ContentType.failure,
+                                      ),
+                                    );
+
+                                    ScaffoldMessenger.of(context)
+                                      ..hideCurrentSnackBar()
+                                      ..showSnackBar(snackBar);
+                                    return;
+                                  }
                                  AuthResponseModel result = await service.register(_registerModel);
                                  if(result.token!=null){
                                    Navigator.pushReplacement(
                                      context,
                                      MaterialPageRoute(
                                          builder: (context) =>
-                                         const MainPage()),
+                                          MainPage(ownerId: result.userId!,)),
                                    );
                                  }else{
                                    final snackBar = SnackBar(

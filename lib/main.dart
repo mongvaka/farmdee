@@ -1,5 +1,6 @@
 import 'package:farmdee/src/module/login/login_page.dart';
 import 'package:farmdee/src/module/main/main_page.dart';
+import 'package:farmdee/src/module/welcome/welcome_page.dart';
 import 'package:farmdee/src/utils/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +59,6 @@ void main() {
         DefaultCupertinoLocalizations.delegate,
         DefaultWidgetsLocalizations.delegate,
       ],
-      home: const LoginPage()));
+      home:const WelcomePage()));
 
 }

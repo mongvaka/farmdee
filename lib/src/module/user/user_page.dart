@@ -2,6 +2,7 @@ import 'package:farmdee/src/module/login/login_page.dart';
 import 'package:farmdee/src/module/login/widgets/label_text.dart';
 import 'package:farmdee/src/module/user/user_model.dart';
 import 'package:farmdee/src/module/user/user_service.dart';
+import 'package:farmdee/src/utils/constants.dart';
 import 'package:farmdee/src/widgets/scaffold/app_scaffold_item.dart';
 import 'package:farmdee/src/widgets/text/caption_text.dart';
 import 'package:farmdee/src/widgets/text/title_text.dart';
@@ -95,7 +96,7 @@ class _UserPageState extends State<UserPage> {
                 child: Container(
                   padding: EdgeInsets.only(top: 10, bottom: 10),
                   decoration: BoxDecoration(
-                      color: Colors.green.shade200,
+                      color: Colors.blue,
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Row(
                     children: [
@@ -115,7 +116,7 @@ class _UserPageState extends State<UserPage> {
                             fontWeight: FontWeight.w700,
                           ),
                           CaptionText(
-                              text: '10',
+                              text: '-',
                               textColor: Colors.white,
                               fontWeight: FontWeight.w700),
                           CaptionText(
@@ -137,7 +138,7 @@ class _UserPageState extends State<UserPage> {
                 child: Container(
                   padding: EdgeInsets.only(top: 10, bottom: 10),
                   decoration: BoxDecoration(
-                      color: Colors.green.shade200,
+                      color: Colors.blue,
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Row(
                     children: [
@@ -154,7 +155,7 @@ class _UserPageState extends State<UserPage> {
                               textColor: Colors.white,
                               fontWeight: FontWeight.w700),
                           CaptionText(
-                              text: '10',
+                              text: '-',
                               textColor: Colors.white,
                               fontWeight: FontWeight.w700),
                           CaptionText(
@@ -180,7 +181,7 @@ class _UserPageState extends State<UserPage> {
                 child: Container(
                   padding: EdgeInsets.only(top: 10, bottom: 10),
                   decoration: BoxDecoration(
-                      color: Colors.green.shade100,
+                      color: Colors.blue,
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Row(
                     children: [
@@ -220,7 +221,7 @@ class _UserPageState extends State<UserPage> {
                 child: Container(
                   padding: EdgeInsets.only(top: 10, bottom: 10),
                   decoration: BoxDecoration(
-                      color: Colors.green.shade100,
+                      color: Colors.blue,
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Row(
                     children: [
@@ -259,7 +260,7 @@ class _UserPageState extends State<UserPage> {
                 child: Container(
                   padding: EdgeInsets.only(top: 10, bottom: 10),
                   decoration: BoxDecoration(
-                      color: Colors.green.shade100,
+                      color: Colors.blue,
                       borderRadius: BorderRadius.all(Radius.circular(10))),
                   child: Row(
                     children: [
@@ -311,7 +312,7 @@ class _UserPageState extends State<UserPage> {
           Container(
             padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
-                color: Colors.green.shade100,
+                color: Colors.green,
                 borderRadius: BorderRadius.all(Radius.circular(10))),
             child: Column(
               children: [
@@ -360,6 +361,110 @@ class _UserPageState extends State<UserPage> {
                             text: model.lastName ?? '',
                             fontSize: 14,
                             color: Colors.white)),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            children: [
+              TitleText(
+                text: 'ที่อยู่จัดส่ง',
+                fontSize: 14,
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: TitleText(
+                          text: 'เบอร์โทร',
+                          fontSize: 14,
+                          color: TEXT_COLOR,
+                        )),
+                    Expanded(
+                        flex: 2,
+                        child: TitleText(
+                            text: model.address?.phoneNumber??'',
+                            fontSize: 14,
+                            color: TEXT_COLOR)),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: TitleText(
+                          text: 'ที่อยู่',
+                          fontSize: 14,
+                          color: TEXT_COLOR,
+                        )),
+                    Expanded(
+                        flex: 2,
+                        child: TitleText(
+                            text: model.address?.address??'',
+                            fontSize: 14,
+                            color: TEXT_COLOR)),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: TitleText(
+                            text: 'ตำบล', fontSize: 14, color: TEXT_COLOR)),
+                    Expanded(
+                        flex: 2,
+                        child: TitleText(
+                            text: model.address?.subDistrictName ?? '',
+                            fontSize: 14,
+                            color: TEXT_COLOR)),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: TitleText(
+                            text: 'อำเภอ',
+                            fontSize: 14,
+                            color: TEXT_COLOR)),
+                    Expanded(
+                        flex: 2,
+                        child: TitleText(
+                            text: model.address?.districtName ?? '',
+                            fontSize: 14,
+                            color: TEXT_COLOR)),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                        flex: 1,
+                        child: TitleText(
+                            text:'จังหวัด',
+                            fontSize: 14,
+                            color: TEXT_COLOR)),
+                    Expanded(
+                        flex: 2,
+                        child: TitleText(
+                            text: model.address?.provinceName ?? '',
+                            fontSize: 14,
+                            color: TEXT_COLOR)),
                   ],
                 ),
               ],

@@ -5,10 +5,12 @@ import '../../shared/basic_search.dart';
 
 class HomeSearch extends BasicSearch {
   late String name;
+  late int? ownerId;
   HomeSearch() {
     page.orderBy = 'ASC';
     page.sortBy = 'clientName';
     name = '';
+    ownerId = 0;
   }
   @override
   fromResponse(BasicResponse response) {
@@ -20,13 +22,10 @@ class HomeSearch extends BasicSearch {
 
   @override
   Map<String, dynamic> toJson() {
-    final LocalStorage storage = LocalStorage('auth');
-    int? id = storage.getItem('id');
-    print('this id : $id');
     if (name == '') {
       return {
         "name": '',
-        "ownerId": id,
+        "ownerId": ownerId,
         "page": {
           "offset": page.offset,
           "limit": page.limit,
@@ -37,6 +36,7 @@ class HomeSearch extends BasicSearch {
     } else {
       return {
         "name": name,
+        "ownerId": ownerId,
         "page": {
           "offset": page.offset,
           "limit": page.limit,

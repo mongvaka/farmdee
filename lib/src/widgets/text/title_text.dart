@@ -8,7 +8,8 @@ class TitleText extends StatelessWidget {
   final  String text;
   final Color color;
   double fontSize;
-   TitleText({Key? key, required this.text,this.color = TEXT_COLOR,this.fontSize = 18}) : super(key: key);
+  FontWeight fontWeight;
+   TitleText({Key? key, required this.text,this.color = TEXT_COLOR,this.fontSize = 18,this.fontWeight = FontWeight.w500}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,11 +17,8 @@ class TitleText extends StatelessWidget {
       maxLines: 2,
       minFontSize: 10,
       text,
-      style: ClientStyle.customTextStyle(color,fontSize,FontWeight.w500),
+      style: ClientStyle.customTextStyle(color,fontSize,fontWeight),
     );
-    return Text(text,
-      style: const TextStyle(
-          color: TEXT_COLOR, fontSize: 19, fontWeight: FontWeight.w600,decoration: TextDecoration.none),
-    );
+
   }
 }

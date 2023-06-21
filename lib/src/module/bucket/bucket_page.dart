@@ -15,6 +15,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../widgets/text/detail_text.dart';
 import '../home/home_search.dart';
 import '../login/widgets/label_text.dart';
+import '../order/order_page.dart';
 import '../products/widgets/product_option_dialog.dart';
 
 class BucketPage extends StatefulWidget {
@@ -225,20 +226,40 @@ class _BucketPageState extends State<BucketPage> {
                             }
 
                           });
-                          bool mobileIsExist  = await service.verifyMobile();
-                          if(!mobileIsExist){
-                            Navigator.push(
+                          bool mobileVerify  = await service.verifyMobile();
+                          if(!mobileVerify)  {
+                            bool result = await Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) =>
                                       VerifyMobile()),
                             );
+                            if(result){
+                              bool created = await service.createOrder(orders);
+                              if(created){
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                       OrderPage(status: 'BuyerConfirm',initialIndex: 0,)),
+                                );
+                              }
+                            }
                           }else{
-                            // bool created = await service.createOrder(orders);
+                            bool created = await service.createOrder(orders);
+                            if(created){
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        OrderPage(status: 'BuyerConfirm',initialIndex: 0,)),
+                              );
+                            }
                           }
 
                         },
                         child: Container(
+                          color: Colors.transparent,
                           padding: EdgeInsets.only(top: 10,bottom: 10),
                           child: Row(children: [
                             Spacer(),

@@ -13,6 +13,7 @@ class BucketService {
   Future<BasicResponse<BucketModel>> list(HomeSearch search) async {
     String url = '/product/search-product-in-bucket';
     final LocalStorage storage = LocalStorage('auth');
+    await storage.ready;
     int? buyerId = storage.getItem('id');
     Response? res = await baseService.post({'buyerId':buyerId}, url);
     if (res?.body == null) {
@@ -31,6 +32,7 @@ class BucketService {
   Future<bool> createOrder(List<Map<String,dynamic>> orders) async{
     String url = '/product/create-order';
     final LocalStorage storage = LocalStorage('auth');
+    await storage.ready;
     int? buyerId = storage.getItem('id');
     Response? res = await baseService.post({"ordersDetail":orders,"buyerId":buyerId}, url);
     print(res?.body);
@@ -39,9 +41,11 @@ class BucketService {
   Future<bool> verifyMobile()async{
     String url = '/users/verify-mobile';
     final LocalStorage storage = LocalStorage('auth');
+    await storage.ready;
     int? userId = storage.getItem('id');
     Response? res = await baseService.post({"userId":userId}, url);
     print(res?.body);
     return res?.body =='true';
   }
+
 }

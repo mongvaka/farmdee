@@ -19,6 +19,7 @@ class ProductDetailService {
   Future<bool> addProductToOrder(int productId,int value,int optionId,bool activate) async {
     String url = '/product/add-product-to-bucket';
     final LocalStorage storage = LocalStorage('auth');
+    await storage.ready;
     int? buyerId = storage.getItem('id');
     Response? res = await _baseService.post(
         {"productId":productId,

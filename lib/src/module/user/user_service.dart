@@ -8,6 +8,7 @@ class UserService {
   BasicService baseService  =  BasicService();
   Future<UserModel> getById() async {
     final LocalStorage storage = LocalStorage('auth');
+    await storage.ready;
     int? id =  storage.getItem('id');
     String url = '/users/get-user';
     Response? res = await baseService.post({'id':id}, url);
@@ -19,6 +20,7 @@ class UserService {
   }
   Future<List<Map<String,dynamic>>> getOrderNotification() async {
     final LocalStorage storage = LocalStorage('auth');
+    await storage.ready;
     int? id =  storage.getItem('id');
     String url = '/product/notice/${id}';
     Response? res = await baseService.get(url);

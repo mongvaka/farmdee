@@ -6,7 +6,8 @@ import 'package:http/http.dart' as http;
 
 class BasicService {
   Future<Response?> post(dynamic json,String urlStr) async {
-    final LocalStorage storage = new LocalStorage('auth');
+    final LocalStorage storage =  LocalStorage('auth');
+    await storage.ready;
     String url = '$API_URL$urlStr';
     String? token =  storage.getItem('token');
     Map<String,String> header = {
@@ -29,7 +30,8 @@ class BasicService {
     }
   }
   Future<Response?> get(String urlStr) async {
-    final LocalStorage storage = new LocalStorage('auth');
+    final LocalStorage storage =  LocalStorage('auth');
+    await storage.ready;
     String url = '$API_URL$urlStr';
     String? token =  storage.getItem('token');
     Map<String,String> header = {

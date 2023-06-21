@@ -15,7 +15,8 @@ import '../shop/shop_page.dart';
 import '../user/user_page.dart';
 
 class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
+  final int ownerId;
+  const MainPage({Key? key, required this.ownerId}) : super(key: key);
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -32,12 +33,15 @@ class _MainPageState extends State<MainPage> {
     MessagePage(),
     UserPage()
   ];
+
+
+
   @override
   Widget build(BuildContext context) {
 
     return MultiBlocProvider(
       providers: [ BlocProvider<SocketCubit>(
-        create: (BuildContext context) => SocketCubit(),
+        create: (BuildContext context) => SocketCubit(ownerId: widget.ownerId),
       ),],
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -74,7 +78,7 @@ class _MainPageState extends State<MainPage> {
                   ),
                   GButton(
                     icon: LineIcons.shoppingBasket,
-                    text: 'สั่งซื้อ',
+                    text: 'สั่งอุปกรณ์',
                   ),
                   GButton(
                     icon: LineIcons.rocketChat,
@@ -98,5 +102,6 @@ class _MainPageState extends State<MainPage> {
       ),
     );
   }
+
 }
 

@@ -9,8 +9,8 @@ import '../../utils/constants.dart';
 
 class SwitchService {
   Future<SwitchModel?> getById(int childId) async {
-    final LocalStorage storage = new LocalStorage('auth');
-
+    final LocalStorage storage = LocalStorage('auth');
+    await storage.ready;
     String url = '${API_URL}/esp/child';
     String? token =  storage.getItem('token');
 
@@ -43,8 +43,8 @@ class SwitchService {
   }
   Future<bool> createSchedule(SwitchModel model) async {
     String url = '${API_URL}/esp/create-schedule';
-    final LocalStorage storage = new LocalStorage('auth');
-
+    final LocalStorage storage =  LocalStorage('auth');
+    await storage.ready;
     try {
       String? token =  storage.getItem('token');
 
@@ -67,15 +67,13 @@ class SwitchService {
       }
       return false;
     } catch (e,t) {
-      print(e);
-      print(t);
       return false;
     }
   }
   Future<bool> deleteSchedule(int scheduleId) async {
     String url = '${API_URL}/esp/delete-schedule';
-    final LocalStorage storage = new LocalStorage('auth');
-
+    final LocalStorage storage = LocalStorage('auth');
+    await storage.ready;
     try {
       String? token =  storage.getItem('token');
 

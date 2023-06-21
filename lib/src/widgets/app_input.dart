@@ -50,11 +50,12 @@ class _AppInputState extends State<AppInput> {
           padding: widget.margin,
           decoration: BoxDecoration(
             // backgroundBlendMode: BlendMode.hardLight,
-              gradient: const LinearGradient(colors: [
-                Color.fromRGBO(255, 255, 255, 0.1),
-                Color.fromRGBO(255, 255, 255, 0.1)
-              ]),
+            //   gradient: const LinearGradient(colors: [
+            //     Color.fromRGBO(255, 255, 255, 0.1),
+            //     Color.fromRGBO(255, 255, 255, 0.1)
+            //   ]),
               // backgroundBlendMode: const Color.fromRGBO(255, 255, 255, 0.1),
+            color: Colors.white,
               border: Border.all(color: widget.borderColor),
               borderRadius: const BorderRadius.all(Radius.circular(10))),
           obscureText: _visiblePwd,
@@ -75,6 +76,7 @@ class _AppInputState extends State<AppInput> {
               });
             },
           ),
+          placeholder: widget.placeholder,
           placeholderStyle: const TextStyle(
             color: Colors.grey,
           ),

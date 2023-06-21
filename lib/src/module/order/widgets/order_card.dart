@@ -109,7 +109,7 @@ class OrderCard extends StatelessWidget {
                         width: 5,
                       ),
                       DetailText(
-                        text: '${price} บาท',
+                        text: '${price*value} บาท',
                         color: TEXT_COLOR,
                       ),
                     ],

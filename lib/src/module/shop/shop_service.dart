@@ -22,6 +22,7 @@ class ShopService {
   Future<BasicResponse<ShopModel>> addProductToOrder(int productId,int optionId) async {
     String url = '/product/add-product-to-bucket';
     final LocalStorage storage = LocalStorage('auth');
+    await storage.ready;
     int? buyerId =  storage.getItem('id');
     print("buyerId");
     print(buyerId);
@@ -37,5 +38,16 @@ class ShopService {
     }
     return BasicResponse.fromJson(
         jsonDecode(utf8.decode(res!.bodyBytes)), ShopModel.fromJson);
+  }
+  Future<int> countBucket()async{
+    String url = '/product/count-bucket';
+    final LocalStorage storage = LocalStorage('auth');
+    int? userId = storage.getItem('id');
+    await storage.ready;
+    Response? res = await _baseService.post({"userId":userId}, url);
+    if(res?.body == null){
+      return 0;
+    }
+    return int.parse( res!.body);
   }
 }

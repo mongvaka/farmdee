@@ -4,6 +4,7 @@ import 'package:farmdee/src/module/login/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:localstorage/localstorage.dart';
 
 import '../../widgets/app_button.dart';
 import '../../widgets/app_input.dart';
@@ -20,6 +21,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controllerUserName =
   TextEditingController(text: '');
@@ -140,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                                    context,
                                    MaterialPageRoute(
                                        builder: (context) =>
-                                       const MainPage()),
+                                        MainPage(ownerId: value.userId!,)),
                                  );
                                 }else{
                                    final snackBar = SnackBar(

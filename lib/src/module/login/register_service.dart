@@ -29,12 +29,12 @@ class RegisterService {
           'Authorization': 'Bearer $token'
         },
       );
-      print(res.body);
       if (res.body == null) {
         return AuthResponseModel();
       }
       AuthResponseModel authData =  AuthResponseModel.fromJson(jsonDecode(utf8.decode(res.bodyBytes)));
-      final LocalStorage storage = new LocalStorage('auth');
+      final LocalStorage storage =  LocalStorage('auth');
+      await storage.ready;
       storage.setItem('id', authData.userId);
       storage.setItem('token', authData.token);
       return authData;
