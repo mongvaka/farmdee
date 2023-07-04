@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = farmdee
+PRODUCT_NAME = Farm Dee;
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.farmdee.farmdee
+PRODUCT_BUNDLE_IDENTIFIER = com.tulip.farmdee;
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2023 com.farmdee. All rights reserved.

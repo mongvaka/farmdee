@@ -97,7 +97,7 @@ class _ProductOptionDialogState extends State<ProductOptionDialog> {
                             elevation: 0,
                             buttonAspectRatio: 1.5,
                           ),
-                          size:22,
+
                           value:widget.amount,
                           didChangeCount: (v){
                             setState(() {

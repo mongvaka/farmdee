@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 
-import '../test_wifi/test_wifi_page.dart';
+// import '../test_wifi/test_wifi_page.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -22,21 +22,21 @@ class _WelcomePageState extends State<WelcomePage> {
     token = await storage.getItem('token');
     int? id = await storage.getItem('id');
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) =>  FlutterWifiIoT()),
-    );
-    // if(token!=null){
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(builder: (context) =>  MainPage(ownerId: id??0,)),
-    //   );
-    // }else{
-    //   Navigator.pushReplacement(
-    //     context,
-    //     MaterialPageRoute(builder: (context) => const LoginPage()),
-    //   );
-    // }
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (context) =>  FlutterWifiIoT()),
+    // );
+    if(token!=null){
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) =>  MainPage(ownerId: id??0,)),
+      );
+    }else{
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    }
   }
   @override
   void initState() {

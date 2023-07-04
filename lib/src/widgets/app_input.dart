@@ -45,7 +45,9 @@ class _AppInputState extends State<AppInput> {
       children: <Widget>[
         CupertinoTextField(
           style:  TextStyle(color:widget.textColor),
-          onChanged: widget.onChanged,
+          onChanged:(val){
+            widget.onChanged!(val);
+          },
           controller: widget.controller,
           padding: widget.margin,
           decoration: BoxDecoration(

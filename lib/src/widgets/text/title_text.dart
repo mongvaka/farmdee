@@ -18,6 +18,7 @@ class TitleText extends StatelessWidget {
       minFontSize: 10,
       text,
       style: ClientStyle.customTextStyle(color,fontSize,fontWeight),
+      overflow: TextOverflow.ellipsis,
     );
 
   }

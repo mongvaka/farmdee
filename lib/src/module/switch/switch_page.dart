@@ -100,8 +100,6 @@ class _SwitchPageState extends State<SwitchPage> {
                             ),
                             Spacer(),
                             FlutterSwitch(
-                              width: 50,
-                              height: 25,
                               inactiveTextFontWeight: FontWeight.w400,
                               activeTextFontWeight: FontWeight.w400,
                               valueFontSize: 16,

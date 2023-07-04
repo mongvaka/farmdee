@@ -105,8 +105,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         ),
                         Row(
                           children: [
-                            TitleText(
-                              text: model == null ? '' : model!.name,
+                            Container(
+                              width: MediaQuery.of(context).size.width-20,
+                              child: TitleText(
+                                text: model == null ? '' : model!.name,
+
+                              ),
                             ),
                           ],
                         ),

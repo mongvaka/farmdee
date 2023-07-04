@@ -9,7 +9,9 @@ import 'package:farmdee/src/widgets/text/title_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:localstorage/localstorage.dart';
+import '../connect_wifi/connect_wifi_page.dart';
 import '../order/order_page.dart';
+import '../search_hardware/search_hardware_page.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -72,444 +74,449 @@ class _UserPageState extends State<UserPage> {
       tailing: SizedBox(),
       title: 'ข้อมูลผู้ใช้',
       canBack: false,
-      child: Container(
-        padding: EdgeInsets.only(left: 10, right: 10),
-        child: Column(children: [
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              TitleText(
-                text: 'ภาพรวม',
-                fontSize: 14,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Row(
-                    children: [
-                      Spacer(),
-                      SvgPicture.asset(
-                        'assets/icons/sensor.svg',
-                        color: Colors.white,
-                        width: 45,
-                        height: 45,
-                      ),
-                      Spacer(),
-                      Column(
-                        children: [
-                          CaptionText(
-                            text: 'เซ็นเซอร์',
-                            textColor: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                          CaptionText(
-                              text: '-',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                          CaptionText(
-                              text: 'รายการ',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                        ],
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Row(
-                    children: [
-                      Spacer(),
-                      SvgPicture.asset(
-                        'assets/icons/chip.svg',
-                        color: Colors.white,
-                      ),
-                      Spacer(),
-                      Column(
-                        children: [
-                          CaptionText(
-                              text: 'ตัวควบคุม',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                          CaptionText(
-                              text: '-',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                          CaptionText(
-                              text: 'รายการ',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                        ],
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Container(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Row(
-                    children: [
-                      Spacer(),
-                      SvgPicture.asset(
-                        'assets/icons/light.svg',
-                        color: Colors.white,
-                      ),
-                      Spacer(),
-                      Column(
-                        children: [
-                          CaptionText(
-                            text: 'วัดค่าแสง',
-                            textColor: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                          CaptionText(
-                              text: '-',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                          CaptionText(
-                              text: 'รายการ',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                        ],
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Row(
-                    children: [
-                      Spacer(),
-                      SvgPicture.asset(
-                        'assets/icons/temperature.svg',
-                        color: Colors.white,
-                      ),
-                      Spacer(),
-                      Column(
-                        children: [
-                          CaptionText(
-                              text: 'วัดอุณภูมิ',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                          CaptionText(
-                              text: '-',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                          CaptionText(
-                              text: 'รายการ',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                        ],
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  padding: EdgeInsets.only(top: 10, bottom: 10),
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: Row(
-                    children: [
-                      Spacer(),
-                      SvgPicture.asset(
-                        'assets/icons/humidity.svg',
-                        width: 35,
-                        height: 35,
-                        color: Colors.white,
-                      ),
-                      Spacer(),
-                      Column(
-                        children: [
-                          CaptionText(
-                              text: 'วัดความชื้น',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                          CaptionText(
-                              text: '-',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                          CaptionText(
-                              text: 'รายการ',
-                              textColor: Colors.white,
-                              fontWeight: FontWeight.w700),
-                        ],
-                      ),
-                      Spacer(),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              TitleText(
-                text: 'ข้อมูลผู้ใช้',
-                fontSize: 14,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: Column(
+      child: SingleChildScrollView(
+        child: Container(
+          padding: EdgeInsets.only(left: 10, right: 10),
+          child: Column(children: [
+            SizedBox(
+              height: 10,
+            ),
+            Row(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: TitleText(
-                          text: 'อีเมล',
-                          fontSize: 14,
+                TitleText(
+                  text: 'ภาพรวม',
+                  fontSize: 14,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        SvgPicture.asset(
+                          'assets/icons/sensor.svg',
                           color: Colors.white,
-                        )),
-                    Expanded(
-                        flex: 1,
-                        child: TitleText(
-                            text: model.email,
-                            fontSize: 14,
-                            color: Colors.white)),
-                  ],
+                          width: 45,
+                          height: 45,
+                        ),
+                        Spacer(),
+                        Column(
+                          children: [
+                            CaptionText(
+                              text: 'เซ็นเซอร์',
+                              textColor: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            CaptionText(
+                                text: '-',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                            CaptionText(
+                                text: 'รายการ',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ],
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  ),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: TitleText(
-                            text: 'ชื่อ', fontSize: 14, color: Colors.white)),
-                    Expanded(
-                        flex: 1,
-                        child: TitleText(
-                            text: model.firstName ?? '',
-                            fontSize: 14,
-                            color: Colors.white)),
-                  ],
+                SizedBox(
+                  width: 10,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: TitleText(
-                            text: 'นามสกุล',
-                            fontSize: 14,
-                            color: Colors.white)),
-                    Expanded(
-                        flex: 1,
-                        child: TitleText(
-                            text: model.lastName ?? '',
-                            fontSize: 14,
-                            color: Colors.white)),
-                  ],
-                ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        SvgPicture.asset(
+                          'assets/icons/chip.svg',
+                          color: Colors.white,
+                        ),
+                        Spacer(),
+                        Column(
+                          children: [
+                            CaptionText(
+                                text: 'ตัวควบคุม',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                            CaptionText(
+                                text: '-',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                            CaptionText(
+                                text: 'รายการ',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ],
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              TitleText(
-                text: 'ที่อยู่จัดส่ง',
-                fontSize: 14,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Container(
-            padding: EdgeInsets.all(10),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(10))),
-            child: Column(
+            SizedBox(
+              height: 10,
+            ),
+            Row(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: TitleText(
-                          text: 'เบอร์โทร',
-                          fontSize: 14,
-                          color: TEXT_COLOR,
-                        )),
-                    Expanded(
-                        flex: 2,
-                        child: TitleText(
-                            text: model.address?.phoneNumber??'',
-                            fontSize: 14,
-                            color: TEXT_COLOR)),
-                  ],
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        SvgPicture.asset(
+                          'assets/icons/light.svg',
+                          color: Colors.white,
+                        ),
+                        Spacer(),
+                        Column(
+                          children: [
+                            CaptionText(
+                              text: 'วัดค่าแสง',
+                              textColor: Colors.white,
+                              fontWeight: FontWeight.w700,
+                            ),
+                            CaptionText(
+                                text: '-',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                            CaptionText(
+                                text: 'รายการ',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ],
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  ),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: TitleText(
-                          text: 'ที่อยู่',
-                          fontSize: 14,
-                          color: TEXT_COLOR,
-                        )),
-                    Expanded(
-                        flex: 2,
-                        child: TitleText(
-                            text: model.address?.address??'',
-                            fontSize: 14,
-                            color: TEXT_COLOR)),
-                  ],
+                SizedBox(
+                  width: 10,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: TitleText(
-                            text: 'ตำบล', fontSize: 14, color: TEXT_COLOR)),
-                    Expanded(
-                        flex: 2,
-                        child: TitleText(
-                            text: model.address?.subDistrictName ?? '',
-                            fontSize: 14,
-                            color: TEXT_COLOR)),
-                  ],
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        SvgPicture.asset(
+                          'assets/icons/temperature.svg',
+                          color: Colors.white,
+                        ),
+                        Spacer(),
+                        Column(
+                          children: [
+                            CaptionText(
+                                text: 'วัดอุณภูมิ',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                            CaptionText(
+                                text: '-',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                            CaptionText(
+                                text: 'รายการ',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ],
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  ),
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: TitleText(
-                            text: 'อำเภอ',
-                            fontSize: 14,
-                            color: TEXT_COLOR)),
-                    Expanded(
-                        flex: 2,
-                        child: TitleText(
-                            text: model.address?.districtName ?? '',
-                            fontSize: 14,
-                            color: TEXT_COLOR)),
-                  ],
+                SizedBox(
+                  width: 10,
                 ),
-                Row(
-                  children: [
-                    Expanded(
-                        flex: 1,
-                        child: TitleText(
-                            text:'จังหวัด',
-                            fontSize: 14,
-                            color: TEXT_COLOR)),
-                    Expanded(
-                        flex: 2,
-                        child: TitleText(
-                            text: model.address?.provinceName ?? '',
-                            fontSize: 14,
-                            color: TEXT_COLOR)),
-                  ],
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                    child: Row(
+                      children: [
+                        Spacer(),
+                        SvgPicture.asset(
+                          'assets/icons/humidity.svg',
+                          width: 35,
+                          height: 35,
+                          color: Colors.white,
+                        ),
+                        Spacer(),
+                        Column(
+                          children: [
+                            CaptionText(
+                                text: 'วัดความชื้น',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                            CaptionText(
+                                text: '-',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                            CaptionText(
+                                text: 'รายการ',
+                                textColor: Colors.white,
+                                fontWeight: FontWeight.w700),
+                          ],
+                        ),
+                        Spacer(),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                TitleText(
+                  text: 'ข้อมูลผู้ใช้',
+                  fontSize: 14,
                 ),
               ],
             ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              TitleText(
-                text: 'ข้อมูลการสั่งซื้อ',
-                fontSize: 14,
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.green,
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: TitleText(
+                            text: 'อีเมล',
+                            fontSize: 14,
+                            color: Colors.white,
+                          )),
+                      Expanded(
+                          flex: 1,
+                          child: TitleText(
+                              text: model.email,
+                              fontSize: 14,
+                              color: Colors.white)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: TitleText(
+                              text: 'ชื่อ', fontSize: 14, color: Colors.white)),
+                      Expanded(
+                          flex: 1,
+                          child: TitleText(
+                              text: model.firstName ?? '',
+                              fontSize: 14,
+                              color: Colors.white)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: TitleText(
+                              text: 'นามสกุล',
+                              fontSize: 14,
+                              color: Colors.white)),
+                      Expanded(
+                          flex: 1,
+                          child: TitleText(
+                              text: model.lastName ?? '',
+                              fontSize: 14,
+                              color: Colors.white)),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: getOrderOptionCard(),
-            // children: getOrderOptionCard(),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            children: [
-              TitleText(
-                text: 'ดำเนินการ',
-                fontSize: 14,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                TitleText(
+                  text: 'ที่อยู่จัดส่ง',
+                  fontSize: 14,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10))),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: TitleText(
+                            text: 'เบอร์โทร',
+                            fontSize: 14,
+                            color: TEXT_COLOR,
+                          )),
+                      Expanded(
+                          flex: 2,
+                          child: TitleText(
+                              text: model.address?.phoneNumber??'',
+                              fontSize: 14,
+                              color: TEXT_COLOR)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: TitleText(
+                            text: 'ที่อยู่',
+                            fontSize: 14,
+                            color: TEXT_COLOR,
+                          )),
+                      Expanded(
+                          flex: 2,
+                          child: TitleText(
+                              text: model.address?.address??'',
+                              fontSize: 14,
+                              color: TEXT_COLOR)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: TitleText(
+                              text: 'ตำบล', fontSize: 14, color: TEXT_COLOR)),
+                      Expanded(
+                          flex: 2,
+                          child: TitleText(
+                              text: model.address?.subDistrictName ?? '',
+                              fontSize: 14,
+                              color: TEXT_COLOR)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: TitleText(
+                              text: 'อำเภอ',
+                              fontSize: 14,
+                              color: TEXT_COLOR)),
+                      Expanded(
+                          flex: 2,
+                          child: TitleText(
+                              text: model.address?.districtName ?? '',
+                              fontSize: 14,
+                              color: TEXT_COLOR)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: TitleText(
+                              text:'จังหวัด',
+                              fontSize: 14,
+                              color: TEXT_COLOR)),
+                      Expanded(
+                          flex: 2,
+                          child: TitleText(
+                              text: model.address?.provinceName ?? '',
+                              fontSize: 14,
+                              color: TEXT_COLOR)),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-         Row(
-           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-           children: [
-             ...getOperationCard()
-           ],
-         )
-        ]),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                TitleText(
+                  text: 'ข้อมูลการสั่งซื้อ',
+                  fontSize: 14,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: getOrderOptionCard(),
+              // children: getOrderOptionCard(),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Row(
+              children: [
+                TitleText(
+                  text: 'ดำเนินการ',
+                  fontSize: 14,
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+           Row(
+             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             children: [
+               ...getOperationCard()
+             ],
+           ),
+            SizedBox(
+              height: 10,
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -587,6 +594,39 @@ class _UserPageState extends State<UserPage> {
     return [
       GestureDetector(
         onTap: () async {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                 FlutterWifiIoT()),
+          );
+        },
+        child: Container(
+            width: 80,
+            height: 50,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(10))),
+            child: Center(
+              child: Container(
+                child: Column(
+                  children: [
+                    Spacer(),
+                    SvgPicture.asset(
+                      'assets/icons/connect.svg',
+                      color: Colors.grey,
+                      width: 20,
+                      height: 20,
+                    ),
+                    CaptionText(text: 'ต่ออุุปกรณ์'),
+                    Spacer(),
+                  ],
+                ),
+              ),
+            )),
+      ),
+      GestureDetector(
+        onTap: () async {
           final LocalStorage storage = new LocalStorage('auth');
           await storage.clear();
           Navigator.pushReplacement(
@@ -617,7 +657,8 @@ class _UserPageState extends State<UserPage> {
                 ),
               ),
             )),
-      )
+      ),
+
     ];
   }
 }

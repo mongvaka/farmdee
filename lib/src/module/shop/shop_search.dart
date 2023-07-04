@@ -5,10 +5,12 @@ import '../../shared/basic_search.dart';
 
 class ShopSearch extends BasicSearch {
   late String name;
+  late int categoryId;
   ShopSearch() {
     page.orderBy = 'ASC';
     page.sortBy = 'productName';
     name = '';
+    categoryId = 1;
   }
   @override
   fromResponse(BasicResponse response) {
@@ -23,6 +25,7 @@ class ShopSearch extends BasicSearch {
     if (name == '') {
       return {
         "name": '',
+        'categoryId':categoryId,
         "page": {
           "offset": page.offset,
           "limit": page.limit,
@@ -33,6 +36,7 @@ class ShopSearch extends BasicSearch {
     } else {
       return {
         "name": name,
+        'categoryId':categoryId,
         "page": {
           "offset": page.offset,
           "limit": page.limit,

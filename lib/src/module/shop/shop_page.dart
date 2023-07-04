@@ -5,6 +5,7 @@ import 'package:farmdee/src/module/shop/shop_search.dart';
 import 'package:farmdee/src/module/shop/shop_service.dart';
 import 'package:farmdee/src/module/shop/widgets/shop_card.dart';
 import 'package:farmdee/src/widgets/scaffold/app_scaffold_item.dart';
+import 'package:farmdee/src/widgets/text/title_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,7 @@ import 'package:flutter_svg/svg.dart';
 import '../bucket/bucket_page.dart';
 import '../products/widgets/product_option_dialog.dart';
 import '../verify_mobile/get_otp_page.dart';
+import 'models/category_model.dart';
 import 'models/shop_model.dart';
 
 class ShopPage extends StatefulWidget {
@@ -29,6 +31,9 @@ class _ShopPageState extends State<ShopPage> {
   bool _isFirstLoadRunning = false;
   bool _isLoadMoreRunning = false;
   List<ShopModel> _posts = [];
+  List<CategoryModel> _category = [
+  ];
+  int categoryId = 1;
   void _loadMore() async {
     if (search.page.last == false &&
         _isFirstLoadRunning == false &&
@@ -99,6 +104,7 @@ class _ShopPageState extends State<ShopPage> {
     super.initState();
     _firstLoad();
     _getCountBucket();
+    _getCategoryData();
     _controller = ScrollController()..addListener(_loadMore);
   }
   int? countBucket = 0;
@@ -148,10 +154,23 @@ class _ShopPageState extends State<ShopPage> {
                 ),
               ],
             ),
-          )),
+          )
+      ),
         title: 'สั่งซื้อสินค้า', canBack: false,
         child: Column(
           children: [
+            Container(
+              padding: EdgeInsets.only(left: 15,right: 15),
+          width: MediaQuery.of(context).size.width,height: 50,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  ..._getCategoryCard(),
+                  ],
+              ),
+            ),
+            ),
             Expanded(
               child: _posts!.isNotEmpty
                   ? ListView.builder(
@@ -215,6 +234,42 @@ class _ShopPageState extends State<ShopPage> {
       if(value){
         _getCountBucket();
       }
+    });
+  }
+
+  List<Widget> _getCategoryCard() {
+    return _category.map((e) {
+      return GestureDetector(
+        onTap: (){
+          setState(() {
+            categoryId = e.id;
+          });
+          search.categoryId = categoryId;
+          _firstLoad();
+          _controller = ScrollController()..addListener(_loadMore);
+        },
+        child: Container(
+            padding: EdgeInsets.all(8),
+            margin: EdgeInsets.only(left: 2,right: 2,top: 5,bottom: 5),
+            decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(
+                  color:e.id == categoryId?Colors.blue: Colors.grey,
+                  width: e.id == categoryId?2:1
+                ),
+                borderRadius: BorderRadius.only( topLeft:Radius.circular(10),topRight:Radius.circular(10))),
+            child: TitleText(text: e.name,fontSize: 13,)),
+      );
+    }
+    ).toList();
+  }
+
+  void _getCategoryData() {
+    service.category().then((value) {
+      setState(() {
+        _category = value;
+
+      });
     });
   }
 }

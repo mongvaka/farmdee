@@ -75,18 +75,22 @@ class _MainPageState extends State<MainPage> {
                   GButton(
                     icon: LineIcons.home,
                     text: 'อุปกรณ์',
+                    textStyle: TextStyle(fontWeight: FontWeight.w600,fontSize:12),
                   ),
                   GButton(
                     icon: LineIcons.shoppingBasket,
                     text: 'สั่งอุปกรณ์',
+                    textStyle: TextStyle(fontWeight: FontWeight.w600,fontSize:12),
                   ),
                   GButton(
                     icon: LineIcons.rocketChat,
                     text: 'สอบถาม',
+                    textStyle: TextStyle(fontWeight: FontWeight.w600,fontSize:12),
                   ),
                   GButton(
                     icon: LineIcons.user,
                     text: 'ผู้ใช้',
+                    textStyle: TextStyle(fontWeight: FontWeight.w600,fontSize:12),
                   ),
                 ],
                 selectedIndex: _selectedIndex,

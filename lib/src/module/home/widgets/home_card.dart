@@ -50,7 +50,7 @@ class _HomeCardState extends State<HomeCard> {
               Row(
                 children: [
                   SvgPicture.asset(
-                    'assets/icons/bank.svg',
+                    'assets/icons/chip.svg',
                     height: 16,
                     width:16,
                   ),
@@ -85,7 +85,7 @@ class _HomeCardState extends State<HomeCard> {
               Row(
                 children: [
                   SvgPicture.asset(
-                    'assets/icons/coins.svg',
+                    'assets/icons/switch.svg',
                     height: 14,
                     width:14,
                   ),

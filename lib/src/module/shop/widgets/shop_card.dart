@@ -67,12 +67,13 @@ class _ShopCardState extends State<ShopCard> {
                       Row(
                         children: [
                           Container(
-                            width:MediaQuery.of(context).size.width/1.75,
+                            width:MediaQuery.of(context).size.width/1.8,
                             child: AutoSizeText(
                               textAlign: TextAlign.left,
                               maxLines: 2,
                               minFontSize: 10,
                               widget.model.name,
+                              overflow: TextOverflow.ellipsis,
                               style: ClientStyle.customTextStyle(TEXT_COLOR,18,FontWeight.w500),
                             ),
                           ),
@@ -81,7 +82,7 @@ class _ShopCardState extends State<ShopCard> {
                       Row(
                         children: [
                           Container(
-                            width:MediaQuery.of(context).size.width/1.75,
+                            width:MediaQuery.of(context).size.width/1.8,
                             child: AutoSizeText(
                               maxLines: 2,
                               minFontSize: 10,
@@ -131,7 +132,7 @@ class _ShopCardState extends State<ShopCard> {
                                 ),
                                 Row(
                                   children: [
-                                    Text('ราคา ${widget.model.minPrice} - ${widget.model.maxPrice} บาท'),
+                                    Text('ราคา ${widget.model.minPrice} - ${widget.model.maxPrice}'),
                                   ],
                                 ),
                               ],

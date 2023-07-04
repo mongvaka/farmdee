@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:farmdee/src/module/shop/models/category_model.dart';
 import 'package:farmdee/src/module/shop/models/shop_model.dart';
 import 'package:farmdee/src/module/shop/shop_search.dart';
 import 'package:http/http.dart';
@@ -49,5 +50,14 @@ class ShopService {
       return 0;
     }
     return int.parse( res!.body);
+  }
+  Future<List<CategoryModel>> category()async{
+    String url = '/product/category';
+    Response? res = await _baseService.get( url);
+    if(res?.body == null){
+      return [];
+    }
+    final items = jsonDecode(utf8.decode(res!.bodyBytes)).cast<Map<String, dynamic>>();
+    return List<CategoryModel>.from(items.map((itemsJson) => CategoryModel.fromJson(itemsJson)));
   }
 }
