@@ -1,5 +1,6 @@
 import 'package:farmdee/src/module/login/login_page.dart';
 import 'package:farmdee/src/module/login/widgets/label_text.dart';
+import 'package:farmdee/src/module/user/model/edit_profile_model.dart';
 import 'package:farmdee/src/module/user/user_model.dart';
 import 'package:farmdee/src/module/user/user_service.dart';
 import 'package:farmdee/src/utils/constants.dart';
@@ -12,6 +13,8 @@ import 'package:localstorage/localstorage.dart';
 import '../connect_wifi/connect_wifi_page.dart';
 import '../order/order_page.dart';
 import '../search_hardware/search_hardware_page.dart';
+import '../verify_mobile/verify_mobile.dart';
+import 'edit_profile_page.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({Key? key}) : super(key: key);
@@ -307,6 +310,25 @@ class _UserPageState extends State<UserPage> {
                   text: 'ข้อมูลผู้ใช้',
                   fontSize: 14,
                 ),
+                Spacer(),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              EditProfilePage(model: EditProfileModel(fName: model.firstName,lName: model.lastName),)),
+                    ).then((value) {
+                      getUserById();
+                    });
+
+                  },
+                  child:TitleText(
+                    text: 'แก้ไข',
+                    fontSize: 14,
+                    color: Colors.blue,
+                  ),
+                )
               ],
             ),
             SizedBox(
@@ -378,6 +400,23 @@ class _UserPageState extends State<UserPage> {
                   text: 'ที่อยู่จัดส่ง',
                   fontSize: 14,
                 ),
+                Spacer(),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              VerifyMobile()),
+                    );
+                    // VerifyMobile
+                  },
+                  child:TitleText(
+                    text: 'แก้ไข',
+                    fontSize: 14,
+                    color: Colors.blue,
+                  ),
+                )
               ],
             ),
             SizedBox(

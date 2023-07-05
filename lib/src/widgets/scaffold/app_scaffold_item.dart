@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:farmdee/src/widgets/app_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -42,8 +43,10 @@ class AppScaffoldItem extends StatelessWidget {
                     ),
                   ))
               : null,
-          middle: Text(
+          middle: AutoSizeText(
             title,
+            minFontSize: 10,
+            maxLines: 1,
             style: const TextStyle(
                 color: Colors.black, fontSize: 17, fontWeight: FontWeight.w600),
           ),

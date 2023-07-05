@@ -5,6 +5,7 @@ import 'package:farmdee/src/module/verify_mobile/model/address_model.dart';
 import 'package:farmdee/src/module/verify_mobile/model/address_option_model.dart';
 import 'package:farmdee/src/shared/basic_respones.dart';
 import 'package:farmdee/src/widgets/app_button.dart';
+import 'package:farmdee/src/widgets/scaffold/app_scaffold_item.dart';
 import 'package:farmdee/src/widgets/text/title_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -62,8 +63,11 @@ class _VerifyMobileState extends State<VerifyMobile> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
+    return AppScaffoldItem(
+      tailing: SizedBox(),
+      canBack: true,
+      title: 'ที่อยู่ในการจัดส่ง',
+      child: SafeArea(
         child: Stack(
           children: [
             Container(
@@ -71,14 +75,14 @@ class _VerifyMobileState extends State<VerifyMobile> {
               child: Column(
                 children: [
 
-                  Row(
-                    children: [
-                      Spacer(),
-                      TitleText(text: 'ที่อยู่ในการจัดส่ง',),
-                      Spacer(),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
+                  // Row(
+                  //   children: [
+                  //     Spacer(),
+                  //     TitleText(text: 'ที่อยู่ในการจัดส่ง',),
+                  //     Spacer(),
+                  //   ],
+                  // ),
+                  // SizedBox(height: 10,),
                   GestureDetector(
                     onTap: (){
                       showModal(context, 'เลือกประเทศ', widget.countryOptions!, AddressType.country);
@@ -171,25 +175,25 @@ class _VerifyMobileState extends State<VerifyMobile> {
                         widget.model.address = val;
                       });
                     },
-
                   ),
                   SizedBox(height: 10,),
                   Container(
                     height: 70,
                     color: Colors.white,
-                    child: IntlPhoneField(
-                      decoration: InputDecoration(
-
-                        labelText: 'เบอร์มือถือ',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide: BorderSide(),
+                    child: Material(
+                      child: IntlPhoneField(
+                        decoration: InputDecoration(
+                          labelText: 'เบอร์มือถือ',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(),
+                          ),
                         ),
+                        initialCountryCode: 'TH',
+                        onChanged: (phone) {
+                          widget.model.phoneNumber = '${phone.countryCode}${phone.number}';
+                        },
                       ),
-                      initialCountryCode: 'TH',
-                      onChanged: (phone) {
-                        widget.model.phoneNumber = '${phone.countryCode}${phone.number}';
-                      },
                     ),
                   )
                 ],
