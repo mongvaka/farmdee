@@ -41,6 +41,22 @@ class AddressModel {
         postCode:json['subDistrict']?['postCode']
     );
   }
+  factory AddressModel.empty() {
+    return AddressModel(
+        userId: 0 ,
+        countryCode: '',
+        provinceCode: '',
+        districtCode: '',
+        subDistrictCode: '',
+        phoneNumber: '',
+        address:'',
+        countryName:'',
+        provinceName:'',
+        districtName:'',
+        subDistrictName:'',
+        postCode:''
+    );
+  }
   Map<String, dynamic> toJson() {
     return {
       'userId': userId,

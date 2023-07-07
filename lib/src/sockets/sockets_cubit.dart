@@ -13,7 +13,7 @@ class SocketCubit extends Cubit<SocketState> {
   SocketCubit({ required this.ownerId})
       : super(SocketState.nothing()) {
     print('socket colled');
-    socket = IO.io("http://192.168.1.42:3033", <String, dynamic>{
+    socket = IO.io("http://141.98.17.93", <String, dynamic>{
       "transports": ["websocket"],});
     socket!.onConnect((_) {
       print('connect');

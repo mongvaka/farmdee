@@ -6,7 +6,7 @@ import '../utils/constants.dart';
 import 'package:http/http.dart' as http;
 
 class BasicService {
-  Future<Response?> post(dynamic json,String urlStr) async {
+  Future<Response> post(dynamic json,String urlStr) async {
     final LocalStorage storage =  LocalStorage('auth');
     await storage.ready;
     String url = '$API_URL$urlStr';
@@ -16,7 +16,6 @@ class BasicService {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token'
     };
-    try {
       Response res = await http.post(
         Uri.parse(url),
         body: jsonEncode(json),
@@ -24,13 +23,8 @@ class BasicService {
         headers: header,
       );
       return res;
-
-    } catch (e) {
-      print(e);
-      return Future(() => null);
-    }
   }
-  Future<Response?> get(String urlStr) async {
+  Future<Response> get(String urlStr) async {
     final LocalStorage storage =  LocalStorage('auth');
     await storage.ready;
     String url = '$API_URL$urlStr';
@@ -40,18 +34,11 @@ class BasicService {
       'Accept': 'application/json',
       'Authorization': 'Bearer $token'
     };
-    try {
       Response res = await http.get(
         Uri.parse(url),
         headers: header,
       );
-      print(res.body);
       return res;
-
-    } catch (e) {
-      print(e);
-      return Future(() => null);
-    }
   }
   Future<Response?> getWifiPages(String urlStr) async {
 

@@ -227,7 +227,7 @@ class _MessagePageState extends State<MessagePage> {
                               SendMessageModel model = SendMessageModel(message: message, type: messageType, answerId: null, clientId: null, supportId: null);
                               await service.sendMessage(model);
                               setState(() {
-                                _posts.add(MessageModel(message: message, type: 'Message', answer: null));
+                                // _posts.add(MessageModel(message: message, type: 'Message', answer: null));
                                 message = "";
                                 typeMessageController.text = '';
                               });

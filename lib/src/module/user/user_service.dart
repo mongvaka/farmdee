@@ -12,10 +12,12 @@ class UserService {
     await storage.ready;
     int? id =  storage.getItem('id');
     String url = '/users/get-user';
-    Response? res = await baseService.post({'id':id}, url);
+    Response res = await baseService.post({'id':id}, url);
     if (res?.body == null) {
       return UserModel(lastName: '', firstName: '', email: '');
     }
+    print('this id : ${id}');
+    print('this res.body : ${res?.body}');
     return UserModel.fromJson(jsonDecode(utf8.decode(res!.bodyBytes)));
   }
   Future<List<Map<String,dynamic>>> getOrderNotification() async {

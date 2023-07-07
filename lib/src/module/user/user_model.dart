@@ -20,7 +20,7 @@ class UserModel  {
       lastName: json['lastName'],
       firstName: json['firstName'],
       email: json['email'],
-      address: AddressModel.fromJson(json['address']?[0]) ,
+      address: json['address'].length !=0? AddressModel.fromJson(json['address']?[0]):AddressModel.empty() ,
     );
   }
 

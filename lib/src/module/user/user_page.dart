@@ -79,6 +79,8 @@ class _UserPageState extends State<UserPage> {
       canBack: false,
       child: SingleChildScrollView(
         child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
           padding: EdgeInsets.only(left: 10, right: 10),
           child: Column(children: [
             SizedBox(
@@ -657,7 +659,7 @@ class _UserPageState extends State<UserPage> {
                       width: 20,
                       height: 20,
                     ),
-                    CaptionText(text: 'ต่ออุุปกรณ์'),
+                    CaptionText(text: 'ต่ออุปกรณ์'),
                     Spacer(),
                   ],
                 ),

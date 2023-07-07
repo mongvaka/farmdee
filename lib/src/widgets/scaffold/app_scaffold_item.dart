@@ -69,6 +69,7 @@ class AppScaffoldItem extends StatelessWidget {
           //       )
           //     : null,
         ),
-        child: child);
+        child: SafeArea(
+            child: child));
   }
 }

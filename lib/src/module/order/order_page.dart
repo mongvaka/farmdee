@@ -55,7 +55,7 @@ class _OrderPageState extends State<OrderPage> {
                           color: Colors.grey,
                           width: 20,
                           height: 20,
-                        ), child: DetailText(text: 'การยกเลิก',),),
+                        ), child: DetailText(text: 'ที่ยกเลิก',),),
                         Tab(
                           iconMargin: EdgeInsets.only(bottom: 0),
                           icon:  SvgPicture.asset(
