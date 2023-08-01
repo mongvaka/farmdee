@@ -292,13 +292,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   }
 
   List<Widget> getImages(List<ImageModel> images) {
-    print('images.length');
-
-    print(images.length);
     List<Widget> imageWidgets = [];
     images.forEach((element) {
       imageWidgets.add(Image.network(
-        '$API_URL/images/product/${element.url}',
+        '$API_URL/images/product/${element.name}',
         fit: BoxFit.cover,
       ));
     });

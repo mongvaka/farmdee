@@ -11,6 +11,7 @@ import 'package:farmdee/src/widgets/text/detail_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:simple_fontellico_progress_dialog/simple_fontico_loading.dart';
 
 import '../../widgets/app_button.dart';
 import '../../widgets/app_input.dart';
@@ -32,6 +33,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
   List<CategoryModel> category = [];
   List<XFile> images = [];
   List<CreateProductOptionModel> productOptionModels =[];
+
   @override
   void initState() {
     super.initState();
@@ -69,7 +71,7 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                 placeholder: 'รายละเอียด',
                 onChanged: (val) {
                   setState(() {
-                    widget.model.name = val;
+                    widget.model.detail = val;
                   });
                 },
               ),
@@ -127,9 +129,12 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                   GestureDetector(
                       onTap: () async{
                         var img = await ImagePicker().pickMultiImage();
-                        img.forEach((element) {
-                          print(element.name);
+                        setState(() {
+                          images.addAll(img) ;
                         });
+                        // img.forEach((element) {
+                        //   print(element.name);
+                        // });
                       },
                       child: Container(
                         padding: const EdgeInsets.only(left: 18, right: 10),
@@ -153,16 +158,23 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
                   ),
                 ),
               ),
+              SizedBox(height: 20,),
               SizedBox(
                 width: double.infinity,
                 child: AppButton(
                   type: AppButtonType.primary,
                   text: 'สร้างสินค้า',
                   onPressed:() async {
-                    bool result = await service.createProduct(widget.model);
-                    if(result){
-                      Navigator.pop(context);
-                    }
+                    SimpleFontelicoProgressDialog _dialog = SimpleFontelicoProgressDialog(context: context);
+                    _dialog.show(message: 'กำลังสร้าง...', type: SimpleFontelicoProgressDialogType.threelines);
+                    ProductDetailModel productModel = await service.createProduct(widget.model);
+                    images.forEach((img) async{
+                      await service.uploadImageProduct(img,productModel.id);
+                    });
+                    _dialog.hide();
+                    // if(result){
+                    //   Navigator.pop(context);
+                    // }
                   },
                 ),
               ),
@@ -187,34 +199,67 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
 
     }
     ).then((value){
-      widget.model.categoryId = value;
+      if(value!=null){
+        setState(() {
+          widget.model.categoryId = value;
+
+        });
+      }
+
     });
   }
 
   List<Widget> getImageProduct(List<XFile> images) {
     return images.map((e){
-      return Image.file(
-        //to show image, you type like this.
-        File(e.path),
-        width: 100,
-        height: 100,
+      return GestureDetector(
+        onLongPress: (){
+          setState(() {
+            images.remove(e);
+          });
+        },
+        child: Container(
+          margin: EdgeInsets.all(5),
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(
+                color: Colors.white,
+              ),
+              borderRadius:const BorderRadius.all(Radius.circular(5))),
+          child: Image.file(
+            //to show image, you type like this.
+            File(e.path),
+            width: 100,
+            height: 100,
+            fit: BoxFit.cover,
+          ),
+        ),
       );
     }).toList();
   }
 
   List<Widget> getProductOption(List<ProductOptionModel> options) {
     return options.map((e) {
-      return CreateProductOptionCard(model: e,onNameChange: (name){
-        setState(() {
-          e.name = name;
+      return GestureDetector(
+        onLongPress: (){
+          print(e.id);
+          setState(() {
+            widget.model.options.remove(e);
 
-        });
-      },
-      onPriceChange: (price){
-        setState(() {
-          e.price = price;
-        });
-      },
+          });
+        },
+        child: CreateProductOptionCard(model: e,onNameChange: (name){
+          setState(() {
+            e.name = name;
+
+          });
+        },
+        onPriceChange: (price){
+          setState(() {
+            e.price = price;
+          });
+        },
+        ),
       );
     }).toList();
   }
@@ -235,6 +280,6 @@ class _ProductCreatePageState extends State<ProductCreatePage> {
     if(category.isEmpty){
       return '';
     }
-    category.firstWhere((element) => element.id == categoryId).name;
+   return category.firstWhere((element) => element.id == categoryId).name;
   }
 }

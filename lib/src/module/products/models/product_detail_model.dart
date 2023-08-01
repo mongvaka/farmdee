@@ -1,4 +1,5 @@
 import 'package:farmdee/src/module/products/models/product_option.dart';
+import 'package:farmdee/src/utils/data_hepler.dart';
 
 import '../../shop/models/image.dart';
 import 'comment_model.dart';
@@ -39,11 +40,11 @@ class ProductDetailModel {
     return ProductDetailModel(
         id: int.parse(json['id'] ?? 0.0),
         name: json['name'],
-        categoryId: json['categoryId'],
+        categoryId: DataHelper.toInt(json['categoryId']),
         code: json['code'],
         detail: json['detail'],
-        rating: json['rating'],
-        sold: json['sold'],
+        rating: DataHelper.toDouble(json['rating']) ,
+        sold: DataHelper.toInt(json['sold']),
         images: imageList,
         comments: commentList,
         options: optionList);

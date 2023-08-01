@@ -17,6 +17,7 @@ class ShopService {
     if (res?.body == null) {
       return BasicResponse();
     }
+    print('this body : ${res?.body}');
     return BasicResponse.fromJson(
         jsonDecode(utf8.decode(res!.bodyBytes)), ShopModel.fromJson);
   }

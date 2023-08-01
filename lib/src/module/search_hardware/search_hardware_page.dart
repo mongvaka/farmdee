@@ -39,12 +39,9 @@ class _SearchHardwarePageState extends State<SearchHardwarePage> {
 
     List<String> keyFound = [];
     stream.listen((NetworkAddress addr) async {
-      print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa${addr.ip}');
-      // if (addr.exists) {
         Response result = await http.get(
           Uri.parse('http://${addr.ip}'),
         );
-        print('this Responssssssssssssssssssssssssssssssssssssssss$result');
         if(isNumeric(result.body)){
           print('Found result ip ${addr.ip} : ${result.body} ');
           keyFound.add(result.body.toString().replaceAll("\n", "").replaceAll("\r", ""));
@@ -53,14 +50,17 @@ class _SearchHardwarePageState extends State<SearchHardwarePage> {
               loaded = true;
               print('thisValue : ${value}');
               _hardwareList = value;
-
+              print('_hardwareList1 : ${_hardwareList}');
             });
           });
         // }
       }
     }).onDone(() {
-
+    setState(() {
+      loaded = true;
+    });
       print('thiskeyFound : ${keyFound}');
+      print('_hardwareList2 : ${_hardwareList}');
 
     } );
 
@@ -108,7 +108,7 @@ class _SearchHardwarePageState extends State<SearchHardwarePage> {
   Widget build(BuildContext context) {
     return AppScaffoldItem(
       tailing: SizedBox(),
-      title: 'ค้นหาอุปกรณ์', canBack: true,
+      title: 'ค้นหา', canBack: true,
       child: Column(
         children: [
           Expanded(

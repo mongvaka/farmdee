@@ -18,7 +18,21 @@ class SelectCategoryOption extends StatelessWidget {
               onTap: (){
                 Navigator.pop(context,e.id);
               },
-              child: DetailText(text: e.name,),
+              child: Container(
+                width: double.infinity,
+                  padding: EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.white,
+                      ),
+                      borderRadius:const BorderRadius.all(Radius.circular(5))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      DetailText(text: e.name,),
+                    ],
+                  )),
             );
           }).toList()
         ],

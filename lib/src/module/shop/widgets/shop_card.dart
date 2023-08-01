@@ -52,7 +52,7 @@ class _ShopCardState extends State<ShopCard> {
                 flex: 3,
                 child: Container(
                     height: 100,
-                    child: Image.network('$API_URL/images/product/${widget.model.images[0]?.url}')),
+                    child: widget.model.images.firstOrNull != null? Image.network('$API_URL/images/product/${widget.model.images.firstOrNull?.name}'):Image.asset('assets/images/1.jpg')),
               ),
               SizedBox(
                 width: 5,
