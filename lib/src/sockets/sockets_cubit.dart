@@ -5,6 +5,7 @@ import 'package:localstorage/localstorage.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import '../module/message/models/answer_model.dart';
 import '../module/message/models/message_model.dart';
+import '../utils/constants.dart';
 
 
 class SocketCubit extends Cubit<SocketState> {
@@ -13,7 +14,7 @@ class SocketCubit extends Cubit<SocketState> {
   SocketCubit({ required this.ownerId})
       : super(SocketState.nothing()) {
     print('socket colled');
-    socket = IO.io("http://141.98.17.93", <String, dynamic>{
+    socket = IO.io(API_URL_PURE, <String, dynamic>{
       "transports": ["websocket"],});
     socket!.onConnect((_) {
       print('connect');

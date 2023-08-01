@@ -1,4 +1,3 @@
-
 import 'package:farmdee/src/module/login/login_service.dart';
 import 'package:farmdee/src/module/login/register_page.dart';
 import 'package:flutter/cupertino.dart';
@@ -21,11 +20,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _controllerUserName =
-  TextEditingController(text: '');
-  final LoginModel _loginModel = LoginModel.fromJson({'username': '', 'password': ''});
+      TextEditingController(text: '');
+  final LoginModel _loginModel =
+      LoginModel.fromJson({'username': '', 'password': ''});
   String _errorPwd = '';
   String _errorUsername = '';
   LoginService service = LoginService();
@@ -39,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
         top: false,
         child: Container(
           decoration: const BoxDecoration(
-         color: Colors.white,
+            color: Colors.white,
           ),
           child: Center(
             child: SingleChildScrollView(
@@ -86,11 +85,9 @@ class _LoginPageState extends State<LoginPage> {
                               controller: _controllerUserName,
                               placeholder: 'อีเมล',
                               errorMessage: _errorUsername,
-
                               onChanged: (val) {
                                 setState(() {
                                   _loginModel.email = val;
-
                                 });
                               },
                             ),
@@ -121,67 +118,69 @@ class _LoginPageState extends State<LoginPage> {
                               child: AppButton(
                                 type: AppButtonType.primary,
                                 text: 'เข้าสู่ระบบ',
-                                onPressed:() async {
+                                onPressed: () async {
                                   // Navigator.pushReplacement(
                                   //   context,
                                   //   MaterialPageRoute(
                                   //       builder: (context) =>
                                   //       const MainPage()),
                                   // );
-                                 service.login(_loginModel).then((value)  {
-                                   print('loginComplete : ${value.token}');
-                                 if(value.token != null){
-                                   // Navigator.pushAndRemoveUntil(
-                                   //     context,
-                                   //     MaterialPageRoute(
-                                   //         builder: (context) => MainPage()
-                                   //     ),
-                                   //     ModalRoute.withName("/Home")
-                                   // );
-                                   Navigator.pushReplacement(
-                                   context,
-                                   MaterialPageRoute(
-                                       builder: (context) =>
-                                        MainPage(ownerId: value.userId!,)),
-                                 );
-                                }else{
-                                   final snackBar = SnackBar(
-                                     elevation: 0,
-                                     behavior: SnackBarBehavior.floating,
-                                     backgroundColor: Colors.transparent,
-                                     content: AwesomeSnackbarContent(
-                                       title: 'ข้อมูลไม่ถูกต้อง!',
-                                       titleFontSize: 16,
-                                       messageFontSize: 14,
-                                       message:
-                                       'โปรดระบุข้อมูลผู้ใช้ให้ถูกต้อง',
-                                       contentType: ContentType.failure,
-                                     ),
-                                   );
+                                  service.login(_loginModel).then((value) {
+                                    print('loginComplete : ${value.token}');
+                                    if (value.token != null) {
+                                      // Navigator.pushAndRemoveUntil(
+                                      //     context,
+                                      //     MaterialPageRoute(
+                                      //         builder: (context) => MainPage()
+                                      //     ),
+                                      //     ModalRoute.withName("/Home")
+                                      // );
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => MainPage(
+                                                  ownerId: value.userId!,
+                                                )),
+                                      );
+                                    } else {
+                                      final snackBar = SnackBar(
+                                        elevation: 0,
+                                        behavior: SnackBarBehavior.floating,
+                                        backgroundColor: Colors.transparent,
+                                        content: AwesomeSnackbarContent(
+                                          title: 'ข้อมูลไม่ถูกต้อง!',
+                                          titleFontSize: 16,
+                                          messageFontSize: 14,
+                                          message:
+                                              'โปรดระบุข้อมูลผู้ใช้ให้ถูกต้อง',
+                                          contentType: ContentType.failure,
+                                        ),
+                                      );
 
-                                   ScaffoldMessenger.of(context)
-                                     ..hideCurrentSnackBar()
-                                     ..showSnackBar(snackBar);
-                                 }
-                                 });
-
-
-                                   },
+                                      ScaffoldMessenger.of(context)
+                                        ..hideCurrentSnackBar()
+                                        ..showSnackBar(snackBar);
+                                    }
+                                  });
+                                },
                               ),
                             ),
                             const SizedBox(
                               height: 20.0,
                             ),
                             GestureDetector(
-                                onTap: (){
+                                onTap: () {
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                        const RegisterPage()),
+                                            const RegisterPage()),
                                   );
                                 },
-                                child: Center(child: LabelText( text:'สมัครสมาชิก',)))
+                                child: Center(
+                                    child: LabelText(
+                                  text: 'สมัครสมาชิก',
+                                )))
                           ],
                         )),
                     // const SizedBox(

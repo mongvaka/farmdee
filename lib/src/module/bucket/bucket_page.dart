@@ -291,7 +291,8 @@ class _BucketPageState extends State<BucketPage> {
         images: m.product.images,
         rating: m.product.rating,
         sold: m.product.sold,
-        options: m.product.options
+        options: m.product.options,
+      categoryId: 0
     );
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(

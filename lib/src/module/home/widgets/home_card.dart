@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:farmdee/src/module/home/home_model.dart';
+import 'package:farmdee/src/module/home/home_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,6 +11,7 @@ import '../../../shared/style.dart';
 import '../../../utils/constants.dart';
 
 class HomeCard extends StatefulWidget {
+  bool pending = false;
   final Function(HomeModel) onPress;
   final Function(HomeModel) onPressSwitch;
   final HomeModel model;
@@ -23,6 +25,7 @@ class HomeCard extends StatefulWidget {
 }
 
 class _HomeCardState extends State<HomeCard> {
+  HomeService service = HomeService();
   @override
   Widget build(BuildContext context) {
     return  GestureDetector(
@@ -94,7 +97,7 @@ class _HomeCardState extends State<HomeCard> {
                     width: 5,
                   ),
                   Text(
-                    widget.model.status==1? 'สถานะ เปิด':'สถานะ ปิด',
+                    widget.pending?'สถานะ กำลังสั่งงาน': widget.model.status==1? 'สถานะ เปิด':'สถานะ ปิด',
                     style: ClientStyle.customTextStyle(TEXT_COLOR,14,FontWeight.w300),
                     // style: TextStyle(
                     //     color: Colors.grey,
@@ -104,6 +107,7 @@ class _HomeCardState extends State<HomeCard> {
                   Spacer(),
 
                   FlutterSwitch(
+                    disabled: widget.pending,
                     showOnOff: true,
                     activeText: 'เปิด',
                     inactiveText: 'ปิด',
@@ -113,10 +117,19 @@ class _HomeCardState extends State<HomeCard> {
                     value: widget.statusSwitch,
                     onToggle: (val) {
                       setState(() {
+                        widget.pending = true;
                         widget.statusSwitch = val;
                         widget.model.status = val?1:0;
-                        widget.onPressSwitch(widget.model);
                       });
+                      service.switchStatus(widget.model).then((value) {
+                        if(value){
+                          setState(() {
+                            widget.pending = false;
+
+                          });
+                        }
+                      });
+
                     },
                   ),
                 ],

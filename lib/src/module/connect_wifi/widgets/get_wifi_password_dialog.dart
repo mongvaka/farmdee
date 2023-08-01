@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 
 import '../model/name_password_model.dart';
 class GetPasswordWifiDialog extends StatelessWidget {
-  Function(String) onPasswordChang;
+  Function(String,String,String) onPasswordChang;
   String password = '';
-   GetPasswordWifiDialog({Key? key, required this.onPasswordChang}) : super(key: key);
+  final String wifiName,bssid;
+   GetPasswordWifiDialog({Key? key, required this.onPasswordChang, required this.wifiName, required this.bssid}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +21,7 @@ class GetPasswordWifiDialog extends StatelessWidget {
               child: Center(
                 child: AppInput(
                   onChanged: (val){
-                    onPasswordChang(val);
+                    onPasswordChang(val,wifiName,bssid);
                     // print('thisVal : ${val}');
                     // password = val;
 

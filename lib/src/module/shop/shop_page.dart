@@ -1,9 +1,11 @@
 import 'package:farmdee/src/module/login/widgets/label_text.dart';
 import 'package:farmdee/src/module/products/models/product_detail_model.dart';
+import 'package:farmdee/src/module/products/product_create_page.dart';
 import 'package:farmdee/src/module/products/product_detail.dart';
 import 'package:farmdee/src/module/shop/shop_search.dart';
 import 'package:farmdee/src/module/shop/shop_service.dart';
 import 'package:farmdee/src/module/shop/widgets/shop_card.dart';
+import 'package:farmdee/src/widgets/loadding_dialog.dart';
 import 'package:farmdee/src/widgets/scaffold/app_scaffold_item.dart';
 import 'package:farmdee/src/widgets/text/title_text.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,8 +33,7 @@ class _ShopPageState extends State<ShopPage> {
   bool _isFirstLoadRunning = false;
   bool _isLoadMoreRunning = false;
   List<ShopModel> _posts = [];
-  List<CategoryModel> _category = [
-  ];
+  List<CategoryModel> _category = [];
   int categoryId = 1;
   void _loadMore() async {
     if (search.page.last == false &&
@@ -77,11 +78,11 @@ class _ShopPageState extends State<ShopPage> {
       print(res);
       search.fromResponse(res);
       setState(() {
-        if(res.content !=null){
+        if (res.content != null) {
           _posts = res!.content!;
         }
       });
-    } catch (err,t) {
+    } catch (err, t) {
       if (kDebugMode) {
         print(t);
       }
@@ -91,13 +92,15 @@ class _ShopPageState extends State<ShopPage> {
       _isFirstLoadRunning = false;
     });
   }
-  void _getCountBucket(){
+
+  void _getCountBucket() {
     service.countBucket().then((value) {
       setState(() {
         countBucket = value;
       });
     });
   }
+
   late ScrollController _controller;
   @override
   void initState() {
@@ -107,118 +110,151 @@ class _ShopPageState extends State<ShopPage> {
     _getCategoryData();
     _controller = ScrollController()..addListener(_loadMore);
   }
+
   int? countBucket = 0;
   @override
   Widget build(BuildContext context) {
     return AppScaffoldItem(
-      tailing: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      BucketPage()),
-            );
-          },
-          child: Container(
-            margin: EdgeInsets.only(right: 10),
-            padding: const EdgeInsets.only(left: 5, right: 5),
-            width: 45,
-            color: const Color.fromRGBO(245, 246, 248, 0.8),
-            child: Stack(
-              children: [
-                Positioned(
-                  right: 0,
-                  child:countBucket==0? SizedBox() : new Container(
-                    padding: EdgeInsets.all(1),
-                    decoration: new BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(6),
-                    ),
-                    constraints: BoxConstraints(
-                      minWidth: 12,
-                      minHeight: 12,
-                    ),
-                    child: new Text(
-                      '$countBucket',
-                      style: new TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-                SvgPicture.asset(
-                  'assets/icons/shopping_cart.svg',
-                ),
-              ],
-            ),
-          )
-      ),
-        title: 'สั่งซื้อสินค้า', canBack: false,
-        child: Column(
+      tailing: Container(
+        width: 100,
+        child: Row(
           children: [
-            Container(
-              padding: EdgeInsets.only(left: 15,right: 15),
-          width: MediaQuery.of(context).size.width,height: 50,
+            GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ProductCreatePage()),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(left: 18, right: 10),
+                  width: 45,
+                  color: const Color.fromRGBO(245, 246, 248, 0.8),
+                  child: SvgPicture.asset(
+                    'assets/icons/plus.svg',
+
+                  ),
+                )),
+            GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => BucketPage()),
+                  );
+                },
+                child: Container(
+                  margin: EdgeInsets.only(right: 10),
+                  padding: const EdgeInsets.only(left: 5, right: 5),
+                  width: 45,
+                  color: const Color.fromRGBO(245, 246, 248, 0.8),
+                  child: Stack(
+                    children: [
+                      Positioned(
+                        right: 0,
+                        child: countBucket == 0
+                            ? SizedBox()
+                            : new Container(
+                                padding: EdgeInsets.all(1),
+                                decoration: new BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                constraints: BoxConstraints(
+                                  minWidth: 12,
+                                  minHeight: 12,
+                                ),
+                                child: new Text(
+                                  '$countBucket',
+                                  style: new TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 8,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                      ),
+                      SvgPicture.asset(
+                        'assets/icons/shopping_cart.svg',
+                      ),
+                    ],
+                  ),
+                )),
+          ],
+        ),
+      ),
+      title: 'สั่งซื้อสินค้า',
+      canBack: false,
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.only(left: 15, right: 15),
+            width: MediaQuery.of(context).size.width,
+            height: 50,
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
                   ..._getCategoryCard(),
-                  ],
+                ],
               ),
             ),
-            ),
-            Expanded(
-              child: _posts!.isNotEmpty
-                  ? ListView.builder(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  itemCount: _posts?.length,
-                  controller: _controller,
-                  itemBuilder: (_, index) {
-                    ShopModel model = _posts![index];
-                    return ShopCard(
-                        onPress: (ShopModel model) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    ProductDetailPage(id: model.id,)),
-                          );
-                        },
-                        onPressBuy: (ShopModel model) {
-                          showModal(context,'เพิ่มลงตะกร้า',model,false);
-                        },
-                        model:model
-                    );
-                  })
-                  :!_posts.isEmpty? const Center(child: CupertinoActivityIndicator()):Center(child: LabelText(text: 'ไม่มีข้อมูล',),),
-            ),
-            if (_isLoadMoreRunning == true)
-              const Padding(
-                padding: EdgeInsets.only(top: 1, bottom: 1),
-                child: Center(
-                  child: CupertinoActivityIndicator(),
-                ),
+          ),
+          Expanded(
+            child: _posts!.isNotEmpty
+                ? ListView.builder(
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    itemCount: _posts?.length,
+                    controller: _controller,
+                    itemBuilder: (_, index) {
+                      ShopModel model = _posts![index];
+                      return ShopCard(
+                          onPress: (ShopModel model) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProductDetailPage(
+                                        id: model.id,
+                                      )),
+                            );
+                          },
+                          onPressBuy: (ShopModel model) {
+                            showModal(context, 'เพิ่มลงตะกร้า', model, false);
+                          },
+                          model: model);
+                    })
+                : _isFirstLoadRunning
+                    ? const Center(child: AppLoadingDialog())
+                    : Center(
+                        child: LabelText(
+                          text: 'ไม่มีข้อมูล',
+                        ),
+                      ),
+          ),
+          if (_isLoadMoreRunning == true)
+            const Padding(
+              padding: EdgeInsets.only(top: 1, bottom: 1),
+              child: Center(
+                child: CupertinoActivityIndicator(),
               ),
-          ],
-        ),
+            ),
+        ],
+      ),
     );
   }
-  void showModal(context, String text,ShopModel model,bool gotoBucket) {
+
+  void showModal(context, String text, ShopModel model, bool gotoBucket) {
     ProductDetailModel productDetailModel = new ProductDetailModel(
-        id: model.id,
-        name: model.name,
-        code: model.code,
-        detail: model.detail,
-        comments: [],
-        images: model.images,
-        rating: model.rating,
-        sold: 0,
-        options: model.options,
+      id: model.id,
+      name: model.name,
+      code: model.code,
+      detail: model.detail,
+      comments: [],
+      images: model.images,
+      rating: model.rating,
+      sold: 0,
+      options: model.options,
+      categoryId: 0
     );
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
@@ -228,10 +264,13 @@ class _ShopPageState extends State<ShopPage> {
         ),
         context: context,
         builder: (context) {
-          return ProductOptionDialog(model: productDetailModel, title: text,returnValue: false,option: model.options[0]);
-        }).whenComplete(() {
-    }).then((value) {
-      if(value){
+          return ProductOptionDialog(
+              model: productDetailModel,
+              title: text,
+              returnValue: false,
+              option: model.options[0]);
+        }).whenComplete(() {}).then((value) {
+      if (value) {
         _getCountBucket();
       }
     });
@@ -240,7 +279,7 @@ class _ShopPageState extends State<ShopPage> {
   List<Widget> _getCategoryCard() {
     return _category.map((e) {
       return GestureDetector(
-        onTap: (){
+        onTap: () {
           setState(() {
             categoryId = e.id;
           });
@@ -250,25 +289,27 @@ class _ShopPageState extends State<ShopPage> {
         },
         child: Container(
             padding: EdgeInsets.all(8),
-            margin: EdgeInsets.only(left: 2,right: 2,top: 5,bottom: 5),
+            margin: EdgeInsets.only(left: 2, right: 2, top: 5, bottom: 5),
             decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border.all(
-                  color:e.id == categoryId?Colors.blue: Colors.grey,
-                  width: e.id == categoryId?2:1
-                ),
-                borderRadius: BorderRadius.only( topLeft:Radius.circular(10),topRight:Radius.circular(10))),
-            child: TitleText(text: e.name,fontSize: 13,)),
+                    color: e.id == categoryId ? Colors.blue : Colors.grey,
+                    width: e.id == categoryId ? 2 : 1),
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(10),
+                    topRight: Radius.circular(10))),
+            child: TitleText(
+              text: e.name,
+              fontSize: 13,
+            )),
       );
-    }
-    ).toList();
+    }).toList();
   }
 
   void _getCategoryData() {
     service.category().then((value) {
       setState(() {
         _category = value;
-
       });
     });
   }

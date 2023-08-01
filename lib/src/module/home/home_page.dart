@@ -1,5 +1,6 @@
 import 'package:farmdee/src/module/switch/switch_page.dart';
 import 'package:farmdee/src/widgets/app_button.dart';
+import 'package:farmdee/src/widgets/loadding_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -148,7 +149,7 @@ class _HomePageState extends State<HomePage> {
 
                   );
                 })
-                :!_posts.isEmpty? const Center(child: CupertinoActivityIndicator()):Center(child: LabelText(text: 'ไม่มีข้อมูล',),),
+                :_isFirstLoadRunning? const Center(child: AppLoadingDialog()):Center(child: LabelText(text: 'ไม่มีข้อมูล',),),
           ),
           if (_isLoadMoreRunning == true)
             const Padding(

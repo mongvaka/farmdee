@@ -3,24 +3,24 @@ import 'dart:ui';
 
 import '../../message/models/answer_model.dart';
 
-class ProductOptionModel  {
+class CreateProductOptionModel  {
   String name;
   double price;
   int? id;
 
 
-  ProductOptionModel({
+  CreateProductOptionModel({
     required this.name,
     required this.price,
     required this.id
   });
 
-  factory ProductOptionModel.fromJson(dynamic json) {
-      return ProductOptionModel(
-        id: int.parse(json['id']),
-        name: json['name'],
-        price: json['price'].toDouble()  ,
-      );
+  factory CreateProductOptionModel.fromJson(dynamic json) {
+    return CreateProductOptionModel(
+      id: int.parse(json['id']),
+      name: json['name'],
+      price: json['price'].toDouble()  ,
+    );
   }
   Map<String, dynamic> toJson() {
     return {

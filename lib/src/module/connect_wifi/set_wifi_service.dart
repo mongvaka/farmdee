@@ -18,7 +18,7 @@ class SetWifiService {
     print('get');
     String url = 'http://192.168.4.1/wifi?';
     Response? res = await _baseService.getWifiPages(url);
-    // print(res);
+    print(res);
     if (res?.body == null) {
       return false;
     }

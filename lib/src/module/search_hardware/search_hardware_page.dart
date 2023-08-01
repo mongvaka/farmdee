@@ -39,25 +39,29 @@ class _SearchHardwarePageState extends State<SearchHardwarePage> {
 
     List<String> keyFound = [];
     stream.listen((NetworkAddress addr) async {
-      print(addr);
-      if (addr.exists) {
+      print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa${addr.ip}');
+      // if (addr.exists) {
         Response result = await http.get(
-          Uri.parse('http://${addr.ip}/somewhere'),
+          Uri.parse('http://${addr.ip}'),
         );
+        print('this Responssssssssssssssssssssssssssssssssssssssss$result');
         if(isNumeric(result.body)){
           print('Found result ip ${addr.ip} : ${result.body} ');
           keyFound.add(result.body.toString().replaceAll("\n", "").replaceAll("\r", ""));
-        }
+          service.list(keyFound).then((value){
+            setState(() {
+              loaded = true;
+              print('thisValue : ${value}');
+              _hardwareList = value;
+
+            });
+          });
+        // }
       }
     }).onDone(() {
-      service.list(keyFound).then((value){
-        setState(() {
-          print('lllll');
-          loaded = true;
-          _hardwareList = value;
 
-        });
-      });
+      print('thiskeyFound : ${keyFound}');
+
     } );
 
   }
@@ -130,6 +134,7 @@ class _SearchHardwarePageState extends State<SearchHardwarePage> {
                            int index =   _hardwareList.indexWhere((element) => element.key==result.key);
                            setState(() {
                              _hardwareList[index] = result;
+                             Navigator.pop(context,true);
                            });
                           }else{
                             print('Cannot Activate');

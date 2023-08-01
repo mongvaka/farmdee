@@ -7,6 +7,7 @@ import 'package:farmdee/src/module/message/models/message_model.dart';
 import 'package:farmdee/src/module/message/models/send_message_model.dart';
 import 'package:farmdee/src/sockets/sockets_cubit.dart';
 import 'package:farmdee/src/sockets/sockets_state.dart';
+import 'package:farmdee/src/widgets/loadding_dialog.dart';
 import 'package:farmdee/src/widgets/scaffold/app_scaffold_item.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -168,7 +169,7 @@ class _MessagePageState extends State<MessagePage> {
 
                   );
                 })
-                :!_posts.isEmpty? const Center(child: CupertinoActivityIndicator()):Center(child: LabelText(text: 'ไม่มีข้อมูล',),),
+                :_isFirstLoadRunning? const Center(child: AppLoadingDialog()):Center(child: LabelText(text: 'ไม่มีข้อมูล',),),
           ),
           if (_isLoadMoreRunning == true)
             const Padding(

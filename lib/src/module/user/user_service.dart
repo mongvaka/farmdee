@@ -40,4 +40,5 @@ class UserService {
     Response? res = await baseService.post(model.toJson(), url);
     return res!=null;
   }
+
 }
