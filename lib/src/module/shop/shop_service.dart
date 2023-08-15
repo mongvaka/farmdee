@@ -52,6 +52,12 @@ class ShopService {
     }
     return int.parse( res!.body);
   }
+  Future<int> getUserId()async{
+    final LocalStorage storage = LocalStorage('auth');
+    int userId = storage.getItem('id');
+
+    return userId;
+  }
   Future<List<CategoryModel>> category()async{
     String url = '/product/category';
     Response? res = await _baseService.get( url);

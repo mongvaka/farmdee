@@ -42,7 +42,7 @@ const COMPLEX_CHART_OUTER_COLOR = [
 ];
 const API_URL_PURE = 'wss://farmdee.website';
  const API_URL = 'https://farmdee.website/api/v1';
- //const API_URL = 'http://192.168.1.42:3033/api/v1';
+ // const API_URL = 'http://192.168.1.44:3033/api/v1';
 const REQ_HEADER = <String, String>{
   'Content-Type': 'application/json; charset=UTF-8',
 };

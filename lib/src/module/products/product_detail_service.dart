@@ -45,6 +45,7 @@ class ProductDetailService {
   }
 
   createProduct(ProductDetailModel model) async {
+    print('product : ${model.toJson()}');
     String url = '/product/create-product';
     Response? res = await _baseService.post(model.toJson(), url);
     return ProductDetailModel.fromJson(jsonDecode(res.body)); res.body;

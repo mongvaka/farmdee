@@ -20,7 +20,8 @@ import 'models/category_model.dart';
 import 'models/shop_model.dart';
 
 class ShopPage extends StatefulWidget {
-  const ShopPage({Key? key}) : super(key: key);
+  int userId = 0;
+  ShopPage({Key? key}) : super(key: key);
 
   @override
   State<ShopPage> createState() => _ShopPageState();
@@ -109,6 +110,7 @@ class _ShopPageState extends State<ShopPage> {
     _getCountBucket();
     _getCategoryData();
     _controller = ScrollController()..addListener(_loadMore);
+    _getUserId();
   }
 
   int? countBucket = 0;
@@ -119,7 +121,7 @@ class _ShopPageState extends State<ShopPage> {
         width: 100,
         child: Row(
           children: [
-            GestureDetector(
+           widget.userId == 2? GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
@@ -134,7 +136,7 @@ class _ShopPageState extends State<ShopPage> {
                     'assets/icons/plus.svg',
 
                   ),
-                )),
+                )):Spacer(),
             GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -310,6 +312,14 @@ class _ShopPageState extends State<ShopPage> {
     service.category().then((value) {
       setState(() {
         _category = value;
+      });
+    });
+  }
+
+  void _getUserId() {
+    service.getUserId().then((value) {
+      setState(() {
+        widget.userId = value;
       });
     });
   }
