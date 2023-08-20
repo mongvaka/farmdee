@@ -2,12 +2,11 @@ import 'package:farmdee/src/module/login/login_service.dart';
 import 'package:farmdee/src/module/login/register_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
-import 'package:localstorage/localstorage.dart';
 
 import '../../widgets/app_button.dart';
 import '../../widgets/app_input.dart';
 import '../../widgets/app_input_email.dart';
+import '../../widgets/dialogs/app_snack_bar.dart';
 import '../main/main_page.dart';
 import 'login_model.dart';
 import 'widgets/label_text.dart';
@@ -125,16 +124,38 @@ class _LoginPageState extends State<LoginPage> {
                                   //       builder: (context) =>
                                   //       const MainPage()),
                                   // );
+                                  if(_loginModel.email == null || _loginModel.email==''){
+                                    const snackBar =  SnackBar(
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      content:AppSnackBar(
+                                        text: 'โปรดระบุที่อยู่อีเมล',
+                                      ),
+                                    );
+
+                                    ScaffoldMessenger.of(context)
+                                      ..hideCurrentSnackBar()
+                                      ..showSnackBar(snackBar);
+                                    return;
+                                  }
+                                  if(_loginModel.password == null || _loginModel.password==''){
+                                    const snackBar =  SnackBar(
+                                      elevation: 0,
+                                      behavior: SnackBarBehavior.floating,
+                                      backgroundColor: Colors.transparent,
+                                      content:AppSnackBar(
+                                        text: 'โปรดระบุรหัสผ่าน',
+                                      ),
+                                    );
+
+                                    ScaffoldMessenger.of(context)
+                                      ..hideCurrentSnackBar()
+                                      ..showSnackBar(snackBar);
+                                    return;
+                                  }
                                   service.login(_loginModel).then((value) {
-                                    print('loginComplete : ${value.token}');
                                     if (value.token != null) {
-                                      // Navigator.pushAndRemoveUntil(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) => MainPage()
-                                      //     ),
-                                      //     ModalRoute.withName("/Home")
-                                      // );
                                       Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
@@ -143,17 +164,12 @@ class _LoginPageState extends State<LoginPage> {
                                                 )),
                                       );
                                     } else {
-                                      final snackBar = SnackBar(
+                                      const snackBar =  SnackBar(
                                         elevation: 0,
                                         behavior: SnackBarBehavior.floating,
                                         backgroundColor: Colors.transparent,
-                                        content: AwesomeSnackbarContent(
-                                          title: 'ข้อมูลไม่ถูกต้อง!',
-                                          titleFontSize: 16,
-                                          messageFontSize: 14,
-                                          message:
-                                              'โปรดระบุข้อมูลผู้ใช้ให้ถูกต้อง',
-                                          contentType: ContentType.failure,
+                                        content:AppSnackBar(
+                                          text: 'ข้อมูลไม่ถูกต้อง!',
                                         ),
                                       );
 

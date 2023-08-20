@@ -1,4 +1,3 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:farmdee/src/module/login/login_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 import '../../widgets/app_button.dart';
 import '../../widgets/app_input.dart';
 import '../../widgets/app_input_email.dart';
+import '../../widgets/dialogs/app_snack_bar.dart';
 import '../main/main_page.dart';
 import 'auth_respones_model.dart';
 import 'login_model.dart';
@@ -202,17 +202,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                   _registerModel.fName ==''||
                                   _registerModel.lName ==''
                                   ){
-                                    final snackBar = SnackBar(
+                                    const snackBar = SnackBar(
                                       elevation: 0,
                                       behavior: SnackBarBehavior.floating,
                                       backgroundColor: Colors.transparent,
-                                      content: AwesomeSnackbarContent(
-                                        title: 'กรอกข้อมูลให้ครบถ้วน!',
-                                        titleFontSize: 16,
-                                        messageFontSize: 14,
-                                        message:
-                                        'โปรดระบุข้อมูลให้ครบทุกช่อง',
-                                        contentType: ContentType.failure,
+                                      content: AppSnackBar(
+                                        text: 'กรอกข้อมูลให้ครบถ้วน!',
                                       ),
                                     );
 
@@ -222,17 +217,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                     return;
                                   }
                                   if(_registerModel.password != _registerModel.rePassword){
-                                    final snackBar = SnackBar(
+                                    const snackBar = SnackBar(
                                       elevation: 0,
                                       behavior: SnackBarBehavior.floating,
                                       backgroundColor: Colors.transparent,
-                                      content: AwesomeSnackbarContent(
-                                        title: 'รหัสผ่านไม่ตรงกัน!',
-                                        titleFontSize: 16,
-                                        messageFontSize: 14,
-                                        message:
-                                        'โปรดระบุรหัสผ่านและยืนยันรหัสผ่านให้ตรงกัน',
-                                        contentType: ContentType.failure,
+                                      content: AppSnackBar(
+                                        text: 'รหัสผ่านไม่ตรงกัน!'
                                       ),
                                     );
 
@@ -250,17 +240,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                           MainPage(ownerId: result.userId!,)),
                                    );
                                  }else{
-                                   final snackBar = SnackBar(
+                                   const snackBar = SnackBar(
                                      elevation: 0,
                                      behavior: SnackBarBehavior.floating,
                                      backgroundColor: Colors.transparent,
-                                     content: AwesomeSnackbarContent(
-                                       title: 'ข้อมูลไม่ถูกต้อง!',
-                                       titleFontSize: 16,
-                                       messageFontSize: 14,
-                                       message:
-                                       'โปรดระบุข้อมูลผู้ใช้ให้ถูกต้อง',
-                                       contentType: ContentType.failure,
+                                     content: AppSnackBar(
+                                       text: 'ข้อมูลไม่ถูกต้อง!',
                                      ),
                                    );
 

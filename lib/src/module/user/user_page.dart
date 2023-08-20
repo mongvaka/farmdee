@@ -1,6 +1,6 @@
 import 'package:farmdee/src/module/login/login_page.dart';
-import 'package:farmdee/src/module/login/widgets/label_text.dart';
 import 'package:farmdee/src/module/user/model/edit_profile_model.dart';
+import 'package:farmdee/src/module/user/model/sensor_count_model.dart';
 import 'package:farmdee/src/module/user/user_model.dart';
 import 'package:farmdee/src/module/user/user_service.dart';
 import 'package:farmdee/src/utils/constants.dart';
@@ -12,20 +12,21 @@ import 'package:flutter_svg/svg.dart';
 import 'package:localstorage/localstorage.dart';
 import '../connect_wifi/connect_wifi_page.dart';
 import '../order/order_page.dart';
-import '../search_hardware/search_hardware_page.dart';
 import '../verify_mobile/verify_mobile.dart';
 import 'edit_profile_page.dart';
 
 class UserPage extends StatefulWidget {
-  const UserPage({Key? key}) : super(key: key);
+  UserModel model = UserModel(lastName: '', firstName: '', email: '');
+  SensorCountModel sensorCountModel = SensorCountModel.empty();
+  UserPage({Key? key}) : super(key: key);
 
   @override
   State<UserPage> createState() => _UserPageState();
 }
 
 class _UserPageState extends State<UserPage> {
-  UserModel model = UserModel(lastName: '', firstName: '', email: '');
   UserService service = UserService();
+
   List<Map<String, dynamic>> initOrderNotice = [
     {
       "name": "การจัดส่ง",
@@ -53,12 +54,13 @@ class _UserPageState extends State<UserPage> {
     super.initState();
     getUserById();
     getNotification();
+    getSensorCount();
   }
 
   getUserById() {
     service.getById().then((value) {
       setState(() {
-        model = value;
+        widget.model = value;
       });
     });
   }
@@ -124,7 +126,7 @@ class _UserPageState extends State<UserPage> {
                               fontWeight: FontWeight.w700,
                             ),
                             CaptionText(
-                                text: '-',
+                                text: '${widget.sensorCountModel.sensorCount}',
                                 textColor: Colors.white,
                                 fontWeight: FontWeight.w700),
                             CaptionText(
@@ -163,7 +165,7 @@ class _UserPageState extends State<UserPage> {
                                 textColor: Colors.white,
                                 fontWeight: FontWeight.w700),
                             CaptionText(
-                                text: '-',
+                                text: '${widget.sensorCountModel.controllerCount}',
                                 textColor: Colors.white,
                                 fontWeight: FontWeight.w700),
                             CaptionText(
@@ -207,7 +209,7 @@ class _UserPageState extends State<UserPage> {
                               fontWeight: FontWeight.w700,
                             ),
                             CaptionText(
-                                text: '-',
+                                text: '${widget.sensorCountModel.lightSensor}',
                                 textColor: Colors.white,
                                 fontWeight: FontWeight.w700),
                             CaptionText(
@@ -246,7 +248,7 @@ class _UserPageState extends State<UserPage> {
                                 textColor: Colors.white,
                                 fontWeight: FontWeight.w700),
                             CaptionText(
-                                text: '-',
+                                text: '${widget.sensorCountModel.tempSensor}',
                                 textColor: Colors.white,
                                 fontWeight: FontWeight.w700),
                             CaptionText(
@@ -287,7 +289,7 @@ class _UserPageState extends State<UserPage> {
                                 textColor: Colors.white,
                                 fontWeight: FontWeight.w700),
                             CaptionText(
-                                text: '-',
+                                text: '${widget.sensorCountModel.homSensor}',
                                 textColor: Colors.white,
                                 fontWeight: FontWeight.w700),
                             CaptionText(
@@ -319,7 +321,7 @@ class _UserPageState extends State<UserPage> {
                       context,
                       MaterialPageRoute(
                           builder: (context) =>
-                              EditProfilePage(model: EditProfileModel(fName: model.firstName,lName: model.lastName),)),
+                              EditProfilePage(model: EditProfileModel(fName: widget.model.firstName,lName: widget.model.lastName),)),
                     ).then((value) {
                       getUserById();
                     });
@@ -355,7 +357,7 @@ class _UserPageState extends State<UserPage> {
                       Expanded(
                           flex: 1,
                           child: TitleText(
-                              text: model.email,
+                              text: widget.model.email,
                               fontSize: 14,
                               color: Colors.white)),
                     ],
@@ -369,7 +371,7 @@ class _UserPageState extends State<UserPage> {
                       Expanded(
                           flex: 1,
                           child: TitleText(
-                              text: model.firstName ?? '',
+                              text: widget.model.firstName ?? '',
                               fontSize: 14,
                               color: Colors.white)),
                     ],
@@ -385,7 +387,7 @@ class _UserPageState extends State<UserPage> {
                       Expanded(
                           flex: 1,
                           child: TitleText(
-                              text: model.lastName ?? '',
+                              text: widget.model.lastName ?? '',
                               fontSize: 14,
                               color: Colors.white)),
                     ],
@@ -443,7 +445,7 @@ class _UserPageState extends State<UserPage> {
                       Expanded(
                           flex: 2,
                           child: TitleText(
-                              text: model.address?.phoneNumber??'',
+                              text: widget.model.address?.phoneNumber??'',
                               fontSize: 14,
                               color: TEXT_COLOR)),
                     ],
@@ -460,7 +462,7 @@ class _UserPageState extends State<UserPage> {
                       Expanded(
                           flex: 2,
                           child: TitleText(
-                              text: model.address?.address??'',
+                              text: widget.model.address?.address??'',
                               fontSize: 14,
                               color: TEXT_COLOR)),
                     ],
@@ -474,7 +476,7 @@ class _UserPageState extends State<UserPage> {
                       Expanded(
                           flex: 2,
                           child: TitleText(
-                              text: model.address?.subDistrictName ?? '',
+                              text: widget.model.address?.subDistrictName ?? '',
                               fontSize: 14,
                               color: TEXT_COLOR)),
                     ],
@@ -490,7 +492,7 @@ class _UserPageState extends State<UserPage> {
                       Expanded(
                           flex: 2,
                           child: TitleText(
-                              text: model.address?.districtName ?? '',
+                              text: widget.model.address?.districtName ?? '',
                               fontSize: 14,
                               color: TEXT_COLOR)),
                     ],
@@ -506,7 +508,7 @@ class _UserPageState extends State<UserPage> {
                       Expanded(
                           flex: 2,
                           child: TitleText(
-                              text: model.address?.provinceName ?? '',
+                              text: widget.model.address?.provinceName ?? '',
                               fontSize: 14,
                               color: TEXT_COLOR)),
                     ],
@@ -701,5 +703,13 @@ class _UserPageState extends State<UserPage> {
       ),
 
     ];
+  }
+
+  void getSensorCount() {
+    service.getSensorCount().then((value) {
+      setState(() {
+        widget.sensorCountModel = value;
+      });
+    });
   }
 }

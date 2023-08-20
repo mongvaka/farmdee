@@ -4,7 +4,7 @@ class DataHelper{
       return 0.0;
     }
     try{
-      return double.parse(value);
+      return double.parse('$value');
     }catch(e){
       return 0.0;
     }
@@ -14,7 +14,7 @@ class DataHelper{
       return 0;
     }
     try{
-      return int.parse(value);
+      return int.parse('$value');
     }catch(e){
       return 0 ;
     }

@@ -1,4 +1,3 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:farmdee/src/module/verify_mobile/address_service.dart';
 import 'package:farmdee/src/module/verify_mobile/model/verify_otp_model.dart';
 import 'package:farmdee/src/utils/constants.dart';

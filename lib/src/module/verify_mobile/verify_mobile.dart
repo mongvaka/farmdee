@@ -1,4 +1,3 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:farmdee/src/module/verify_mobile/address_service.dart';
 import 'package:farmdee/src/module/verify_mobile/get_otp_page.dart';
 import 'package:farmdee/src/module/verify_mobile/model/address_model.dart';
@@ -12,6 +11,7 @@ import 'package:http/http.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 import '../../widgets/app_input.dart';
+import '../../widgets/dialogs/app_snack_bar.dart';
 import '../login/widgets/label_text.dart';
 import 'model/verify_otp_model.dart';
 import 'widgets/select_address_dialog.dart';
@@ -309,13 +309,8 @@ class _VerifyMobileState extends State<VerifyMobile> {
       elevation: 0,
       behavior: SnackBarBehavior.floating,
       backgroundColor: Colors.transparent,
-      content: AwesomeSnackbarContent(
-        title: 'โปรดระบุข้อมูล${s}',
-        titleFontSize: 16,
-        messageFontSize: 14,
-        message:
-        'ข้อมูล${s}ไม่สามารถเว้นว่างได้',
-        contentType: ContentType.failure,
+      content: AppSnackBar(
+        text: 'โปรดระบุข้อมูล${s}',
       ),
     );
 
